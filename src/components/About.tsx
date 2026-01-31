@@ -1,7 +1,14 @@
-import { Palette, Network, Code, Bug, Brain, Shield } from 'lucide-react';
+import { Palette, Network, Code, Bug, Brain, Shield, Briefcase } from 'lucide-react';
 
 export default function About() {
   const roles = [
+    {
+      icon: Briefcase,
+      title: 'Business Consultant',
+      count: 2,
+      description: 'Tư vấn chiến lược và giải pháp kinh doanh tối ưu',
+      color: 'from-indigo-500 to-blue-500'
+    },
     {
       icon: Palette,
       title: 'Product Design',

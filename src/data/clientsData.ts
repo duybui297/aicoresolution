@@ -42,5 +42,11 @@ export const notableClients: Client[] = [
     name: 'Đại Thành Pharma',
     logo: 'https://images.pexels.com/photos/356040/pexels-photo-356040.jpeg?auto=compress&cs=tinysrgb&w=400',
     industry: 'Dược phẩm & Y tế'
+  },
+  {
+    id: 8,
+    name: 'Anabas Restaurant',
+    logo: 'https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg?auto=compress&cs=tinysrgb&w=400',
+    industry: 'Nhà hàng & F&B'
   }
 ];

@@ -38,7 +38,7 @@ export const companyTimeline: TimelineEvent[] = [
   },
   {
     year: 2025,
-    teamSize: 20,
+    teamSize: 22,
     title: 'Dẫn Đầu Đổi Mới',
     description: 'Tiếp tục mở rộng và đổi mới. Chúng tôi không ngừng nghiên cứu và áp dụng các công nghệ AI mới nhất như GPT, Computer Vision, và AutoML vào sản phẩm của khách hàng.',
     milestone: 'Đạt 100+ dự án, top 10 công ty AI Solutions tại Việt Nam'
