@@ -44,12 +44,7 @@ export default function Clients() {
                 </p>
               </div>
 
-              <div className="px-6 pb-6">
-                <div className="flex items-center gap-2 text-blue-600 text-sm font-semibold">
-                  <span>Xem case study</span>
-                  <span className="group-hover:translate-x-2 transition-transform duration-300">→</span>
-                </div>
-              </div>
+
             </div>
           ))}
         </div>
