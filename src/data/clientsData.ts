@@ -1,52 +1,60 @@
 import { Client } from '../types';
+import AnabasLogo from '../assets/Banner_Anabas_Restaurant.png';
+import TiemHoaLogo from '../assets/1989.png';
+import LuxLogo from '../assets/lux.jpg';
+import TanNhatSuongLogo from '../assets/tan nhat suong.jpg';
+import ChauLogo from '../assets/chau kitchen & bar.jpg';
+import ICCLogo from '../assets/Du hoc ICC.png';
+import HankangLogo from '../assets/Du học Hangkang.jpg';
+import SuperfitLogo from '../assets/Superfit.jpg';
 
 export const notableClients: Client[] = [
   {
     id: 1,
-    name: 'Vacera',
-    logo: 'https://images.pexels.com/photos/1103970/pexels-photo-1103970.jpeg?auto=compress&cs=tinysrgb&w=400',
-    industry: 'Gốm sứ & Thiết bị vệ sinh'
+    name: 'clients.names.anabas',
+    logo: AnabasLogo,
+    industry: 'clients.list.anabas'
   },
   {
     id: 2,
-    name: 'Lux Holdings',
-    logo: 'https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=400',
-    industry: 'Bất động sản & Đầu tư'
+    name: 'clients.names.tiemhoa',
+    logo: TiemHoaLogo,
+    industry: 'clients.list.tiemhoa'
   },
   {
     id: 3,
-    name: 'AI Wolf',
-    logo: 'https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=400',
-    industry: 'Giải pháp AI'
+    name: 'clients.names.lux',
+    logo: LuxLogo,
+    industry: 'clients.list.lux'
   },
   {
     id: 4,
-    name: 'Devia Steel',
-    logo: 'https://images.pexels.com/photos/1216589/pexels-photo-1216589.jpeg?auto=compress&cs=tinysrgb&w=400',
-    industry: 'Công nghiệp thép'
+    name: 'clients.names.tanNhatSuong',
+    logo: TanNhatSuongLogo,
+    industry: 'clients.list.tanNhatSuong'
   },
   {
     id: 5,
-    name: 'Win International',
-    logo: 'https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg?auto=compress&cs=tinysrgb&w=400',
-    industry: 'Nội thất & Kiến trúc'
+    name: 'clients.names.chau',
+    logo: ChauLogo,
+    industry: 'clients.list.chau'
   },
   {
     id: 6,
-    name: 'Koti Charge',
-    logo: 'https://images.pexels.com/photos/110844/pexels-photo-110844.jpeg?auto=compress&cs=tinysrgb&w=400',
-    industry: 'Công nghệ sạc điện'
+    name: 'clients.names.icc',
+    logo: ICCLogo,
+    industry: 'clients.list.icc'
   },
   {
     id: 7,
-    name: 'Đại Thành Pharma',
-    logo: 'https://images.pexels.com/photos/356040/pexels-photo-356040.jpeg?auto=compress&cs=tinysrgb&w=400',
-    industry: 'Dược phẩm & Y tế'
+    name: 'clients.names.hankang',
+    logo: HankangLogo,
+    industry: 'clients.list.hankang'
   },
   {
     id: 8,
-    name: 'Anabas Restaurant',
-    logo: 'https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg?auto=compress&cs=tinysrgb&w=400',
-    industry: 'Nhà hàng & F&B'
+    name: 'clients.names.superfit',
+    logo: SuperfitLogo,
+    industry: 'clients.list.superfit'
   }
 ];
