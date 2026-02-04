@@ -1,22 +1,25 @@
 import { Building2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { notableClients } from '../data/clientsData';
 
 export default function Clients() {
+  const { t } = useTranslation();
+
   return (
     <section className="py-20 px-4 bg-slate-50">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 bg-white border border-slate-200 rounded-full px-5 py-2 mb-4 shadow-sm">
             <Building2 className="w-4 h-4 text-slate-600" />
-            <span className="text-sm font-semibold text-slate-700">Đối Tác Của Chúng Tôi</span>
+            <span className="text-sm font-semibold text-slate-700">{t('clients.badge')}</span>
           </div>
 
           <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4">
-            Khách Hàng Tiêu Biểu
+            {t('clients.title')}
           </h2>
 
           <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-            Được tin tưởng bởi các doanh nghiệp hàng đầu trong nhiều lĩnh vực khác nhau
+            {t('clients.description')}
           </p>
         </div>
 
@@ -36,11 +39,11 @@ export default function Clients() {
 
               <div className="p-6">
                 <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">
-                  {client.name}
+                  {t(client.name)}
                 </h3>
 
                 <p className="text-sm text-slate-600 leading-relaxed">
-                  {client.industry}
+                  {t(client.industry)}
                 </p>
               </div>
 

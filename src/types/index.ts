@@ -26,7 +26,7 @@ export interface CaseStudy {
 }
 
 export interface TimelineEvent {
-  year: number;
+  year: string;
   teamSize: number;
   title: string;
   description: string;

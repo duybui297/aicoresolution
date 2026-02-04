@@ -1,18 +1,23 @@
 import { useState } from 'react';
 import { Menu, X, Sparkles } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from './LanguageSwitcher';
 
 interface NavigationProps {
-  activeTab: 'home' | 'case-studies' | 'contact';
-  onTabChange: (tab: 'home' | 'case-studies' | 'contact') => void;
+  activeTab: 'home' | 'services' | 'case-studies' | 'insights' | 'about';
+  onTabChange: (tab: 'home' | 'services' | 'case-studies' | 'insights' | 'about') => void;
 }
 
 export default function Navigation({ activeTab, onTabChange }: NavigationProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { t } = useTranslation();
 
   const tabs = [
-    { id: 'home' as const, label: 'Trang Chủ' },
-    { id: 'case-studies' as const, label: 'Case Studies' },
-    { id: 'contact' as const, label: 'Liên Hệ' }
+    { id: 'home' as const, label: t('nav.home') },
+    { id: 'services' as const, label: t('nav.services') },
+    { id: 'case-studies' as const, label: t('nav.caseStudies') },
+    { id: 'insights' as const, label: t('nav.insights') },
+    { id: 'about' as const, label: t('nav.about') }
   ];
 
   return (
@@ -24,8 +29,8 @@ export default function Navigation({ activeTab, onTabChange }: NavigationProps) 
               <Sparkles className="w-6 h-6 text-white" />
             </div>
             <div>
-              <div className="text-xl font-bold text-slate-900">AI Core Solution</div>
-              <div className="text-xs text-slate-500">AI-Powered Development</div>
+              <div className="text-xl font-bold text-slate-900">{t('nav.companyName')}</div>
+              <div className="text-xs text-slate-500">{t('nav.tagline')}</div>
             </div>
           </div>
 
@@ -34,15 +39,15 @@ export default function Navigation({ activeTab, onTabChange }: NavigationProps) 
               <button
                 key={tab.id}
                 onClick={() => onTabChange(tab.id)}
-                className={`px-6 py-2 rounded-xl font-semibold transition-all duration-300 ${
-                  activeTab === tab.id
-                    ? 'bg-blue-600 text-white shadow-lg'
-                    : 'text-slate-700 hover:bg-slate-100'
-                }`}
+                className={`px-6 py-2 rounded-xl font-semibold transition-all duration-300 ${activeTab === tab.id
+                  ? 'bg-blue-600 text-white shadow-lg'
+                  : 'text-slate-700 hover:bg-slate-100'
+                  }`}
               >
                 {tab.label}
               </button>
             ))}
+            <LanguageSwitcher />
           </div>
 
           <button
@@ -62,15 +67,17 @@ export default function Navigation({ activeTab, onTabChange }: NavigationProps) 
                   onTabChange(tab.id);
                   setMobileMenuOpen(false);
                 }}
-                className={`w-full px-6 py-3 rounded-xl font-semibold transition-all duration-300 text-left ${
-                  activeTab === tab.id
-                    ? 'bg-blue-600 text-white shadow-lg'
-                    : 'text-slate-700 hover:bg-slate-100'
-                }`}
+                className={`w-full px-6 py-3 rounded-xl font-semibold transition-all duration-300 text-left ${activeTab === tab.id
+                  ? 'bg-blue-600 text-white shadow-lg'
+                  : 'text-slate-700 hover:bg-slate-100'
+                  }`}
               >
                 {tab.label}
               </button>
             ))}
+            <div className="pt-2">
+              <LanguageSwitcher />
+            </div>
           </div>
         )}
       </div>

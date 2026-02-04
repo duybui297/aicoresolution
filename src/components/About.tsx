@@ -1,47 +1,50 @@
 import { Palette, Network, Code, Bug, Brain, Shield, Briefcase } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function About() {
+  const { t } = useTranslation();
+
   const roles = [
     {
       icon: Briefcase,
-      title: 'Business Consultant',
+      title: t('about.roles.businessConsultant.title'),
       count: 2,
-      description: 'Tư vấn chiến lược và giải pháp kinh doanh tối ưu',
+      description: t('about.roles.businessConsultant.description'),
       color: 'from-indigo-500 to-blue-500'
     },
     {
       icon: Palette,
-      title: 'Product Design',
+      title: t('about.roles.productDesign.title'),
       count: 3,
-      description: 'UI/UX designers tạo trải nghiệm người dùng tối ưu',
+      description: t('about.roles.productDesign.description'),
       color: 'from-pink-500 to-rose-500'
     },
     {
       icon: Network,
-      title: 'Solution Architect',
+      title: t('about.roles.solutionArchitect.title'),
       count: 2,
-      description: 'Thiết kế kiến trúc hệ thống scalable và bảo mật',
+      description: t('about.roles.solutionArchitect.description'),
       color: 'from-blue-500 to-cyan-500'
     },
     {
       icon: Code,
-      title: 'Developer',
+      title: t('about.roles.developer.title'),
       count: 10,
-      description: 'Full-stack developers xây dựng sản phẩm chất lượng cao',
+      description: t('about.roles.developer.description'),
       color: 'from-green-500 to-emerald-500'
     },
     {
       icon: Bug,
-      title: 'Quality Assurance',
+      title: t('about.roles.qa.title'),
       count: 3,
-      description: 'Testers đảm bảo chất lượng và hiệu năng',
+      description: t('about.roles.qa.description'),
       color: 'from-orange-500 to-amber-500'
     },
     {
       icon: Brain,
-      title: 'AI/ML Engineer',
+      title: t('about.roles.aiEngineer.title'),
       count: 2,
-      description: 'Chuyên gia AI tích hợp machine learning vào sản phẩm',
+      description: t('about.roles.aiEngineer.description'),
       color: 'from-violet-500 to-purple-500'
     }
   ];
@@ -52,17 +55,15 @@ export default function About() {
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 bg-blue-50 border border-blue-200 rounded-full px-5 py-2 mb-4">
             <Shield className="w-4 h-4 text-blue-600" />
-            <span className="text-sm font-semibold text-blue-900">Về Chúng Tôi</span>
+            <span className="text-sm font-semibold text-blue-900">{t('about.badge')}</span>
           </div>
 
           <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
-            Đội Ngũ Chuyên Nghiệp
+            {t('about.title')}
           </h2>
 
           <p className="text-lg text-slate-600 max-w-3xl mx-auto leading-relaxed">
-            20+ chuyên gia với đam mê công nghệ và AI, sẵn sàng biến ý tưởng của bạn thành hiện thực.
-            Chúng tôi kết hợp chuyên môn sâu với quy trình Agile và AI-assisted development
-            để mang lại giải pháp tối ưu nhất.
+            {t('about.description')}
           </p>
         </div>
 
@@ -74,13 +75,9 @@ export default function About() {
                 key={index}
                 className="group bg-white rounded-2xl p-6 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-slate-100"
               >
-                <div className="flex items-start justify-between mb-4">
+                <div className="flex items-start mb-4">
                   <div className={`p-3 bg-gradient-to-br ${role.color} rounded-xl shadow-lg group-hover:scale-110 transition-transform duration-300`}>
                     <Icon className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="text-right">
-                    <div className="text-3xl font-bold text-slate-900">{role.count}</div>
-                    <div className="text-xs text-slate-500 uppercase tracking-wide">Members</div>
                   </div>
                 </div>
 
@@ -100,15 +97,15 @@ export default function About() {
           <div className="grid md:grid-cols-3 gap-8 text-center">
             <div>
               <div className="text-4xl md:text-5xl font-bold mb-2">5+</div>
-              <div className="text-blue-200">Năm kinh nghiệm</div>
+              <div className="text-blue-200">{t('about.achievements.experience')}</div>
             </div>
             <div>
               <div className="text-4xl md:text-5xl font-bold mb-2">100%</div>
-              <div className="text-blue-200">Khách hàng hài lòng</div>
+              <div className="text-blue-200">{t('about.achievements.satisfaction')}</div>
             </div>
             <div>
               <div className="text-4xl md:text-5xl font-bold mb-2">24/7</div>
-              <div className="text-blue-200">Hỗ trợ khách hàng</div>
+              <div className="text-blue-200">{t('about.achievements.support')}</div>
             </div>
           </div>
         </div>

@@ -1,0 +1,191 @@
+{
+    "meta": {
+        "title": "AICoreSolutions - Your AI Partner for Sustainable Growth",
+        "description": "Specialized in providing AI website design solutions, modern and optimized user experience."
+    },
+    "nav": {
+        "home": "Home",
+        "services": "Services",
+        "caseStudies": "Case Studies",
+        "insights": "Insights",
+        "about": "About Us",
+        "companyName": "AI Core Solutions",
+        "tagline": "AI-Powered Development"
+    },
+    "hero": {
+        "badge": "AI-Powered Development & Solutions",
+        "title": "AI Core Solutions",
+        "subtitle": "Driving Growth Through AI-Powered Development & Solutions",
+        "subtitleHighlight": "",
+        "stats": {
+            "projects": "Completed Projects",
+            "productivity": "Productivity Boost with AI",
+            "industries": "Diverse Industries"
+        }
+    },
+    "timeline": {
+        "title": "Elite Team | Scalable Impact | Leading-Edge Technology",
+        "description": "By deeply integrating AI into our operational and production workflows, we deliver the execution power of a 30-plus person agency. From strategic consulting and conceptualization to product development and AI optimization, we are committed to delivering exceptional results with unmatched speed and absolute precision.",
+        "events": {
+            "period1": {
+                "title": "Born from Passion",
+                "description": "Two AI software engineers, fueled by a deep passion for technology, founded AI Core Solutions. With a vision to bring cutting-edge AI solutions to Vietnamese businesses.",
+                "milestone": "First Project: An e-commerce website integrated with AI recommendation systems."
+            },
+            "period2": {
+                "title": "Team Expansion",
+                "description": "Our early successes enabled us to grow the team by adding three key members: a Solution Architect, a Frontend Developer, and a UI/UX Designer.",
+                "milestone": "Complete eight big projects following this expansion."
+            },
+            "period3": {
+                "title": "The AI Pivot",
+                "description": "Since 2023, with the advent of GPT, we've recognized that AI is no longer merely about core integration—it's poised to be a true game-changer. We've delved into research and seamlessly applied AI throughout our development processes to significantly boost productivity.",
+                "milestone": "Achieved milestone of 50+ successful projects"
+            },
+            "period4": {
+                "title": "Pioneering Innovation",
+                "description": "We continue to expand and innovate relentlessly, diving deep into research and integrating the latest AI technologies—such as GPT, Computer Vision, and AutoML—directly into our clients' products for transformative results.",
+                "milestone": "Reached 100+ projects, top 10 AI Solutions company"
+            }
+        }
+    },
+    "about": {
+        "badge": "About Us",
+        "title": "Professional Team",
+        "description": "A team of passionate technology and AI experts, fully committed to turning your ideas into reality. We blend deep expertise with Agile methodologies and AI-assisted development to deliver the most optimized, high-impact solutions.",
+        "roles": {
+            "businessConsultant": {
+                "title": "Business Consultant",
+                "description": "Strategic consulting and optimal business solutions"
+            },
+            "productDesign": {
+                "title": "Product Design",
+                "description": "UI/UX designers create optimal user experiences"
+            },
+            "solutionArchitect": {
+                "title": "Solution Architect",
+                "description": "Designing scalable and secure system architectures"
+            },
+            "developer": {
+                "title": "Developer",
+                "description": "Full-stack developers build high-quality products"
+            },
+            "qa": {
+                "title": "Quality Assurance",
+                "description": "Testers ensure quality and performance"
+            },
+            "aiEngineer": {
+                "title": "AI/ML Engineer",
+                "description": "AI specialists integrate machine learning into products"
+            }
+        },
+        "achievements": {
+            "experience": "Years of Experience",
+            "satisfaction": "Customer Satisfaction",
+            "support": "Customer Support"
+        }
+    },
+    "clients": {
+        "badge": "Our Partners",
+        "title": "Featured Clients",
+        "description": "Trusted by leading businesses across various industries",
+        "list": {
+            "anabas": "Most famous specialty restaurant in Hoi An Ancient Town, top TripAdvisor reviews.",
+            "tiemhoa": "Leading fresh flower shop in Da Nang, fast delivery, highest positive ratings.",
+            "lux": "Vietnam's top reputable distributor of premium real estate.",
+            "tanNhatSuong": "Quality resort hotel, ideal stopover in Hoi An/Da Nang.",
+            "chau": "Best restaurant in Hoi An Ancient Town, loved by tourists for Asian-European fusion.",
+            "icc": "Top Japan study abroad center, highest visa success rate.",
+            "hankang": "Leading Korea study abroad consultant in Da Nang, successful scholarships.",
+            "superfit": "Hoi An's top modern gym, highly rated by tourists and expats."
+        },
+        "names": {
+            "anabas": "Anabas Restaurant",
+            "tiemhoa": "Tiệm Hoa 1989",
+            "lux": "Lux Holdings",
+            "tanNhatSuong": "Tan Nhat Suong Hotel",
+            "chau": "Châu Kitchen & Bar",
+            "icc": "Study Abroad ICC",
+            "hankang": "Study Abroad Hankang",
+            "superfit": "Superfit Hoi An"
+        }
+    },
+    "testimonials": {
+        "badge": "Customer Reviews",
+        "title": "What Customers Say About Us",
+        "description": "Customer satisfaction is the measure of our success",
+        "at": "at",
+        "list": {
+            "lan": {
+                "name": "Phạm Thị Lan",
+                "position": "Operations Manager",
+                "company": "Devia Steel",
+                "content": "The smart manufacturing management system has improved our operational efficiency by 35%. The support team is very enthusiastic and highly responsive."
+            },
+            "tuan": {
+                "name": "Nguyễn Minh Tuấn",
+                "position": "CEO",
+                "company": "Lux Holdings",
+                "content": "AI Core Solution has helped us build an intelligent real estate management platform powered by AI. They not only have a deep understanding of technology but also a profound grasp of our business."
+            },
+            "huong": {
+                "name": "Trần Thu Hương",
+                "position": "Marketing Director",
+                "company": "Vacera",
+                "content": "The AI Core Solution team is very professional and dedicated. Our website and CRM system have been AI-optimized, helping to increase the conversion rate by 40%."
+            },
+            "anh": {
+                "name": "Võ Đức Anh",
+                "position": "CTO",
+                "company": "Koti Charge",
+                "content": "Great partnership! They’re not only excellent at coding but also provide valuable insights on UX and business strategy. The solution architecture is highly scalable."
+            },
+            "chau": {
+                "name": "Đặng Minh Châu",
+                "position": "General Director",
+                "company": "Đại Thành Pharma",
+                "content": "The AI-integrated e-commerce recommendation solution has doubled our online sales. This is the most reliable technology partner we have ever worked with."
+            },
+            "nam": {
+                "name": "Lê Hoàng Nam",
+                "position": "Founder",
+                "company": "AI Wolf",
+                "content": "From idea to complete product in just 3 months. They applied AI to the development process, significantly saving time and costs."
+            }
+        }
+    },
+    "footer": {
+        "description": "Your trusted tech partner, expert in building AI-powered software solutions. We empower your business with efficient and sustainable digital transformation.",
+        "services": {
+            "title": "Services",
+            "aiDevelopment": "AI Development",
+            "webDevelopment": "Web Development",
+            "mobileApps": "Mobile Apps",
+            "cloudSolutions": "Cloud Solutions",
+            "consulting": "Consulting"
+        },
+        "contact": {
+            "title": "Contact",
+            "email": "contact@aicoresolution.vn",
+            "phone": "+84 123 456 789",
+            "address": "Da Nang, Vietnam"
+        },
+        "copyright": "© 2025 AI Core Solutions. All rights reserved.",
+        "privacyPolicy": "Privacy Policy",
+        "termsOfService": "Terms of Service"
+    },
+    "pages": {
+        "services": {
+            "title": "Our Services",
+            "description": "We provide comprehensive technology solutions powered by AI"
+        },
+        "insights": {
+            "title": "Expertise & Experience",
+            "description": "Our development journey and achievements"
+        },
+        "about": {
+            "title": "About Us",
+            "description": "Passionate AI & Software Development experts"
+        }
+    }
+}

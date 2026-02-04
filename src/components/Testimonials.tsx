@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { testimonials } from '../data/testimonialsData';
 
 export default function Testimonials() {
+  const { t } = useTranslation();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const next = () => {
@@ -26,15 +28,15 @@ export default function Testimonials() {
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 bg-blue-500/20 backdrop-blur-sm border border-blue-400/30 rounded-full px-5 py-2 mb-4">
             <Quote className="w-4 h-4 text-blue-300" />
-            <span className="text-sm font-semibold text-blue-100">Đánh Giá Từ Khách Hàng</span>
+            <span className="text-sm font-semibold text-blue-100">{t('testimonials.badge')}</span>
           </div>
 
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Khách Hàng Nói Gì Về Chúng Tôi
+            {t('testimonials.title')}
           </h2>
 
           <p className="text-lg text-blue-100 max-w-2xl mx-auto">
-            Sự hài lòng của khách hàng là thước đo thành công của chúng tôi
+            {t('testimonials.description')}
           </p>
         </div>
 
@@ -59,15 +61,15 @@ export default function Testimonials() {
                 <Quote className="w-8 h-8 text-blue-300 mb-4 mx-auto md:mx-0 opacity-50" />
 
                 <p className="text-lg md:text-xl leading-relaxed mb-6 text-blue-50">
-                  {testimonials[currentIndex].content}
+                  {t(testimonials[currentIndex].content)}
                 </p>
 
                 <div>
                   <div className="font-bold text-xl text-white">
-                    {testimonials[currentIndex].name}
+                    {t(testimonials[currentIndex].name)}
                   </div>
                   <div className="text-blue-200">
-                    {testimonials[currentIndex].position} tại {testimonials[currentIndex].company}
+                    {t(testimonials[currentIndex].position)} {t('testimonials.at')} {t(testimonials[currentIndex].company)}
                   </div>
                 </div>
               </div>
@@ -94,9 +96,8 @@ export default function Testimonials() {
             <button
               key={index}
               onClick={() => setCurrentIndex(index)}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                index === currentIndex ? 'w-8 bg-white' : 'w-2 bg-white/30 hover:bg-white/50'
-              }`}
+              className={`h-2 rounded-full transition-all duration-300 ${index === currentIndex ? 'w-8 bg-white' : 'w-2 bg-white/30 hover:bg-white/50'
+                }`}
             />
           ))}
         </div>

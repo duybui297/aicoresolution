@@ -1,58 +1,64 @@
 import { Testimonial } from '../types';
+import TuanAvatar from '../assets/Nguyen Minh Tuan.png';
+import HuongAvatar from '../assets/Tran Thu Huong.png';
+import NamAvatar from '../assets/Le Hoang Nam.png';
+import LanAvatar from '../assets/Pham Thi Lan.png';
+import AnhAvatar from '../assets/Vo Duc Anh.png';
+import ChauAvatar from '../assets/Dang Minh Chau.png';
 
 export const testimonials: Testimonial[] = [
   {
     id: 1,
-    name: 'Nguyễn Minh Tuấn',
-    position: 'CEO',
-    company: 'Lux Holdings',
-    content: 'AI Core Solution đã giúp chúng tôi xây dựng nền tảng quản lý bất động sản thông minh với AI. Họ không chỉ hiểu rõ công nghệ mà còn hiểu sâu về business của chúng tôi.',
+    name: 'testimonials.list.tuan.name',
+    position: 'testimonials.list.tuan.position',
+    company: 'testimonials.list.tuan.company',
+    content: 'testimonials.list.tuan.content',
     rating: 5,
-    avatar: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=200'
+    avatar: TuanAvatar
   },
   {
     id: 2,
-    name: 'Trần Thu Hương',
-    position: 'Marketing Director',
-    company: 'Vacera',
-    content: 'Team AI Core Solution rất chuyên nghiệp và tận tâm. Website và hệ thống CRM của chúng tôi được tối ưu hoá AI giúp tăng 40% conversion rate.',
+    name: 'testimonials.list.huong.name',
+    position: 'testimonials.list.huong.position',
+    company: 'testimonials.list.huong.company',
+    content: 'testimonials.list.huong.content',
     rating: 5,
-    avatar: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=200'
+    avatar: HuongAvatar
   },
   {
     id: 3,
-    name: 'Lê Hoàng Nam',
-    position: 'Founder',
-    company: 'AI Wolf',
-    content: 'Từ ý tưởng đến sản phẩm hoàn chỉnh chỉ trong 3 tháng. Họ áp dụng AI vào quy trình phát triển giúp tiết kiệm thời gian và chi phí đáng kể.',
+    name: 'testimonials.list.nam.name',
+    position: 'testimonials.list.nam.position',
+    company: 'testimonials.list.nam.company',
+    content: 'testimonials.list.nam.content',
     rating: 5,
-    avatar: 'https://images.pexels.com/photos/1222271/pexels-photo-1222271.jpeg?auto=compress&cs=tinysrgb&w=200'
+    avatar: NamAvatar
   },
   {
     id: 4,
-    name: 'Phạm Thị Lan',
-    position: 'Operations Manager',
-    company: 'Devia Steel',
-    content: 'Hệ thống quản lý sản xuất thông minh đã cải thiện hiệu suất vận hành của chúng tôi lên 35%. Đội ngũ support rất nhiệt tình và responsive.',
+    name: 'testimonials.list.lan.name',
+    position: 'testimonials.list.lan.position',
+    company: 'testimonials.list.lan.company',
+    content: 'testimonials.list.lan.content',
     rating: 5,
-    avatar: 'https://images.pexels.com/photos/1181690/pexels-photo-1181690.jpeg?auto=compress&cs=tinysrgb&w=200'
+    avatar: LanAvatar
   },
   {
     id: 5,
-    name: 'Võ Đức Anh',
-    position: 'CTO',
-    company: 'Koti Charge',
-    content: 'Partnership tuyệt vời! Họ không chỉ code giỏi mà còn đưa ra nhiều insights về UX và business strategy. Solution architecture rất scalable.',
+    name: 'testimonials.list.anh.name',
+    position: 'testimonials.list.anh.position',
+    company: 'testimonials.list.anh.company',
+    content: 'testimonials.list.anh.content',
     rating: 5,
-    avatar: 'https://images.pexels.com/photos/1516680/pexels-photo-1516680.jpeg?auto=compress&cs=tinysrgb&w=200'
+    avatar: AnhAvatar
   },
   {
     id: 6,
-    name: 'Đặng Minh Châu',
-    position: 'General Director',
-    company: 'Đại Thành Pharma',
-    content: 'Giải pháp e-commerce tích hợp AI recommendation đã tăng doanh số online của chúng tôi gấp đôi. Đây là đối tác công nghệ đáng tin cậy nhất mà chúng tôi từng làm việc.',
+    name: 'testimonials.list.chau.name',
+    position: 'testimonials.list.chau.position',
+    company: 'testimonials.list.chau.company',
+    content: 'testimonials.list.chau.content',
     rating: 5,
-    avatar: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=200'
+    avatar: ChauAvatar
   }
 ];

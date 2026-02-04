@@ -1,0 +1,191 @@
+{
+    "meta": {
+        "title": "AICoreSolutions - Đối tác AI Cho Sự Tăng trưởng Bền vững",
+        "description": "Chuyên cung cấp giải pháp thiết kế website AI, hiện đại và tối ưu hóa trải nghiệm người dùng."
+    },
+    "nav": {
+        "home": "Trang chủ",
+        "services": "Dịch vụ",
+        "caseStudies": "Tiêu biểu",
+        "insights": "Chuyên môn",
+        "about": "Về chúng tôi",
+        "companyName": "AI Core Solutions",
+        "tagline": "AI-Powered Development"
+    },
+    "hero": {
+        "badge": "AI-Powered Development & Solutions",
+        "title": "AI Core Solutions",
+        "subtitle": "Thúc đẩy Tăng trưởng Thông qua Phát triển & Giải pháp Dựa trên AI",
+        "subtitleHighlight": "",
+        "stats": {
+            "projects": "Dự án hoàn thành",
+            "productivity": "Tăng năng suất với AI",
+            "industries": "Ngành nghề đa dạng"
+        }
+    },
+    "timeline": {
+        "title": "Đội ngũ tinh nhuệ - Quy mô vượt trội - Công nghệ dẫn đầu",
+        "description": "Bằng cách tích hợp AI sâu rộng vào quy trình vận hành & sản xuất, chúng tôi sở hữu năng lực thực thi tương đương một đơn vị sản xuất trên dưới 30 người. Từ việc tư vấn, lên ý tưởng, phát triển sản phẩm đến tối ưu hóa và tích hợp các giải pháp AI, chúng tôi cam kết mang lại hiệu quả vượt mong đợi với tốc độ và độ chính xác tuyệt đối.",
+        "events": {
+            "period1": {
+                "title": "Khởi Đầu Từ Đam Mê",
+                "description": "Hai kỹ sư phần mềm AI với niềm đam mê nghệ quyết định thành lập AI Core Solution. Với tầm nhìn mang giải pháp AI đến với các doanh nghiệp Việt Nam.",
+                "milestone": "Dự án đầu tiên: Website thương mại điện tử tích hợp AI recommendation"
+            },
+            "period2": {
+                "title": "Mở Rộng Đội Ngũ",
+                "description": "Thành công ban đầu giúp chúng tôi mở rộng đội ngũ với 3 thành viên mới bao gồm Solution Architect, Frontend Developer và UI/UX Designer. Hoàn thành 8 dự án lớn sau đó.",
+                "milestone": "Hoàn thành 8 dự án và đạt giải \"Startup Công Nghệ Triển Vọng\""
+            },
+            "period3": {
+                "title": "Bước Ngoặt AI",
+                "description": "Từ năm 2023, với sự ra đời của GPT, chúng tôi nhận ra rằng AI không còn chỉ là câu chuyện tích hợp lõi nữa—nó sẽ trở thành yếu tố thay đổi cuộc chơi thực sự. Chúng tôi đã nghiên cứu sâu và áp dụng AI một cách liền mạch vào toàn bộ quy trình phát triển để nâng cao đáng kể năng suất.",
+                "milestone": "Đạt cột mốc 50+ dự án thành công"
+            },
+            "period4": {
+                "title": "Dẫn Dắt Đổi Mới",
+                "description": "Chúng tôi tiếp tục mở rộng và đổi mới không ngừng, nghiên cứu sâu sắc và tích hợp các công nghệ AI tiên tiến nhất—như GPT, Computer Vision, và AutoML—vào thẳng sản phẩm của khách hàng để mang lại sự chuyển đổi đột phá.",
+                "milestone": "Đạt 100+ dự án, top 10 công ty AI Solutions"
+            }
+        }
+    },
+    "about": {
+        "badge": "Về Chúng Tôi",
+        "title": "Đội Ngũ Chuyên Nghiệp",
+        "description": "Các chuyên gia với đam mê công nghệ và AI, sẵn sàng biến ý tưởng của bạn thành hiện thực. Chúng tôi kết hợp chuyên môn sâu với quy trình Agile và AI-assisted development để mang lại giải pháp tối ưu nhất.",
+        "roles": {
+            "businessConsultant": {
+                "title": "Business Consultant",
+                "description": "Tư vấn chiến lược và giải pháp kinh doanh tối ưu"
+            },
+            "productDesign": {
+                "title": "Product Design",
+                "description": "UI/UX designers tạo trải nghiệm người dùng tối ưu"
+            },
+            "solutionArchitect": {
+                "title": "Solution Architect",
+                "description": "Thiết kế kiến trúc hệ thống scalable và bảo mật"
+            },
+            "developer": {
+                "title": "Developer",
+                "description": "Full-stack developers xây dựng sản phẩm chất lượng cao"
+            },
+            "qa": {
+                "title": "Quality Assurance",
+                "description": "Testers đảm bảo chất lượng và hiệu năng"
+            },
+            "aiEngineer": {
+                "title": "AI/ML Engineer",
+                "description": "Chuyên gia AI tích hợp machine learning vào sản phẩm"
+            }
+        },
+        "achievements": {
+            "experience": "Năm kinh nghiệm",
+            "satisfaction": "Khách hàng hài lòng",
+            "support": "Hỗ trợ khách hàng"
+        }
+    },
+    "clients": {
+        "badge": "Đối Tác Của Chúng Tôi",
+        "title": "Khách Hàng Tiêu Biểu",
+        "description": "Được tin tưởng bởi các doanh nghiệp hàng đầu trong nhiều lĩnh vực khác nhau",
+        "list": {
+            "anabas": "Nhà hàng đặc sản nổi tiếng nhất Phố Cổ Hội An, review cao TripAdvisor.",
+            "tiemhoa": "Shop hoa tươi uy tín hàng đầu Đà Nẵng, giao nhanh, đánh giá tích cực nhất.",
+            "lux": "Đơn vị phân phối bất động sản cao cấp uy tín hàng đầu Việt Nam.",
+            "tanNhatSuong": "Khách sạn nghỉ dưỡng chất lượng, điểm dừng chân lý tưởng Hội An/Đà Nẵng.",
+            "chau": "Nhà hàng ngon nhất Phố Cổ Hội An, fusion Á-Âu được du khách yêu thích.",
+            "icc": "Trung tâm du học Nhật Bản uy tín top đầu, tỷ lệ visa cao nhất.",
+            "hankang": "Đơn vị dẫn đầu tư vấn du học Hàn Quốc tại Đà Nẵng, săn học bổng thành công.",
+            "superfit": "Phòng gym hiện đại hàng đầu Hội An, đánh giá cao từ du khách và expat."
+        },
+        "names": {
+            "anabas": "Anabas Restaurant",
+            "tiemhoa": "Tiệm Hoa 1989",
+            "lux": "Lux Holdings",
+            "tanNhatSuong": "Tân Nhật Sương Hotel",
+            "chau": "Châu Kitchen & Bar",
+            "icc": "Du học ICC",
+            "hankang": "Du học Hankang",
+            "superfit": "Superfit Hội An"
+        }
+    },
+    "testimonials": {
+        "badge": "Đánh Giá Từ Khách Hàng",
+        "title": "Khách Hàng Nói Gì Về Chúng Tôi",
+        "description": "Sự hài lòng của khách hàng là thước đo thành công của chúng tôi",
+        "at": "tại",
+        "list": {
+            "lan": {
+                "name": "Phạm Thị Lan",
+                "position": "Operations Manager",
+                "company": "Devia Steel",
+                "content": "Hệ thống quản lý sản xuất thông minh đã cải thiện hiệu suất vận hành của chúng tôi lên 35%. Đội ngũ support rất nhiệt tình và responsive."
+            },
+            "tuan": {
+                "name": "Nguyễn Minh Tuấn",
+                "position": "CEO",
+                "company": "Lux Holdings",
+                "content": "AI Core Solution đã giúp chúng tôi xây dựng nền tảng quản lý bất động sản thông minh với AI. Họ không chỉ hiểu rõ công nghệ mà còn hiểu sâu về business của chúng tôi."
+            },
+            "huong": {
+                "name": "Trần Thu Hương",
+                "position": "Marketing Director",
+                "company": "Vacera",
+                "content": "Team AI Core Solution rất chuyên nghiệp và tận tâm. Website và hệ thống CRM của chúng tôi được tối ưu hoá AI giúp tăng 40% conversion rate."
+            },
+            "anh": {
+                "name": "Võ Đức Anh",
+                "position": "CTO",
+                "company": "Koti Charge",
+                "content": "Partnership tuyệt vời! Họ không chỉ code giỏi mà còn đưa ra nhiều insights về UX và business strategy. Solution architecture rất scalable."
+            },
+            "chau": {
+                "name": "Đặng Minh Châu",
+                "position": "General Director",
+                "company": "Đại Thành Pharma",
+                "content": "Giải pháp e-commerce tích hợp AI recommendation đã tăng doanh số online của chúng tôi gấp đôi. Đây là đối tác công nghệ đáng tin cậy nhất mà chúng tôi từng làm việc."
+            },
+            "nam": {
+                "name": "Lê Hoàng Nam",
+                "position": "Founder",
+                "company": "AI Wolf",
+                "content": "Từ ý tưởng đến sản phẩm hoàn chỉnh chỉ trong 3 tháng. Họ áp dụng AI vào quy trình phát triển giúp tiết kiệm thời gian và chi phí đáng kể."
+            }
+        }
+    },
+    "footer": {
+        "description": "Đối tác công nghệ đáng tin cậy, chuyên phát triển giải pháp phần mềm với sức mạnh của Trí tuệ Nhân tạo. Chúng tôi giúp doanh nghiệp của bạn chuyển đổi số hiệu quả và bền vững.",
+        "services": {
+            "title": "Dịch Vụ",
+            "aiDevelopment": "AI Development",
+            "webDevelopment": "Web Development",
+            "mobileApps": "Mobile Apps",
+            "cloudSolutions": "Cloud Solutions",
+            "consulting": "Consulting"
+        },
+        "contact": {
+            "title": "Liên Hệ",
+            "email": "contact@aicoresolution.vn",
+            "phone": "+84 123 456 789",
+            "address": "Đà Nẵng, Việt Nam"
+        },
+        "copyright": "© 2025 AI Core Solutions. All rights reserved.",
+        "privacyPolicy": "Privacy Policy",
+        "termsOfService": "Terms of Service"
+    },
+    "pages": {
+        "services": {
+            "title": "Dịch Vụ Của Chúng Tôi",
+            "description": "Chúng tôi cung cấp các giải pháp công nghệ toàn diện với sức mạnh của AI"
+        },
+        "insights": {
+            "title": "Chuyên Môn & Kinh Nghiệm",
+            "description": "Hành trình phát triển và những thành tựu của chúng tôi"
+        },
+        "about": {
+            "title": "Về Chúng Tôi",
+            "description": "Đội ngũ chuyên gia AI & Software Development đầy đam mê"
+        }
+    }
+}
