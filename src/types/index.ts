@@ -22,6 +22,7 @@ export interface CaseStudy {
   industry: string;
   description: string;
   image: string;
+  category: string;
   tags: string[];
 }
 

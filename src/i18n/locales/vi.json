@@ -10,7 +10,33 @@
         "insights": "Chuyên môn",
         "about": "Về chúng tôi",
         "companyName": "AI Core Solutions",
-        "tagline": "AI-Powered Development"
+        "tagline": "AI-Powered Development",
+        "contact": "Liên hệ",
+        "news": "Tin tức"
+    },
+    "news": {
+        "title": "Tin Tức & Sự Kiện",
+        "subtitle": "Cập nhật xu hướng AI mới nhất.",
+        "readMore": "Đọc tiếp",
+        "posts": {
+            "post1": {
+                "title": "AI giảm chi phí vận hành như thế nào trong năm 2026?",
+                "excerpt": "Khám phá các phương pháp mới nhất để tinh gọn bộ máy nhân sự."
+            },
+            "post2": {
+                "title": "Hướng dẫn tích hợp Chatbot cho doanh nghiệp SME",
+                "excerpt": "Các bước đơn giản để tự động hóa chăm sóc khách hàng 24/7."
+            },
+            "post3": {
+                "title": "AI Core Solutions mở rộng đội ngũ lên 40 nhân sự",
+                "excerpt": "Chúng tôi chào đón các tài năng mới để phục vụ khách hàng tốt hơn."
+            }
+        },
+        "categories": {
+            "trends": "AI Trends",
+            "tips": "Tech Tips",
+            "company": "Company News"
+        }
     },
     "hero": {
         "badge": "AI-Powered Development & Solutions",
@@ -186,6 +212,147 @@
         "about": {
             "title": "Về Chúng Tôi",
             "description": "Đội ngũ chuyên gia AI & Software Development đầy đam mê"
+        }
+    },
+    "caseStudiesPage": {
+        "title": "Dự án Tiêu biểu",
+        "description": "Khám phá các dự án thành công mà chúng tôi đã triển khai cho khách hàng trong nhiều lĩnh vực khác nhau",
+        "searchPlaceholder": "Tìm kiếm theo tên, ngành nghề hoặc danh mục...",
+        "showing": "Hiển thị",
+        "projects": "dự án",
+        "noResults": "Không tìm thấy kết quả",
+        "tryAgain": "Thử tìm kiếm với từ khóa khác hoặc chọn ngành nghề khác",
+        "viewWebsite": "Xem website",
+        "all": "Tất cả",
+        "categories": {
+            "tourism": "Du lịch & Dịch vụ Giải trí",
+            "education": "Giáo dục & Tư vấn Chuyên môn",
+            "beauty": "Làm đẹp & Chăm sóc Cá nhân",
+            "sports": "Thể thao, Thời trang & Phong cách Sống",
+            "pets": "Thú cưng & Sản phẩm Tiêu dùng",
+            "construction": "Xây dựng, Vật liệu & Thiết bị Công nghiệp"
+        },
+        "items": {
+            "1": "Hệ thống đặt bàn và quản lý nhà hàng với AI chatbot hỗ trợ khách hàng 24/7",
+            "12": "Restaurant & bar với AI tối ưu hóa menu và quản lý sự kiện",
+            "8": "Quản lý khách sạn với AI định giá động và tối ưu trải nghiệm khách hàng",
+            "23": "Nền tảng đặt vé du lịch với AI lên kế hoạch lịch trình và dự đoán giá",
+            "10": "Nền tảng đặt lịch Spa với AI gợi ý trị liệu viên và sở thích khách hàng",
+            "6": "Hệ thống quản lý phòng Gym với AI lên kế hoạch tập luyện và theo dõi hội viên",
+            "25": "Tư vấn du học với AI gợi ý trường đại học và hỗ trợ hồ sơ",
+            "26": "Tư vấn du học Hàn Quốc với AI đánh giá ngôn ngữ và hướng dẫn visa",
+            "16": "Nền tảng sức khỏe tâm thần với AI hỗ trợ tư vấn và theo dõi tâm trạng",
+            "29": "Nền tảng dịch vụ pháp lý với AI xử lý tài liệu và quản lý hồ sơ",
+            "4": "Nền tảng bất động sản với AI định giá tài sản và phân tích thị trường",
+            "13": "Đặt lịch dịch vụ làm đẹp với AI gợi ý phong cách và mô phỏng trước/sau",
+            "11": "Cửa hàng thực phẩm chức năng với AI tư vấn sức khỏe và gợi ý cá nhân hóa",
+            "30": "Đặt lịch tiệm Nail với AI xem trước mẫu thiết kế và chương trình khách hàng thân thiết",
+            "31": "Thương mại điện tử dược phẩm với AI kiểm tra đơn thuốc và cảnh báo tương tác thuốc",
+            "3": "Shop hoa online với AI tìm kiếm bằng hình ảnh và tối ưu hóa giao hàng",
+            "5": "Nền tảng bán lẻ thể thao với AI gợi ý size và quản lý tồn kho",
+            "18": "Thương mại điện tử thời trang với AI tư vấn phong cách và thử đồ ảo",
+            "2": "Nền tảng thương mại điện tử với AI gợi ý sản phẩm và mô phỏng AR",
+            "20": "Dịch vụ decal xe với công cụ thiết kế AI và mô phỏng trên xe",
+            "21": "Nền tảng sạc xe điện với AI tìm trạm sạc và tối ưu hóa sử dụng",
+            "7": "Nền tảng chăm sóc thú cưng với AI theo dõi sức khỏe và đặt lịch grooming",
+            "32": "Cửa hàng thức ăn thú cưng tự nhiên với AI lên kế hoạch dinh dưỡng",
+            "9": "Cửa hàng Gaming gear với AI xây dựng cấu hình PC và kiểm tra tương thích",
+            "33": "Cửa hàng linh kiện máy tính với AI tối ưu hóa cấu hình build",
+            "17": "Cửa hàng thiết bị điện với AI gợi ý sản phẩm phù hợp và hướng dẫn lắp đặt",
+            "15": "Quản lý sản xuất với AI tối ưu hóa quy trình và kiểm soát chất lượng",
+            "19": "Cửa hàng nội thất gỗ với AI tùy chỉnh thiết kế và ước tính giá",
+            "24": "Gạch & thiết bị vệ sinh với AI thiết kế phòng tắm và gợi ý sản phẩm",
+            "27": "Cửa hàng vật liệu xây dựng với AI phối màu và tính toán số lượng",
+            "28": "Nền tảng dịch vụ xe nâng với AI dự đoán bảo trì và quản lý đội xe"
+        }
+    },
+    "contact": {
+        "title": "Liên Hệ Với Chúng Tôi",
+        "description": "Để lại thông tin, đội ngũ AI Consultant sẽ liên hệ tư vấn giải pháp tối ưu nhất cho doanh nghiệp của bạn trong vòng 24h.",
+        "fullname": "Họ tên",
+        "fullnamePlaceholder": "Nguyễn Văn A",
+        "email": "Email",
+        "phone": "Số điện thoại",
+        "subject": "Nhu cầu tư vấn",
+        "message": "Tin nhắn",
+        "messagePlaceholder": "Mô tả sơ qua về dự án...",
+        "submit": "Gửi Yêu Cầu Tư Vấn",
+        "subjects": {
+            "aiIntegration": "Tích hợp AI vào hệ thống",
+            "webApp": "Triển khai Web/App",
+            "consulting": "Tư vấn chuyển đổi số",
+            "other": "Khác"
+        },
+        "info": {
+            "title": "Thông Tin Liên Hệ",
+            "headquarters": "Trụ sở chính",
+            "address": "123 Đường Nguyễn Văn Linh, Quận Hải Châu, TP. Đà Nẵng, Việt Nam",
+            "hours": "(08:00 - 17:30, Thứ 2 - Thứ 6)"
+        }
+    },
+    "services": {
+        "title": "Gói Dịch Vụ",
+        "description": "Giải pháp linh hoạt phù hợp với mọi quy mô doanh nghiệp.",
+        "popular": "POPULAR",
+        "contact": "Liên hệ ngay",
+        "select": "Chọn gói",
+        "consult": "Tư vấn riêng",
+        "scale": {
+            "small": "Quy mô nhỏ",
+            "medium": "Quy mô vừa",
+            "enterprise": "Enterprise"
+        },
+        "features": {
+            "basic": "Tính năng cơ bản",
+            "fullAI": "Full tính năng AI",
+            "customAI": "Custom AI Models"
+        },
+        "support": {
+            "email": "Support Email",
+            "full": "Support 24/7",
+            "dedicated": "Dedicated Team"
+        },
+        "items": {
+            "ai-integration": {
+                "name": "Tích hợp AI vào hệ thống",
+                "description": "Nâng cấp hệ thống cũ với sức mạnh trí tuệ nhân tạo.",
+                "features": [
+                    "Chatbot CSKH",
+                    "Dự đoán bảo trì",
+                    "Phân tích cảm xúc",
+                    "Phát hiện gian lận"
+                ]
+            },
+            "digital-system": {
+                "name": "Triển khai hệ thống số",
+                "description": "Xây dựng nền tảng số hóa quản lý quy trình doanh nghiệp toàn diện.",
+                "features": [
+                    "Hệ thống ERP",
+                    "Quản lý kho",
+                    "Báo cáo tự động",
+                    "Tích hợp đa kênh"
+                ]
+            },
+            "crm-migration": {
+                "name": "Migrate từ CRM lạc hậu",
+                "description": "Chuyển đổi dữ liệu an toàn từ hệ thống cũ sang nền tảng quản trị hiện đại.",
+                "features": [
+                    "Làm sạch dữ liệu",
+                    "Mapping trường dữ liệu",
+                    "Đào tạo nhân sự",
+                    "Bảo mật tuyệt đối"
+                ]
+            },
+            "digital-consulting": {
+                "name": "Tư vấn chuyển đổi số",
+                "description": "Đánh giá hiện trạng và xây dựng lộ trình chuyển đổi số phù hợp nhất.",
+                "features": [
+                    "Audit quy trình",
+                    "Lập kế hoạch lộ trình",
+                    "Tư vấn công nghệ",
+                    "Giám sát triển khai"
+                ]
+            }
         }
     }
 }

@@ -4,8 +4,8 @@ import { useTranslation } from 'react-i18next';
 import LanguageSwitcher from './LanguageSwitcher';
 
 interface NavigationProps {
-  activeTab: 'home' | 'services' | 'case-studies' | 'insights' | 'about';
-  onTabChange: (tab: 'home' | 'services' | 'case-studies' | 'insights' | 'about') => void;
+  activeTab: 'home' | 'services' | 'case-studies' | 'news' | 'contact';
+  onTabChange: (tab: 'home' | 'services' | 'case-studies' | 'news' | 'contact') => void;
 }
 
 export default function Navigation({ activeTab, onTabChange }: NavigationProps) {
@@ -16,8 +16,8 @@ export default function Navigation({ activeTab, onTabChange }: NavigationProps) 
     { id: 'home' as const, label: t('nav.home') },
     { id: 'services' as const, label: t('nav.services') },
     { id: 'case-studies' as const, label: t('nav.caseStudies') },
-    { id: 'insights' as const, label: t('nav.insights') },
-    { id: 'about' as const, label: t('nav.about') }
+    { id: 'news' as const, label: t('nav.news') },
+    { id: 'contact' as const, label: t('nav.contact') }
   ];
 
   return (

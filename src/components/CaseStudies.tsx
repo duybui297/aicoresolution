@@ -1,18 +1,41 @@
 import { useState } from 'react';
 import { ExternalLink, Tag, Search } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import { caseStudies } from '../data/caseStudiesData';
 
 export default function CaseStudies() {
+  const { t } = useTranslation();
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedIndustry, setSelectedIndustry] = useState('all');
+  const [selectedCategory, setSelectedCategory] = useState('all');
 
-  const industries = ['all', ...new Set(caseStudies.map(cs => cs.industry))];
+  const categories = [
+    'all',
+    'Du lịch & Dịch vụ Giải trí',
+    'Giáo dục & Tư vấn Chuyên môn',
+    'Làm đẹp & Chăm sóc Cá nhân',
+    'Thể thao, Thời trang & Phong cách Sống',
+    'Thú cưng & Sản phẩm Tiêu dùng',
+    'Xây dựng, Vật liệu & Thiết bị Công nghiệp'
+  ];
+
+  const categoryTranslationKey: Record<string, string> = {
+    'all': 'caseStudiesPage.all',
+    'Du lịch & Dịch vụ Giải trí': 'caseStudiesPage.categories.tourism',
+    'Giáo dục & Tư vấn Chuyên môn': 'caseStudiesPage.categories.education',
+    'Làm đẹp & Chăm sóc Cá nhân': 'caseStudiesPage.categories.beauty',
+    'Thể thao, Thời trang & Phong cách Sống': 'caseStudiesPage.categories.sports',
+    'Thú cưng & Sản phẩm Tiêu dùng': 'caseStudiesPage.categories.pets',
+    'Xây dựng, Vật liệu & Thiết bị Công nghiệp': 'caseStudiesPage.categories.construction'
+  };
 
   const filteredCases = caseStudies.filter(cs => {
+    const translatedCategory = t(categoryTranslationKey[cs.category]);
     const matchesSearch = cs.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         cs.industry.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesIndustry = selectedIndustry === 'all' || cs.industry === selectedIndustry;
-    return matchesSearch && matchesIndustry;
+      cs.industry.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      cs.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      translatedCategory.toLowerCase().includes(searchTerm.toLowerCase());
+    const matchesCategory = selectedCategory === 'all' || cs.category === selectedCategory;
+    return matchesSearch && matchesCategory;
   });
 
   return (
@@ -20,11 +43,10 @@ export default function CaseStudies() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-6xl font-bold text-slate-900 mb-4">
-            Case Studies
+            {t('caseStudiesPage.title')}
           </h1>
           <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-            Khám phá các dự án thành công mà chúng tôi đã triển khai cho khách hàng
-            trong nhiều lĩnh vực khác nhau
+            {t('caseStudiesPage.description')}
           </p>
         </div>
 
@@ -33,7 +55,7 @@ export default function CaseStudies() {
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
             <input
               type="text"
-              placeholder="Tìm kiếm theo tên hoặc ngành nghề..."
+              placeholder={t('caseStudiesPage.searchPlaceholder')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-12 pr-4 py-4 rounded-2xl border-2 border-slate-200 focus:border-blue-500 focus:outline-none text-slate-900 bg-white shadow-sm"
@@ -41,24 +63,23 @@ export default function CaseStudies() {
           </div>
 
           <div className="flex flex-wrap justify-center gap-2">
-            {industries.map((industry) => (
+            {categories.map((category) => (
               <button
-                key={industry}
-                onClick={() => setSelectedIndustry(industry)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                  selectedIndustry === industry
-                    ? 'bg-blue-600 text-white shadow-lg scale-105'
-                    : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'
-                }`}
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${selectedCategory === category
+                  ? 'bg-blue-600 text-white shadow-lg scale-105'
+                  : 'bg-white text-slate-700 hover:bg-slate-100 border border-slate-200'
+                  }`}
               >
-                {industry === 'all' ? 'Tất cả' : industry}
+                {t(categoryTranslationKey[category])}
               </button>
             ))}
           </div>
         </div>
 
         <div className="mb-6 text-center text-slate-600">
-          Hiển thị <span className="font-bold text-slate-900">{filteredCases.length}</span> dự án
+          {t('caseStudiesPage.showing')} <span className="font-bold text-slate-900">{filteredCases.length}</span> {t('caseStudiesPage.projects')}
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -92,11 +113,11 @@ export default function CaseStudies() {
                 </div>
 
                 <div className="inline-block bg-blue-50 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full mb-3">
-                  {study.industry}
+                  {t(categoryTranslationKey[study.category])}
                 </div>
 
                 <p className="text-slate-600 text-sm leading-relaxed mb-4">
-                  {study.description}
+                  {t(`caseStudiesPage.items.${study.id}`)}
                 </p>
 
                 <div className="flex flex-wrap gap-2">
@@ -119,7 +140,7 @@ export default function CaseStudies() {
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-2 w-full bg-slate-900 text-white py-3 rounded-xl font-semibold hover:bg-blue-600 transition-all duration-300 group-hover:shadow-lg"
                 >
-                  <span>Xem website</span>
+                  <span>{t('caseStudiesPage.viewWebsite')}</span>
                   <ExternalLink className="w-4 h-4" />
                 </a>
               </div>
@@ -131,10 +152,10 @@ export default function CaseStudies() {
           <div className="text-center py-16">
             <div className="text-slate-400 text-6xl mb-4">🔍</div>
             <h3 className="text-2xl font-bold text-slate-900 mb-2">
-              Không tìm thấy kết quả
+              {t('caseStudiesPage.noResults')}
             </h3>
             <p className="text-slate-600">
-              Thử tìm kiếm với từ khóa khác hoặc chọn ngành nghề khác
+              {t('caseStudiesPage.tryAgain')}
             </p>
           </div>
         )}

@@ -5,7 +5,7 @@ import LuxLogo from '../assets/lux.jpg';
 import TanNhatSuongLogo from '../assets/tan nhat suong.jpg';
 import ChauLogo from '../assets/chau kitchen & bar.jpg';
 import ICCLogo from '../assets/Du hoc ICC.png';
-import HankangLogo from '../assets/Du học Hangkang.jpg';
+import HankangLogo from '../assets/Du hoc Hangkang.jpg';
 import SuperfitLogo from '../assets/Superfit.jpg';
 
 export const notableClients: Client[] = [
