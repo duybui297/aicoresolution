@@ -18,18 +18,23 @@
         "title": "Tin Tức & Sự Kiện",
         "subtitle": "Cập nhật xu hướng AI mới nhất.",
         "readMore": "Đọc tiếp",
+        "notFound": "Không tìm thấy bài viết",
+        "backToNews": "Quay lại Tin tức",
         "posts": {
             "post1": {
-                "title": "AI giảm chi phí vận hành như thế nào trong năm 2026?",
-                "excerpt": "Khám phá các phương pháp mới nhất để tinh gọn bộ máy nhân sự."
+                "title": "OpenClaw và khoảnh khắc AI vượt qua ranh giới kiểm soát",
+                "excerpt": "Liệu chúng ta đã thực sự sẵn sàng để AI không còn là kẻ quan sát, mà trở thành người hành động ngay trong hệ thống của chính mình?",
+                "content": "Đến nay, trí tuệ nhân tạo không còn là khái niệm xa vời, mà len lỏi vào từng ngóc ngách cuộc sống. Và rồi, OpenClaw xuất hiện, khiến tôi phải dừng lại mà suy ngẫm: Liệu chúng ta đã thực sự sẵn sàng để AI không còn là kẻ quan sát, mà trở thành người hành động ngay trong hệ thống của chính mình?\n\nHồi xưa, AI mang lại cảm giác an toàn. Nó trả lời câu hỏi, gợi ý ý tưởng, thậm chí viết lách thay ta, nhưng luôn ở đằng sau một bức tường vô hình. Quyền kiểm soát vẫn thuộc về con người, không lay chuyển. Thế nhưng, khi những AI agent như thế này bắt đầu mở trình duyệt, đọc file, gửi tin nhắn, và thao tác trực tiếp trên máy tính, mọi thứ thay đổi. Không còn là chuyện AI thông minh đến đâu nữa, mà là ta có dám giao phó hay không. OpenClaw chính là minh chứng sống động cho ranh giới mong manh ấy.\n\nTôi khuyên bạn, đừng vội trao quyền quá sớm, dù sự háo hức có lớn đến đâu. Điều làm OpenClaw khác biệt không phải ở khả năng trò chuyện hay mô hình AI đằng sau, mà ở việc nó được xây dựng để tiếp cận toàn bộ hệ thống mà không có lớp bảo vệ nào. Không sandbox, không rào chắn cứng nhắc. Nếu bạn cho phép, nó sẽ hành động như chính bạn – và đó là một bước nhảy vọt đầy rủi ro.\n\nTừ kinh nghiệm của tôi, khi làm việc với bất kỳ \"tác nhân\" mới nào, dù người hay máy, điều quan trọng nhất không phải tốc độ hay hiệu quả ban đầu, mà là sự thấu hiểu. Bạn cần nắm được cách nó diễn giải lệnh, phản ứng với những khoảng trống ngữ cảnh, và nhất là, nó thất bại theo kiểu gì. Trao full quyền cho AI trước khi nắm rõ những điều đó, chẳng khác nào thả một nhân viên mới vào môi trường sản xuất ngay ngày đầu. Rủi ro không xuất phát từ ý đồ xấu, mà từ sự non nớt trong thiết kế và kỳ vọng của chính chúng ta.\n\n{{IMAGE_0}}\n\nKhả năng thực hiện nhiệm vụ không phải lúc nào cũng đi đôi với độ tin cậy. Trong những lần thử nghiệm thực tế với OpenClaw, tôi thấy nó làm được nhiều việc: mở trình duyệt, kiểm tra liên kết hỏng, thao tác giao diện, thậm chí tương tác qua Telegram. Với các tác vụ đơn giản, lặp lại, ấn tượng ban đầu thật sự mạnh mẽ. Nhưng sau một thời gian gắn bó, sự thật dần lộ rõ: Nó vẫn cần được dẫn dắt từng bước, hiếm khi chủ động thực sự, và thường dừng ở mức \"biết cách làm\" chứ chưa đạt đến \"biết khi nào nên làm\".\n\nĐiều này không phải thất bại, mà là lời nhắc nhở rằng AI agent ngày nay vẫn giống như một thực tập sinh đầy quyền lực hơn là một đồng nghiệp độc lập. Nếu bạn kỳ vọng cao hơn thế, thất vọng sẽ là điều không tránh khỏi. Tôi đã thấy điều tương tự ở nhiều công cụ trước đây – chúng hứa hẹn thay đổi, nhưng cuối cùng vẫn cần bàn tay con người để định hướng.\n\n{{IMAGE_1}}\n\nBảo mật, với tôi, không phải là một tính năng tùy chọn, mà là trách nhiệm cốt lõi. OpenClaw khá thẳng thắn khi tự nhận mình \"risky\", cảnh báo rõ ràng về việc cấp quyền và khuyên người dùng phải am hiểu an ninh. Đó là sự trung thực đáng quý, nhưng cũng đồng nghĩa với việc đẩy hết gánh nặng sang vai chúng ta. Khi AI có thể chạm vào trình duyệt, tài khoản, file và các kênh liên lạc, ranh giới giữa một lỗi nhỏ và thảm họa lớn chỉ cách nhau một sợi chỉ. Trong bối cảnh ấy, cách tiếp cận khôn ngoan không nằm ở việc viết lệnh hoàn hảo, mà ở sự cách ly nghiêm ngặt: máy riêng, tài khoản riêng, dữ liệu không nhạy cảm. Không có cách ly, sự tự chủ của AI không còn là sáng tạo nữa, mà trở thành một ván cược đầy may rủi.\n\nCuối cùng, thực thi không bao giờ thay thế được tư duy. OpenClaw giỏi ở vai trò công cụ hành động, nhưng nó không thể đảm đương việc lập chiến lược, ưu tiên, hay phán đoán trong những tình huống mơ hồ. Hầu hết công việc thực tế không khó vì thao tác, mà khó vì ngữ cảnh phức tạp. Cho đến khi AI học được cách \"không nên làm gì\" tốt như \"nên làm gì\", con người vẫn phải giữ vai trò dẫn dắt – không chỉ giám sát, mà còn định hình.\n\n{{IMAGE_2}}\n\nOpenClaw không phải thất bại, cũng chưa phải đỉnh cao của tương lai AI agent. Nó là một lát cắt chân thực về giai đoạn chuyển tiếp chúng ta đang trải qua: từ AI thụ động sang AI có quyền hành động. Giá trị thực sự của nó nằm ở những câu hỏi nó khơi dậy: Chúng ta sẵn sàng giao quyền cho AI đến mức nào, và với những điều kiện gì? Đó không chỉ là vấn đề kỹ thuật. Đó là về trách nhiệm – trách nhiệm của chúng ta với chính mình và với thế giới mà chúng ta đang xây dựng."
             },
             "post2": {
                 "title": "Hướng dẫn tích hợp Chatbot cho doanh nghiệp SME",
-                "excerpt": "Các bước đơn giản để tự động hóa chăm sóc khách hàng 24/7."
+                "excerpt": "Các bước đơn giản để tự động hóa chăm sóc khách hàng 24/7.",
+                "content": "Nội dung bài viết đang được cập nhật..."
             },
             "post3": {
                 "title": "AI Core Solutions mở rộng đội ngũ lên 40 nhân sự",
-                "excerpt": "Chúng tôi chào đón các tài năng mới để phục vụ khách hàng tốt hơn."
+                "excerpt": "Chúng tôi chào đón các tài năng mới để phục vụ khách hàng tốt hơn.",
+                "content": "Nội dung bài viết đang được cập nhật..."
             }
         },
         "categories": {
@@ -293,14 +298,52 @@
     "services": {
         "title": "Gói Dịch Vụ",
         "description": "Giải pháp linh hoạt phù hợp với mọi quy mô doanh nghiệp.",
-        "popular": "POPULAR",
+        "popular": "GÓI HOT NHẤT",
         "contact": "Liên hệ ngay",
         "select": "Chọn gói",
         "consult": "Tư vấn riêng",
         "scale": {
-            "small": "Quy mô nhỏ",
+            "small": "Quy mô nhỏ, khởi đầu nhanh",
             "medium": "Quy mô vừa",
             "enterprise": "Enterprise"
+        },
+        "tierTitles": {
+            "basic": "Basic - Quy mô nhỏ, khởi đầu nhanh",
+            "standard": "Standard – Quy mô vừa, full replacement",
+            "premium": "Premium – Enterprise, tùy chỉnh sâu"
+        },
+        "tiers": {
+            "basic": [
+                "Tích hợp AI cơ bản vào hệ thống hiện có (website, app, CRM đơn giản).",
+                "Chatbot CSKH rule-based + AI đơn giản (FAQ tự động, hỗ trợ 24/7 trên 1-2 kênh: website + Zalo/Messenger).",
+                "Phân tích cảm xúc cơ bản trên feedback/chat.",
+                "Training dữ liệu ban đầu với dữ liệu khách cung cấp.",
+                "Support email/ticket + training đội ngũ.",
+                "Bảo trì 6-12 tháng đầu.",
+                "Không predictive/deep features, dùng API sẵn (FPT/Viettel/OpenAI)."
+            ],
+            "standard": [
+                "Full tích hợp AI vào hệ thống cũ (CRM lạc hậu, database, ERP nhẹ).",
+                "Chatbot CSKH nâng cao (NLP tiếng Việt tốt, multi-turn, tích hợp voice nếu cần).",
+                "Dự đoán bảo trì cơ bản (predictive maintenance trên dữ liệu lịch sử).",
+                "Phân tích cảm xúc chi tiết + phát hiện gian lận cơ bản (anomaly detection trên giao dịch).",
+                "Tích hợp đa kênh (website, Zalo, Facebook, email).",
+                "Fine-tuning models nhẹ với dữ liệu doanh nghiệp.",
+                "Dashboard báo cáo AI insights đơn giản.",
+                "Support 24/7 chat/email, ưu tiên.",
+                "Bảo trì 12 tháng + extend option."
+            ],
+            "premium": [
+                "Tích hợp sâu/custom toàn diện (on-premise nếu cần, API-first).",
+                "Custom AI models (fine-tune LLM riêng cho ngành: bán lẻ, tài chính...).",
+                "Full suite nâng cao: Chatbot + predictive bảo trì deep (time-series), phân tích cảm xúc + hành vi khách hàng.",
+                "Phát hiện gian lận real-time phức tạp.",
+                "Integration enterprise (ERP phức tạp, legacy systems, IoT).",
+                "Dedicated team/account manager, on-site nếu yêu cầu.",
+                "Bảo mật cao (compliance Việt Nam/PDPA).",
+                "Continuous optimization + training models mới.",
+                "Support 24/7 dedicated + SLA cao."
+            ]
         },
         "features": {
             "basic": "Tính năng cơ bản",
@@ -314,44 +357,186 @@
         },
         "items": {
             "ai-integration": {
-                "name": "Tích hợp AI vào hệ thống",
-                "description": "Nâng cấp hệ thống cũ với sức mạnh trí tuệ nhân tạo.",
+                "name": "Giải pháp Tích hợp AI",
+                "description": "Tối ưu vận hành, giảm chi phí",
                 "features": [
-                    "Chatbot CSKH",
+                    "Chatbot hỗ trợ khách hàng",
                     "Dự đoán bảo trì",
                     "Phân tích cảm xúc",
                     "Phát hiện gian lận"
-                ]
+                ],
+                "tiers": {
+                    "basic": "30-60 Tr",
+                    "standard": "60-100 Tr",
+                    "premium": "100-300 Tr"
+                },
+                "tierFeatures": {
+                    "basic": [
+                        "Tích hợp AI cơ bản vào hệ thống hiện có (website, app, CRM đơn giản).",
+                        "Chatbot CSKH rule-based + AI đơn giản (FAQ tự động, hỗ trợ 24/7 trên 1-2 kênh: website + Zalo/Messenger).",
+                        "Phân tích cảm xúc cơ bản trên feedback/chat.",
+                        "Training dữ liệu ban đầu với dữ liệu khách cung cấp.",
+                        "Support email/ticket + training đội ngũ.",
+                        "Bảo trì 6-12 tháng đầu.",
+                        "Không predictive/deep features, dùng API sẵn (FPT/Viettel/OpenAI)."
+                    ],
+                    "standard": [
+                        "Full tích hợp AI vào hệ thống cũ (CRM lạc hậu, database, ERP nhẹ).",
+                        "Chatbot CSKH nâng cao (NLP tiếng Việt tốt, multi-turn, tích hợp voice nếu cần).",
+                        "Dự đoán bảo trì cơ bản (predictive maintenance trên dữ liệu lịch sử).",
+                        "Phân tích cảm xúc chi tiết + phát hiện gian lận cơ bản (anomaly detection trên giao dịch).",
+                        "Tích hợp đa kênh (website, Zalo, Facebook, email).",
+                        "Fine-tuning models nhẹ với dữ liệu doanh nghiệp.",
+                        "Dashboard báo cáo AI insights đơn giản.",
+                        "Support 24/7 chat/email, ưu tiên.",
+                        "Bảo trì 12 tháng + extend option."
+                    ],
+                    "premium": [
+                        "Tích hợp sâu/custom toàn diện (on-premise nếu cần, API-first).",
+                        "Custom AI models (fine-tune LLM riêng cho ngành: bán lẻ, tài chính...).",
+                        "Full suite nâng cao: Chatbot + predictive bảo trì deep (time-series), phân tích cảm xúc + hành vi khách hàng.",
+                        "Phát hiện gian lận real-time phức tạp.",
+                        "Integration enterprise (ERP phức tạp, legacy systems, IoT).",
+                        "Dedicated team/account manager, on-site nếu yêu cầu.",
+                        "Bảo mật cao (compliance Việt Nam/PDPA).",
+                        "Continuous optimization + training models mới.",
+                        "Support 24/7 dedicated + SLA cao."
+                    ]
+                }
             },
             "digital-system": {
                 "name": "Triển khai hệ thống số",
-                "description": "Xây dựng nền tảng số hóa quản lý quy trình doanh nghiệp toàn diện.",
+                "description": "Xây dựng nền tảng số để quản lý toàn diện quy trình kinh doanh.",
                 "features": [
-                    "Hệ thống ERP",
-                    "Quản lý kho",
-                    "Báo cáo tự động",
-                    "Tích hợp đa kênh"
-                ]
+                    "Kinh tế số",
+                    "Nền tảng số",
+                    "Tự động hóa quy trình",
+                    "Dữ liệu số"
+                ],
+                "tiers": {
+                    "basic": "50-100 Tr",
+                    "standard": "150-300 Tr",
+                    "premium": "350-550 Tr"
+                },
+                "tierFeatures": {
+                    "basic": [
+                        "Phát triển nền tảng số custom cơ bản (web-based hoặc hybrid app) để quản lý quy trình kinh doanh cốt lõi.",
+                        "Các module chính: Quản lý bán hàng, Quản lý kho hàng, Quản lý khách hàng (CRM đơn giản), Kế toán cơ bản.",
+                        "Tích hợp kênh bán hàng cơ bản (website tự xây, Zalo OA, Facebook qua API custom).",
+                        "Dashboard báo cáo đơn giản (doanh thu, tồn kho, khách hàng tiềm năng) với biểu đồ tùy chỉnh.",
+                        "Migrate dữ liệu ban đầu từ file Excel hoặc hệ thống cũ đơn giản.",
+                        "Training đội ngũ sử dụng + tài liệu hướng dẫn custom.",
+                        "Support email/ticket + bảo trì 6-12 tháng đầu (fix bug, update nhỏ)."
+                    ],
+                    "standard": [
+                        "Phát triển hệ thống số custom toàn diện để quản lý toàn bộ quy trình kinh doanh.",
+                        "Các module đầy đủ: Bán hàng (đơn hàng, báo giá), Mua hàng, Kho vận (nhập/xuất/tồn), Sản xuất nhẹ (nếu áp dụng), Kế toán chi tiết (hóa đơn, công nợ), Nhân sự (lương, chấm công), CRM (quản lý lead, opportunity).",
+                        "Tự động hóa quy trình (workflow phê duyệt, nhắc nhở tự động, hóa đơn điện tử custom).",
+                        "Tích hợp đa kênh (website custom, Zalo, Facebook, email, POS nếu cần) qua API tự phát triển.",
+                        "Dashboard báo cáo chi tiết + KPI thời gian thực (dự báo doanh thu cơ bản, phân tích bán hàng).",
+                        "Migrate dữ liệu từ hệ thống cũ (Excel, legacy software) với mapping custom.",
+                        "Tùy chỉnh theo ngành nghề (bán lẻ, thương mại, dịch vụ) dựa trên yêu cầu cụ thể.",
+                        "Training nâng cao + support 24/7 qua chat/email, ưu tiên xử lý.",
+                        "Bảo trì 12 tháng + tùy chọn extend (update tính năng nhỏ)."
+                    ],
+                    "premium": [
+                        "Phát triển nền tảng số custom toàn diện, scalable cao (multi-company, multi-location nếu cần).",
+                        "Tích hợp nâng cao: IoT (giám sát thiết bị custom), Business Intelligence sâu (forecasting, predictive analytics cơ bản), API kết nối bên thứ 3 (ngân hàng, vận chuyển, thuế điện tử).",
+                        "Tùy chỉnh quy trình phức tạp (sản xuất đa giai đoạn, chuỗi cung ứng, quản lý dự án, role-based access chi tiết).",
+                        "Dashboard enterprise (real-time BI, báo cáo tùy chỉnh, mobile access).",
+                        "Migrate & tích hợp hệ thống legacy phức tạp (data cleansing, ETL custom).",
+                        "Triển khai on-premise/hybrid/cloud private nếu yêu cầu bảo mật cao.",
+                        "Dedicated team phát triển + account manager riêng, hỗ trợ on-site nếu cần.",
+                        "Bảo mật cao (compliance PDPA Việt Nam, encryption, audit log).",
+                        "Continuous optimization (update theo dữ liệu mới, scale hệ thống).",
+                        "Support 24/7 dedicated + SLA cao (response time <1h, uptime 99.9%)."
+                    ]
+                }
             },
             "crm-migration": {
-                "name": "Migrate từ CRM lạc hậu",
-                "description": "Chuyển đổi dữ liệu an toàn từ hệ thống cũ sang nền tảng quản trị hiện đại.",
+                "name": "Nâng cấp hệ thống cũ",
+                "description": "Nâng cấp dữ liệu an toàn từ các hệ thống cũ sang nền tảng quản lý hiện đại.",
                 "features": [
-                    "Làm sạch dữ liệu",
-                    "Mapping trường dữ liệu",
-                    "Đào tạo nhân sự",
-                    "Bảo mật tuyệt đối"
-                ]
+                    "Thay thế hệ thống cũ",
+                    "Xây dựng hệ thống mới",
+                    "Di chuyển hệ thống cũ an toàn",
+                    "Chuyển đổi hệ thống cũ"
+                ],
+                "tiers": {
+                    "basic": "80-150 Tr",
+                    "standard": "150-300 Tr",
+                    "premium": "300-600 Tr"
+                },
+                "tierFeatures": {
+                    "basic": [
+                        "Thay thế toàn bộ hệ thống cũ bằng nền tảng mới custom (web-based, modules cơ bản).",
+                        "Xây dựng modules cốt lõi: Quản lý khách hàng (CRM), Bán hàng, Kho hàng, Kế toán đơn giản.",
+                        "Migrate dữ liệu an toàn từ legacy (Excel, database cũ) với cleansing cơ bản (deduplication, chuẩn hóa).",
+                        "Tích hợp kênh cơ bản (website custom, Zalo OA).",
+                        "Dashboard báo cáo đơn giản + training đội ngũ.",
+                        "Support email/ticket + bảo trì 6-12 tháng (fix bug, update nhỏ).",
+                        "Bảo mật: Encryption dữ liệu migrate, zero data loss guarantee."
+                    ],
+                    "standard": [
+                        "Thay thế toàn bộ legacy bằng hệ thống custom toàn diện (end-to-end business management).",
+                        "Xây dựng đầy đủ modules: CRM 360°, Bán/Mua hàng, Kho vận, Sản xuất nhẹ, Kế toán chi tiết, Nhân sự, Workflow tự động.",
+                        "Migrate toàn bộ dữ liệu (lịch sử khách hàng, giao dịch, log) với cleansing nâng cao + validation chi tiết.",
+                        "Tích hợp đa kênh (website, Zalo, Facebook, email, POS custom).",
+                        "Dashboard KPI thời gian thực + báo cáo migrate (0% mất mát).",
+                        "Tùy chỉnh theo ngành (bán lẻ, thương mại, dịch vụ) + training nâng cao.",
+                        "Support 24/7 chat/email, ưu tiên + bảo trì 12 tháng + extend option."
+                    ],
+                    "premium": [
+                        "Thay thế toàn bộ legacy bằng nền tảng custom scalable (multi-company, multi-location).",
+                        "Xây dựng hệ thống phức tạp: BI analytics sâu, IoT integration, API third-party (ngân hàng, vận chuyển), quy trình custom cao cấp.",
+                        "Di chuyển dữ liệu lớn/hệ thống cũ phức tạp (không gián đoạn hoạt động, tiếp cận theo từng giai đoạn, chạy song song).",
+                        "Bảo mật cấp doanh nghiệp (tuân thủ PDPA, mã hóa, nhật ký kiểm toán).",
+                        "Đội ngũ chuyên trách + quản lý tài khoản, hỗ trợ tại chỗ nếu cần.",
+                        "Tối ưu hóa liên tục + hỗ trợ chuyên dụng 24/7 + SLA cao (phản hồi <1 giờ, thời gian hoạt động 99,9%)."
+                    ]
+                }
             },
             "digital-consulting": {
-                "name": "Tư vấn chuyển đổi số",
+                "name": "Tư vấn Chuyển đổi Số",
                 "description": "Đánh giá hiện trạng và xây dựng lộ trình chuyển đổi số phù hợp nhất.",
                 "features": [
-                    "Audit quy trình",
+                    "Kiểm toán quy trình",
                     "Lập kế hoạch lộ trình",
                     "Tư vấn công nghệ",
-                    "Giám sát triển khai"
-                ]
+                    "Triển khai Giám sát"
+                ],
+                "tiers": {
+                    "basic": "20-50 Tr",
+                    "standard": "50-200 Tr",
+                    "premium": "200-500 Tr"
+                },
+                "tierFeatures": {
+                    "basic": [
+                        "Basic – Quy mô nhỏ, khởi đầu nhanh",
+                        "Đánh giá hiện trạng (Process Audit): Phỏng vấn lãnh đạo/nhân viên, khảo sát hệ thống cũ, đánh giá mức độ sẵn sàng chuyển đổi số (maturity assessment).",
+                        "Xây dựng roadmap cơ bản (Roadmap Planning): Lộ trình 1-2 năm với các bước ưu tiên (ví dụ: digitize bán hàng, tự động hóa quy trình cơ bản).",
+                        "Tư vấn công nghệ phù hợp (Technology Consulting): Gợi ý stack công nghệ đơn giản (cloud cơ bản, tool low-code nếu cần).",
+                        "Hỗ trợ theo dõi ban đầu (Implementation Monitoring): Báo cáo tiến độ 3-6 tháng đầu, tư vấn điều chỉnh nhỏ.",
+                        "Deliverables: Báo cáo hiện trạng + roadmap PDF + 1-2 buổi workshop.",
+                        "Support email/ticket + bảo trì tư vấn 6 tháng."
+                    ],
+                    "standard": [
+                        "Process Audit chi tiết: Phân tích sâu quy trình kinh doanh (sales, operations, finance, HR), gap analysis, benchmark ngành.",
+                        "Roadmap Planning toàn diện: Lộ trình 3-5 năm, phased (giai đoạn 1: digitize, giai đoạn 2: automate + AI, giai đoạn 3: optimize & scale), KPI đo lường ROI.",
+                        "Technology Consulting sâu: Khuyến nghị công nghệ phù hợp (custom build vs hybrid, tích hợp AI, cloud/on-premise), ước tính chi phí & timeline.",
+                        "Implementation Monitoring: Hỗ trợ giám sát triển khai (theo dõi milestone, risk management, điều chỉnh roadmap theo thực tế).",
+                        "Deliverables: Báo cáo chi tiết (200+ trang), dashboard theo dõi, workshop/training đội ngũ, 3-6 buổi tư vấn sâu.",
+                        "Support 24/7 chat/email ưu tiên + theo dõi 12 tháng + tùy chọn extend."
+                    ],
+                    "premium": [
+                        "Process Audit nâng cao: Audit toàn diện (bao gồm data governance, cybersecurity, compliance PDPA), sử dụng tool chuyên sâu + phỏng vấn rộng.",
+                        "Roadmap Planning chiến lược: Lộ trình dài hạn 5+ năm, tích hợp mục tiêu kinh doanh (tăng trưởng doanh thu, giảm chi phí 20-30%), scenario planning.",
+                        "Technology Consulting enterprise: Tư vấn stack phức tạp (AI custom, IoT, big data, multi-cloud), vendor selection nếu cần.",
+                        "Implementation Monitoring liên tục: Giám sát full-cycle (dedicated consultant theo dự án), monthly review, risk mitigation, post-implementation optimization.",
+                        "Deliverables: Báo cáo executive + chi tiết, interactive dashboard, training lãnh đạo cấp cao, dedicated team.",
+                        "Security & compliance cao + support 24/7 dedicated + SLA cao (response <1h)."
+                    ]
+                }
             }
         }
     }

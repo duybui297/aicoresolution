@@ -1,12 +1,25 @@
 import { useTranslation } from 'react-i18next';
 import { Languages } from 'lucide-react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { getRouteKeyByPath, getRoutePath } from '../utils/routeConstants';
 
 export default function LanguageSwitcher() {
     const { i18n } = useTranslation();
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const toggleLanguage = () => {
         const newLang = i18n.language === 'vi' ? 'en' : 'vi';
-        i18n.changeLanguage(newLang);
+        const currentPath = location.pathname;
+        const routeKey = getRouteKeyByPath(currentPath);
+
+        if (routeKey) {
+            const newPath = getRoutePath(routeKey, newLang);
+            navigate(newPath);
+            i18n.changeLanguage(newLang);
+        } else {
+            i18n.changeLanguage(newLang);
+        }
     };
 
     return (

@@ -1,51 +1,55 @@
 import { useState } from 'react';
-import { Menu, X, Sparkles } from 'lucide-react';
+import logo from '../assets/logo_new.jpg';
+import { Menu, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { Link, useLocation } from 'react-router-dom';
 import LanguageSwitcher from './LanguageSwitcher';
+import { ROUTE_PATHS, getRouteKeyByPath } from '../utils/routeConstants';
 
-interface NavigationProps {
-  activeTab: 'home' | 'services' | 'case-studies' | 'news' | 'contact';
-  onTabChange: (tab: 'home' | 'services' | 'case-studies' | 'news' | 'contact') => void;
-}
-
-export default function Navigation({ activeTab, onTabChange }: NavigationProps) {
+export default function Navigation() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const location = useLocation();
+
+  const lang = i18n.language === 'vi' ? 'vi' : 'en';
 
   const tabs = [
-    { id: 'home' as const, label: t('nav.home') },
-    { id: 'services' as const, label: t('nav.services') },
-    { id: 'case-studies' as const, label: t('nav.caseStudies') },
-    { id: 'news' as const, label: t('nav.news') },
-    { id: 'contact' as const, label: t('nav.contact') }
+    { id: 'home', label: t('nav.home'), path: ROUTE_PATHS.home[lang] },
+    { id: 'services', label: t('nav.services'), path: ROUTE_PATHS.services[lang] },
+    { id: 'case-studies', label: t('nav.caseStudies'), path: ROUTE_PATHS.caseStudies[lang] },
+    { id: 'news', label: t('nav.news'), path: ROUTE_PATHS.news[lang] },
+    { id: 'contact', label: t('nav.contact'), path: ROUTE_PATHS.contact[lang] }
   ];
+
+  const currentRouteKey = getRouteKeyByPath(location.pathname);
+
+  const isActive = (tabId: string) => {
+    if (tabId === 'home') {
+      return currentRouteKey === 'home' || location.pathname === '/' || location.pathname === '';
+    }
+    return currentRouteKey === tabId;
+  };
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-20">
-          <div className="flex items-center gap-3 cursor-pointer" onClick={() => onTabChange('home')}>
-            <div className="p-2 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl">
-              <Sparkles className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <div className="text-xl font-bold text-slate-900">{t('nav.companyName')}</div>
-              <div className="text-xs text-slate-500">{t('nav.tagline')}</div>
-            </div>
-          </div>
+          <Link to="/" className="flex items-center gap-3 cursor-pointer">
+            <img src={logo} alt="Company Logo" className="h-16 w-auto rounded-xl object-contain" />
+          </Link>
 
           <div className="hidden md:flex items-center gap-2">
             {tabs.map((tab) => (
-              <button
+              <Link
                 key={tab.id}
-                onClick={() => onTabChange(tab.id)}
-                className={`px-6 py-2 rounded-xl font-semibold transition-all duration-300 ${activeTab === tab.id
+                to={tab.path}
+                className={`px-6 py-2 rounded-xl font-semibold transition-all duration-300 ${isActive(tab.id)
                   ? 'bg-blue-600 text-white shadow-lg'
                   : 'text-slate-700 hover:bg-slate-100'
                   }`}
               >
                 {tab.label}
-              </button>
+              </Link>
             ))}
             <LanguageSwitcher />
           </div>
@@ -61,19 +65,17 @@ export default function Navigation({ activeTab, onTabChange }: NavigationProps) 
         {mobileMenuOpen && (
           <div className="md:hidden py-4 space-y-2">
             {tabs.map((tab) => (
-              <button
+              <Link
                 key={tab.id}
-                onClick={() => {
-                  onTabChange(tab.id);
-                  setMobileMenuOpen(false);
-                }}
-                className={`w-full px-6 py-3 rounded-xl font-semibold transition-all duration-300 text-left ${activeTab === tab.id
+                to={tab.path}
+                onClick={() => setMobileMenuOpen(false)}
+                className={`block w-full px-6 py-3 rounded-xl font-semibold transition-all duration-300 text-left ${isActive(tab.id)
                   ? 'bg-blue-600 text-white shadow-lg'
                   : 'text-slate-700 hover:bg-slate-100'
                   }`}
               >
                 {tab.label}
-              </button>
+              </Link>
             ))}
             <div className="pt-2">
               <LanguageSwitcher />
