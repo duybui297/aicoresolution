@@ -10,7 +10,33 @@
         "insights": "Insights",
         "about": "About Us",
         "companyName": "AI Core Solutions",
-        "tagline": "AI-Powered Development"
+        "tagline": "AI-Powered Development",
+        "contact": "Contact",
+        "news": "News"
+    },
+    "news": {
+        "title": "News & Events",
+        "subtitle": "Latest AI trends and updates.",
+        "readMore": "Read more",
+        "posts": {
+            "post1": {
+                "title": "How AI Reduces Operational Costs in 2026?",
+                "excerpt": "Discover the latest methods to streamline human resources."
+            },
+            "post2": {
+                "title": "Chatbot Integration Guide for SMEs",
+                "excerpt": "Simple steps to automate customer service 24/7."
+            },
+            "post3": {
+                "title": "AI Core Solutions Expands Team to 40 Employees",
+                "excerpt": "We welcome new talents to better serve our customers."
+            }
+        },
+        "categories": {
+            "trends": "AI Trends",
+            "tips": "Tech Tips",
+            "company": "Company News"
+        }
     },
     "hero": {
         "badge": "AI-Powered Development & Solutions",
@@ -186,6 +212,147 @@
         "about": {
             "title": "About Us",
             "description": "Passionate AI & Software Development experts"
+        }
+    },
+    "caseStudiesPage": {
+        "title": "Featured Projects",
+        "description": "Discover successful projects we have implemented for clients across various industries",
+        "searchPlaceholder": "Search by name, industry or category...",
+        "showing": "Showing",
+        "projects": "projects",
+        "noResults": "No results found",
+        "tryAgain": "Try searching with different keywords or select another category",
+        "viewWebsite": "View Website",
+        "all": "All",
+        "categories": {
+            "tourism": "Tourism & Entertainment Services",
+            "education": "Education & Professional Consulting",
+            "beauty": "Beauty & Personal Care",
+            "sports": "Sports, Fashion & Lifestyle",
+            "pets": "Pets & Consumer Products",
+            "construction": "Construction, Materials & Industrial Equipment"
+        },
+        "items": {
+            "1": "Table reservation and restaurant management system with AI chatbot support 24/7",
+            "12": "Restaurant & bar with AI menu optimization and event management",
+            "8": "Hotel management with AI dynamic pricing and guest experience optimization",
+            "23": "Travel booking platform with AI itinerary planner and price prediction",
+            "10": "Spa booking platform with AI therapist matching and customer preferences",
+            "6": "Gym management system with AI workout planner and member tracking",
+            "25": "Study abroad consulting with AI university matching and application support",
+            "26": "Korea study consulting with AI language assessment and visa guidance",
+            "16": "Mental health platform with AI counseling support and mood tracking",
+            "29": "Legal service platform with AI document processing and case management",
+            "4": "Real estate platform with AI property valuation and market analysis",
+            "13": "Beauty service booking with AI style recommendation and before/after visualization",
+            "11": "Health supplement store with AI health advisor and personalized recommendations",
+            "30": "Nail salon booking with AI design preview and customer loyalty program",
+            "31": "Pharmaceutical e-commerce with AI prescription checking and drug interaction alert",
+            "3": "Online flower shop with AI image search and delivery optimization",
+            "5": "Sports retail platform with AI size recommendation and inventory management",
+            "18": "Fashion e-commerce with AI style advisor and virtual try-on",
+            "2": "E-commerce platform with AI recommendation and AR visualization",
+            "20": "Auto decal service with AI design tool and visualization on car",
+            "21": "EV charging platform with AI station finder and usage optimization",
+            "7": "Pet care platform with AI health monitoring and grooming booking",
+            "32": "Natural pet food store with AI nutritional planner",
+            "9": "Gaming gear store with AI PC builder and compatibility checker",
+            "33": "Computer components store with AI build optimizer",
+            "17": "Electrical equipment store with AI product matching and installation guide",
+            "15": "Manufacturing management with AI production optimization and quality control",
+            "19": "Wooden furniture store with AI design customization and price estimation",
+            "24": "Ceramic & sanitary ware with AI bathroom designer and product recommendation",
+            "27": "Construction material store with AI color matching and quantity calculator",
+            "28": "Forklift service platform with AI maintenance prediction and fleet management"
+        }
+    },
+    "contact": {
+        "title": "Contact Us",
+        "description": "Leave your information, our AI Consultant team will contact you to advise on the most optimal solution for your business within 24 hours.",
+        "fullname": "Full Name",
+        "fullnamePlaceholder": "John Doe",
+        "email": "Email",
+        "phone": "Phone Number",
+        "subject": "Consulting Need",
+        "message": "Message",
+        "messagePlaceholder": "Brief description of the project...",
+        "submit": "Send Consultation Request",
+        "subjects": {
+            "aiIntegration": "AI Integration into System",
+            "webApp": "Web/App Deployment",
+            "consulting": "Digital Transformation Consulting",
+            "other": "Other"
+        },
+        "info": {
+            "title": "Contact Information",
+            "headquarters": "Headquarters",
+            "address": "123 Nguyen Van Linh Street, Hai Chau District, Da Nang City, Vietnam",
+            "hours": "(08:00 - 17:30, Mon - Fri)"
+        }
+    },
+    "services": {
+        "title": "Service Packages",
+        "description": "Flexible solutions suitable for all business sizes.",
+        "popular": "POPULAR",
+        "contact": "Contact Now",
+        "select": "Select Package",
+        "consult": "Custom Consulting",
+        "scale": {
+            "small": "Small Scale",
+            "medium": "Medium Scale",
+            "enterprise": "Enterprise"
+        },
+        "features": {
+            "basic": "Basic Features",
+            "fullAI": "Full AI Features",
+            "customAI": "Custom AI Models"
+        },
+        "support": {
+            "email": "Email Support",
+            "full": "24/7 Support",
+            "dedicated": "Dedicated Team"
+        },
+        "items": {
+            "ai-integration": {
+                "name": "AI System Integration",
+                "description": "Upgrade legacy systems with the power of artificial intelligence.",
+                "features": [
+                    "Customer Support Chatbot",
+                    "Maintenance Prediction",
+                    "Sentiment Analysis",
+                    "Fraud Detection"
+                ]
+            },
+            "digital-system": {
+                "name": "Digital System Deployment",
+                "description": "Build a digital platform for comprehensive business process management.",
+                "features": [
+                    "ERP System",
+                    "Warehouse Management",
+                    "Automated Reporting",
+                    "Omnichannel Integration"
+                ]
+            },
+            "crm-migration": {
+                "name": "Legacy CRM Migration",
+                "description": "Securely migrate data from old systems to modern management platforms.",
+                "features": [
+                    "Data Cleaning",
+                    "Field Mapping",
+                    "Staff Training",
+                    "Absolute Security"
+                ]
+            },
+            "digital-consulting": {
+                "name": "Digital Transformation Consulting",
+                "description": "Assess current status and build the most suitable digital transformation roadmap.",
+                "features": [
+                    "Process Audit",
+                    "Roadmap Planning",
+                    "Technology Consulting",
+                    "Implementation Monitoring"
+                ]
+            }
         }
     }
 }

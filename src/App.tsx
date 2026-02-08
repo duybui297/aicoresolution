@@ -5,11 +5,11 @@ import Home from './pages/Home';
 import ServicesPage from './pages/ServicesPage';
 import CaseStudiesPage from './pages/CaseStudiesPage';
 import InsightsPage from './pages/InsightsPage';
-import AboutPage from './pages/AboutPage';
+import ContactPage from './pages/Contact';
 import { useDocumentMeta } from './hooks/useDocumentMeta';
 
 function App() {
-  const [activeTab, setActiveTab] = useState<'home' | 'services' | 'case-studies' | 'insights' | 'about'>('home');
+  const [activeTab, setActiveTab] = useState<'home' | 'services' | 'case-studies' | 'news' | 'contact'>('home');
 
   // Update document title and meta tags when language changes
   useDocumentMeta();
@@ -26,10 +26,16 @@ function App() {
         return <ServicesPage />;
       case 'case-studies':
         return <CaseStudiesPage />;
-      case 'insights':
+      case 'news':
         return <InsightsPage />;
-      case 'about':
-        return <AboutPage />;
+      case 'contact':
+        // Since we replaced About with Contact in Home, maybe we should also have a ContactPage?
+        // But the user just said "change About section to Contact".
+        // However, the navigation now has 'contact' tab.
+        // If I click 'contact', it should probably scroll to contact section or show a Contact Page.
+        // Given the Home page has <Contact /> now, maybe I should just create a ContactPage wrapper or use Home?
+        // Wait, the user has a `pages/Contact.tsx`. Let's check if I should use that.
+        return <ContactPage />;
       default:
         return <Home />;
     }

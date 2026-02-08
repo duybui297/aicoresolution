@@ -1,146 +1,103 @@
-import { Mail, Phone, MapPin, Send, MessageSquare, User } from 'lucide-react';
+import { MapPin, Mail, Phone } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function Contact() {
+  const { t } = useTranslation();
+
   return (
-    <section className="py-20 px-4 bg-slate-50 min-h-screen">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h1 className="text-4xl md:text-6xl font-bold text-slate-900 mb-4">
-            Liên Hệ Với Chúng Tôi
-          </h1>
-          <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-            Hãy để chúng tôi giúp bạn biến ý tưởng thành hiện thực với công nghệ AI
-          </p>
-        </div>
+    <section className="py-12 bg-white min-h-screen">
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          {/* Form */}
+          <div>
+            <h2 className="text-4xl font-bold mb-6">{t('contact.title')}</h2>
+            <p className="text-slate-600 mb-8">
+              {t('contact.description')}
+            </p>
 
-        <div className="grid md:grid-cols-2 gap-12">
-          <div className="space-y-8">
-            <div>
-              <h2 className="text-3xl font-bold text-slate-900 mb-6">
-                Thông Tin Liên Hệ
-              </h2>
-              <p className="text-slate-600 leading-relaxed mb-8">
-                Chúng tôi luôn sẵn sàng lắng nghe và hỗ trợ bạn. Hãy liên hệ với chúng tôi
-                qua bất kỳ kênh nào dưới đây hoặc điền form bên cạnh.
-              </p>
-            </div>
+            <form className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">{t('contact.fullname')}</label>
+                  <input type="text" className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50" placeholder={t('contact.fullnamePlaceholder')} />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-2">{t('contact.email')}</label>
+                  <input type="email" className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50" placeholder="email@company.com" />
+                </div>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">{t('contact.phone')}</label>
+                <input type="tel" className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50" placeholder="0912..." />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">{t('contact.subject')}</label>
+                <select className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50">
+                  <option>{t('contact.subjects.aiIntegration')}</option>
+                  <option>{t('contact.subjects.webApp')}</option>
+                  <option>{t('contact.subjects.consulting')}</option>
+                  <option>{t('contact.subjects.other')}</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-slate-700 mb-2">{t('contact.message')}</label>
+                <textarea rows={4} className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-slate-50" placeholder={t('contact.messagePlaceholder')}></textarea>
+              </div>
+              <button type="submit" className="w-full bg-blue-600 text-white font-bold py-4 rounded-lg hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/20">
+                {t('contact.submit')}
+              </button>
+            </form>
+          </div>
 
-            <div className="space-y-6">
-              <div className="flex items-start gap-4 p-6 bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow">
-                <div className="p-3 bg-blue-100 rounded-xl">
+          {/* Info & Map */}
+          <div className="bg-slate-50 p-8 rounded-2xl">
+            <h3 className="text-2xl font-bold mb-6">{t('contact.info.title')}</h3>
+            <ul className="space-y-6 mb-8">
+              <li className="flex items-start">
+                <div className="bg-blue-100 p-3 rounded-lg mr-4">
+                  <MapPin className="w-6 h-6 text-blue-600" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-slate-900">{t('contact.info.headquarters')}</h4>
+                  <p className="text-slate-600">{t('contact.info.address')}</p>
+                </div>
+              </li>
+              <li className="flex items-start">
+                <div className="bg-blue-100 p-3 rounded-lg mr-4">
                   <Mail className="w-6 h-6 text-blue-600" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-slate-900 mb-1">Email</h3>
-                  <p className="text-slate-600">contact@aicoresolution.vn</p>
-                  <p className="text-slate-600">sales@aicoresolution.vn</p>
+                  <h4 className="font-bold text-slate-900">Email</h4>
+                  <p className="text-slate-600">contact@aicoresolutions.vn</p>
+                  <p className="text-slate-600">support@aicoresolutions.vn</p>
                 </div>
-              </div>
-
-              <div className="flex items-start gap-4 p-6 bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow">
-                <div className="p-3 bg-green-100 rounded-xl">
-                  <Phone className="w-6 h-6 text-green-600" />
-                </div>
-                <div>
-                  <h3 className="font-bold text-slate-900 mb-1">Điện Thoại</h3>
-                  <p className="text-slate-600">+84 123 456 789</p>
-                  <p className="text-slate-600">+84 987 654 321</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4 p-6 bg-white rounded-2xl shadow-md hover:shadow-xl transition-shadow">
-                <div className="p-3 bg-orange-100 rounded-xl">
-                  <MapPin className="w-6 h-6 text-orange-600" />
+              </li>
+              <li className="flex items-start">
+                <div className="bg-blue-100 p-3 rounded-lg mr-4">
+                  <Phone className="w-6 h-6 text-blue-600" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-slate-900 mb-1">Địa Chỉ</h3>
-                  <p className="text-slate-600">Đà Nẵng, Việt Nam</p>
-                  <p className="text-slate-600">Làm việc từ xa toàn quốc</p>
+                  <h4 className="font-bold text-slate-900">Hotline</h4>
+                  <p className="text-slate-600">+84 905 123 456</p>
+                  <p className="text-slate-600 text-sm">{t('contact.info.hours')}</p>
+                </div>
+              </li>
+            </ul>
+
+            {/* Simulated Map */}
+            <div className="w-full h-64 bg-slate-200 rounded-xl relative overflow-hidden group">
+              <img
+                src="https://picsum.photos/seed/map/800/400"
+                alt="Map location"
+                className="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
+              />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="bg-white/90 backdrop-blur px-4 py-2 rounded shadow-lg text-sm font-bold flex items-center">
+                  <MapPin className="w-4 h-4 text-red-500 mr-2" />
+                  AI Core Office
                 </div>
               </div>
             </div>
-
-            <div className="bg-gradient-to-br from-blue-600 to-blue-700 text-white p-8 rounded-2xl">
-              <h3 className="text-2xl font-bold mb-3">Giờ Làm Việc</h3>
-              <div className="space-y-2">
-                <p className="flex justify-between">
-                  <span>Thứ 2 - Thứ 6:</span>
-                  <span className="font-semibold">8:00 - 18:00</span>
-                </p>
-                <p className="flex justify-between">
-                  <span>Thứ 7:</span>
-                  <span className="font-semibold">8:00 - 12:00</span>
-                </p>
-                <p className="flex justify-between">
-                  <span>Chủ Nhật:</span>
-                  <span className="font-semibold">Nghỉ</span>
-                </p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-2xl shadow-xl p-8">
-            <h2 className="text-2xl font-bold text-slate-900 mb-6">
-              Gửi Tin Nhắn
-            </h2>
-
-            <form className="space-y-6">
-              <div>
-                <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 mb-2">
-                  <User className="w-4 h-4" />
-                  Họ và Tên
-                </label>
-                <input
-                  type="text"
-                  placeholder="Nguyễn Văn A"
-                  className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-blue-500 focus:outline-none transition-colors"
-                />
-              </div>
-
-              <div>
-                <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 mb-2">
-                  <Mail className="w-4 h-4" />
-                  Email
-                </label>
-                <input
-                  type="email"
-                  placeholder="example@email.com"
-                  className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-blue-500 focus:outline-none transition-colors"
-                />
-              </div>
-
-              <div>
-                <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 mb-2">
-                  <Phone className="w-4 h-4" />
-                  Số Điện Thoại
-                </label>
-                <input
-                  type="tel"
-                  placeholder="+84 123 456 789"
-                  className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-blue-500 focus:outline-none transition-colors"
-                />
-              </div>
-
-              <div>
-                <label className="flex items-center gap-2 text-sm font-semibold text-slate-700 mb-2">
-                  <MessageSquare className="w-4 h-4" />
-                  Nội Dung
-                </label>
-                <textarea
-                  rows={5}
-                  placeholder="Mô tả dự án hoặc câu hỏi của bạn..."
-                  className="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-blue-500 focus:outline-none transition-colors resize-none"
-                ></textarea>
-              </div>
-
-              <button
-                type="submit"
-                className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-4 rounded-xl font-bold hover:from-blue-700 hover:to-blue-800 transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
-              >
-                <span>Gửi Tin Nhắn</span>
-                <Send className="w-5 h-5" />
-              </button>
-            </form>
           </div>
         </div>
       </div>
