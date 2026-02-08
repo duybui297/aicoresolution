@@ -18,18 +18,23 @@
         "title": "News & Events",
         "subtitle": "Latest AI trends and updates.",
         "readMore": "Read more",
+        "notFound": "Article not found",
+        "backToNews": "Back to News",
         "posts": {
             "post1": {
-                "title": "How AI Reduces Operational Costs in 2026?",
-                "excerpt": "Discover the latest methods to streamline human resources."
+                "title": "OpenClaw and the Moment AI Crosses the Control Line",
+                "excerpt": "Are we truly ready for AI to stop being a mere observer and start acting directly within our own systems?",
+                "content": "To this day, artificial intelligence is no longer a distant concept—it has quietly permeated every corner of our lives. And then OpenClaw appeared, forcing me to pause and reflect: are we truly ready for AI to stop being a mere observer and start acting directly within our own systems?\n\nIn the past, AI felt safe. It answered questions, suggested ideas, even wrote on our behalf—but always from behind an invisible wall. Control remained firmly in human hands. That certainty, however, begins to erode when AI agents like this can open browsers, read files, send messages, and operate directly on a computer. At that point, the question is no longer how intelligent AI is, but whether we are prepared to entrust it with real authority. OpenClaw is a vivid illustration of how thin that boundary has become.\n\nMy advice is simple: don’t grant full permissions too quickly, no matter how tempting it may be. What sets OpenClaw apart is not its conversational ability or the model behind it, but the fact that it is designed to access the entire system without protective layers—no sandbox, no hard guardrails. If you allow it, it will act as you would. That is a significant leap forward—and a risky one.\n\nFrom my experience, when working with any new “agent,” human or machine, the most critical factor is not speed or initial efficiency, but understanding. You need to know how it interprets instructions, how it reacts to gaps in context, and, most importantly, how it fails. Granting full control to an AI before understanding these aspects is no different from throwing a new hire straight into a production environment on day one. The risk rarely comes from malicious intent, but from immature design and our own misplaced expectations.\n\n{{IMAGE_0}}\n\nExecution capability does not always correlate with reliability. In hands-on tests with OpenClaw, I’ve seen it handle a wide range of tasks: opening browsers, checking broken links, interacting with user interfaces, even communicating via Telegram. For simple, repetitive tasks, the initial impression is genuinely strong. But over time, reality becomes clearer: it still needs step-by-step guidance, rarely shows true initiative, and tends to stop at “knowing how to do something” rather than “knowing when it should be done.”\n\nThis is not a failure—it’s a reminder that today’s AI agents are closer to highly empowered interns than to truly independent colleagues. If you expect more, disappointment is inevitable. I’ve seen the same pattern with many tools before: bold promises of transformation, followed by the enduring need for human direction.\n\n{{IMAGE_1}}\n\nFor me, security is not an optional feature; it is a core responsibility. OpenClaw is refreshingly candid in labeling itself as “risky,” clearly warning users about permission grants and advising that only those with security expertise should proceed. That honesty is commendable, but it also means the burden is squarely on us. When AI can touch browsers, accounts, files, and communication channels, the distance between a minor mistake and a major incident is razor-thin. In that context, the smartest approach is not perfect prompting, but strict isolation: separate machines, separate accounts, non-sensitive data. Without isolation, AI autonomy stops being creative and becomes a gamble.\n\nUltimately, execution will never replace thinking. OpenClaw excels as an action-oriented tool, but it cannot take on strategy, prioritization, or judgment in ambiguous situations. Most real-world work isn’t hard because of operations—it’s hard because of complex context. Until AI learns “what not to do” as well as “what to do,” humans must remain in the driver’s seat—not just supervising, but shaping direction.\n\n{{IMAGE_2}}\n\nOpenClaw is neither a failure nor the pinnacle of AI agents. It is a realistic snapshot of the transitional phase we are living through: from passive AI to AI with the power to act. Its true value lies in the questions it raises: how much authority are we willing to give AI, and under what conditions? That is not merely a technical question—it is a question of responsibility. Our responsibility to ourselves, and to the world we are in the process of building."
             },
             "post2": {
                 "title": "Chatbot Integration Guide for SMEs",
-                "excerpt": "Simple steps to automate customer service 24/7."
+                "excerpt": "Simple steps to automate customer service 24/7.",
+                "content": "Content coming soon..."
             },
             "post3": {
                 "title": "AI Core Solutions Expands Team to 40 Employees",
-                "excerpt": "We welcome new talents to better serve our customers."
+                "excerpt": "We welcome new talents to better serve our customers.",
+                "content": "Content coming soon..."
             }
         },
         "categories": {
@@ -293,14 +298,52 @@
     "services": {
         "title": "Service Packages",
         "description": "Flexible solutions suitable for all business sizes.",
-        "popular": "POPULAR",
+        "popular": "HOTTEST PACKAGE",
         "contact": "Contact Now",
         "select": "Select Package",
         "consult": "Custom Consulting",
         "scale": {
-            "small": "Small Scale",
+            "small": "Small scale, quick start",
             "medium": "Medium Scale",
             "enterprise": "Enterprise"
+        },
+        "tierTitles": {
+            "basic": "Basic – Small scale, quick start",
+            "standard": "Standard – Medium Scale, Full Replacement",
+            "premium": "Premium – Enterprise, deep customization"
+        },
+        "tiers": {
+            "basic": [
+                "Basic AI integration into existing systems (website, app, simple CRM).",
+                "Rule-based + simple AI customer support chatbot (automatic FAQ, 24/7 support on 1-2 channels: website + Zalo/Messenger).",
+                "Basic sentiment analysis on feedback/chat.",
+                "Initial data training using customer-provided data.",
+                "Email/ticket support + team training.",
+                "Maintenance for the first 6-12 months.",
+                "No predictive/deep features; uses ready-made APIs (FPT/Viettel/OpenAI)."
+            ],
+            "standard": [
+                "Full AI integration into legacy systems (outdated CRM, database, light ERP).",
+                "Advanced customer support chatbot (strong Vietnamese NLP, multi-turn conversations, voice integration if needed).",
+                "Basic predictive maintenance (on historical data).",
+                "Detailed sentiment analysis + basic fraud detection (anomaly detection on transactions).",
+                "Multi-channel integration (website, Zalo, Facebook, email).",
+                "Light model fine-tuning with enterprise data.",
+                "Simple AI insights reporting dashboard.",
+                "24/7 chat/email support with priority.",
+                "12-month maintenance + extension option."
+            ],
+            "premium": [
+                "Deep/comprehensive custom integration (on-premise if required, API-first approach).",
+                "Custom AI models (fine-tune industry-specific LLM: retail, finance...).",
+                "Full advanced suite: Chatbot + deep predictive maintenance (time-series), sentiment analysis + customer behavior analytics.",
+                "Complex real-time fraud detection.",
+                "Enterprise-level integration (complex ERP, legacy systems, IoT).",
+                "Dedicated team/account manager, on-site support if requested.",
+                "High security (Vietnam/PDPA compliance).",
+                "Continuous model optimization + retraining on new data.",
+                "24/7 dedicated support + high SLA."
+            ]
         },
         "features": {
             "basic": "Basic Features",
@@ -321,27 +364,139 @@
                     "Maintenance Prediction",
                     "Sentiment Analysis",
                     "Fraud Detection"
-                ]
+                ],
+                "tiers": {
+                    "basic": "1200 - 1500",
+                    "standard": "1500 - 4000",
+                    "premium": "4000 - 12000"
+                },
+                "tierFeatures": {
+                    "basic": [
+                        "Basic AI integration into existing systems (website, app, simple CRM).",
+                        "Rule-based + simple AI customer support chatbot (automatic FAQ, 24/7 support on 1-2 channels: website + Zalo/Messenger).",
+                        "Basic sentiment analysis on feedback/chat.",
+                        "Initial data training using customer-provided data.",
+                        "Email/ticket support + team training.",
+                        "Maintenance for the first 6-12 months.",
+                        "No predictive/deep features; uses ready-made APIs (FPT/Viettel/OpenAI)."
+                    ],
+                    "standard": [
+                        "Full AI integration into legacy systems (outdated CRM, database, light ERP).",
+                        "Advanced customer support chatbot (strong Vietnamese NLP, multi-turn conversations, voice integration if needed).",
+                        "Basic predictive maintenance (on historical data).",
+                        "Detailed sentiment analysis + basic fraud detection (anomaly detection on transactions).",
+                        "Multi-channel integration (website, Zalo, Facebook, email).",
+                        "Light model fine-tuning with enterprise data.",
+                        "Simple AI insights reporting dashboard.",
+                        "24/7 chat/email support with priority.",
+                        "12-month maintenance + extension option."
+                    ],
+                    "premium": [
+                        "Deep/comprehensive custom integration (on-premise if required, API-first approach).",
+                        "Custom AI models (fine-tune industry-specific LLM: retail, finance...).",
+                        "Full advanced suite: Chatbot + deep predictive maintenance (time-series), sentiment analysis + customer behavior analytics.",
+                        "Complex real-time fraud detection.",
+                        "Enterprise-level integration (complex ERP, legacy systems, IoT).",
+                        "Dedicated team/account manager, on-site support if requested.",
+                        "High security (Vietnam/PDPA compliance).",
+                        "Continuous model optimization + retraining on new data.",
+                        "24/7 dedicated support + high SLA."
+                    ]
+                }
             },
             "digital-system": {
                 "name": "Digital System Deployment",
                 "description": "Build a digital platform for comprehensive business process management.",
                 "features": [
-                    "ERP System",
-                    "Warehouse Management",
-                    "Automated Reporting",
-                    "Omnichannel Integration"
-                ]
+                    "Digital Economy",
+                    "Digital Platform",
+                    "Process Automation",
+                    "Digital Data"
+                ],
+                "tiers": {
+                    "basic": "2000 - 4000",
+                    "standard": "5000 - 12000",
+                    "premium": "12000 - 20000"
+                },
+                "tierFeatures": {
+                    "basic": [
+                        "Basic – Small Scale, Quick Start",
+                        "Custom development of a basic digital platform (web-based or hybrid app) for core business process management.",
+                        "Key modules: Sales management, Inventory management, Simple customer management (CRM), Basic accounting.",
+                        "Basic sales channel integration (custom-built website, Zalo OA, Facebook via proprietary APIs).",
+                        "Simple reporting dashboard (revenue, stock levels, potential customers) with custom charts.",
+                        "Initial data migration from Excel files or simple legacy systems.",
+                        "Team training + custom user guides.",
+                        "Email/ticket support + maintenance for the first 6-12 months (bug fixes, minor updates)."
+                    ],
+                    "standard": [
+                        "Custom development of a comprehensive digital system for end-to-end business process management.",
+                        "Full modules: Sales (orders, quotes), Procurement, Inventory (in/out/stock tracking), Light manufacturing (if applicable), Detailed accounting (invoices, receivables), HR (payroll, attendance), CRM (lead/opportunity management).",
+                        "Process automation (custom workflows for approvals, automated reminders, electronic invoicing).",
+                        "Multi-channel integration (custom website, Zalo, Facebook, email, POS if needed) via self-developed APIs.",
+                        "Detailed reporting dashboard + real-time KPIs (basic revenue forecasting, sales analytics).",
+                        "Data migration from legacy systems (Excel, old software) with custom mapping.",
+                        "Industry-specific customization (retail, e-commerce, services) based on detailed requirements.",
+                        "Advanced training + 24/7 chat/email support with priority handling.",
+                        "12-month maintenance + extension options (minor feature updates)."
+                    ],
+                    "premium": [
+                        "Custom development of a fully scalable digital platform (multi-company, multi-location if needed).",
+                        "Advanced integrations: IoT (custom device monitoring), Deep business intelligence (forecasting, basic predictive analytics), APIs for third-party connections (banks, logistics, e-tax).",
+                        "Complex process customization (multi-stage manufacturing, supply chain, project management, detailed role-based access).",
+                        "Enterprise dashboard (real-time BI, custom reports, mobile access).",
+                        "Migration & integration of complex legacy systems (data cleansing, custom ETL).",
+                        "On-premise/hybrid/private cloud deployment if high security is required.",
+                        "Dedicated development team + account manager, on-site support if requested.",
+                        "High security (Vietnam PDPA compliance, encryption, audit logs).",
+                        "Continuous optimization (updates based on new data, system scaling).",
+                        "24/7 dedicated support + high SLA (response time <1 hour, 99.9% uptime)."
+                    ]
+                }
             },
             "crm-migration": {
-                "name": "Legacy CRM Migration",
+                "name": "Legacy System Migration",
                 "description": "Securely migrate data from old systems to modern management platforms.",
                 "features": [
-                    "Data Cleaning",
-                    "Field Mapping",
-                    "Staff Training",
-                    "Absolute Security"
-                ]
+                    "Legacy System Replacement",
+                    "Build New System",
+                    "Secure Legacy Migration",
+                    "Legacy Transformation"
+                ],
+                "tiers": {
+                    "basic": "3000 - 6000",
+                    "standard": "6000 - 12000",
+                    "premium": "12000 - 20000"
+                },
+                "tierFeatures": {
+                    "basic": [
+                        "Basic – Small Scale, Quick Replacement",
+                        "Complete replacement of legacy system with custom new platform (web-based, core modules).",
+                        "Build essential modules: CRM, Sales, Inventory, Basic accounting.",
+                        "Secure data migration from old systems (Excel/DB) with basic cleansing.",
+                        "Basic channel integration (custom website, Zalo OA).",
+                        "Simple reporting dashboard + team training.",
+                        "Email/ticket support + 6-12 months maintenance.",
+                        "Security: Encrypted migration, zero data loss."
+                    ],
+                    "standard": [
+                        "Full replacement of legacy with comprehensive custom system (end-to-end).",
+                        "Complete modules: 360° CRM, Procurement/Sales, Inventory, Light manufacturing, Detailed accounting, HR, Automated workflows.",
+                        "Advanced data migration (full history) with deep cleansing & validation.",
+                        "Multi-channel integration (website, Zalo, Facebook, email, POS).",
+                        "Real-time KPI dashboard + migration report (0% loss).",
+                        "Industry-specific customization + advanced training.",
+                        "24/7 priority support + 12-month maintenance + extensions."
+                    ],
+                    "premium": [
+                        "Full-scale replacement with highly scalable custom platform.",
+                        "Advanced modules: Deep BI, IoT, Third-party APIs, Complex custom processes.",
+                        "Big data/legacy migration (zero-downtime, phased).",
+                        "Enterprise security (PDPA, encryption, audits).",
+                        "Dedicated team + account manager, on-site if needed.",
+                        "Continuous optimization + 24/7 dedicated support + high SLA."
+                    ]
+                }
             },
             "digital-consulting": {
                 "name": "Digital Transformation Consulting",
@@ -351,7 +506,38 @@
                     "Roadmap Planning",
                     "Technology Consulting",
                     "Implementation Monitoring"
-                ]
+                ],
+                "tiers": {
+                    "basic": "1000 - 2000",
+                    "standard": "2000 - 8000",
+                    "premium": "8000 - 20000"
+                },
+                "tierFeatures": {
+                    "basic": [
+                        "Current status assessment (Process Audit): Interviews, system survey, digital maturity evaluation.",
+                        "Basic roadmap planning: 1-2 year prioritized steps.",
+                        "Technology consulting: Simple tech stack recommendations.",
+                        "Initial implementation monitoring: Progress reports for 3-6 months.",
+                        "Deliverables: Status report + roadmap PDF + workshops.",
+                        "Email/ticket support + 6-month advisory maintenance."
+                    ],
+                    "standard": [
+                        "Detailed process audit: Deep business process analysis, gap identification, industry benchmarking.",
+                        "Comprehensive roadmap: 3-5 year phased plan with KPIs & ROI estimates.",
+                        "In-depth technology consulting: Tailored tech recommendations (custom/AI integration).",
+                        "Ongoing implementation monitoring: Milestone tracking, risk management, adjustments.",
+                        "Deliverables: Detailed report, dashboard, training sessions.",
+                        "24/7 priority support + 12-month follow-up."
+                    ],
+                    "premium": [
+                        "Advanced audit: Full governance, cybersecurity, compliance review.",
+                        "Strategic roadmap: Long-term 5+ years, scenario planning aligned with business goals.",
+                        "Enterprise technology consulting: Complex stack advice, vendor evaluation.",
+                        "Continuous monitoring: Dedicated oversight, monthly reviews, optimization.",
+                        "Deliverables: Executive reports, interactive tools, leadership training.",
+                        "24/7 dedicated support + high SLA."
+                    ]
+                }
             }
         }
     }

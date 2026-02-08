@@ -1,8 +1,22 @@
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import { ArrowRight } from 'lucide-react';
 import { BLOG_POSTS } from '../data/newsData';
+import { getRoutePath } from '../utils/routeConstants';
 
 export default function News() {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    const navigate = useNavigate();
+
+    const handlePostClick = (post: typeof BLOG_POSTS[0]) => {
+        const currentLang = i18n.language as 'en' | 'vi';
+        const slug = post.slugs[currentLang] || post.slugs.en;
+        const route = getRoutePath('newsDetail', i18n.language);
+
+        if (route) {
+            navigate(route.replace(':id', slug));
+        }
+    };
 
     return (
         <section className="py-20 bg-slate-50 min-h-screen">
@@ -16,7 +30,9 @@ export default function News() {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     {BLOG_POSTS.map(post => (
-                        <div key={post.id} className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all group flex flex-col h-full">
+                        <div key={post.id}
+                            className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all group flex flex-col h-full cursor-pointer"
+                            onClick={() => handlePostClick(post)}>
                             <div className="overflow-hidden h-48 flex-shrink-0">
                                 <img
                                     src={post.image}
@@ -29,16 +45,16 @@ export default function News() {
                                     <span className="text-xs font-bold text-blue-600 uppercase tracking-wider">{t(post.category)}</span>
                                     <span className="text-xs text-slate-400">{post.date}</span>
                                 </div>
-                                <h3 className="text-xl font-bold mb-3 text-slate-900 hover:text-blue-600 cursor-pointer transition-colors line-clamp-2 min-h-[3.5rem]">
+                                <h3 className="text-xl font-bold mb-3 text-slate-900 hover:text-blue-600 transition-colors line-clamp-2 min-h-[3.5rem]">
                                     {t(post.title)}
                                 </h3>
                                 <p className="text-slate-600 text-sm mb-4 line-clamp-2 min-h-[2.5rem]">
                                     {t(post.excerpt)}
                                 </p>
                                 <div className="flex items-center justify-between border-t border-slate-100 pt-4 mt-auto">
-                                    <span className="text-xs font-medium text-slate-500">{post.author}</span>
-                                    <button className="text-blue-600 text-sm font-medium hover:underline flex items-center gap-1">
-                                        {t('news.readMore')}
+                                    {post.author && <span className="text-xs font-medium text-slate-500">{post.author}</span>}
+                                    <button className="text-blue-600 text-sm font-medium hover:underline flex items-center gap-1 ml-auto">
+                                        {t('news.readMore')} <ArrowRight className="w-4 h-4 ml-1" />
                                     </button>
                                 </div>
                             </div>

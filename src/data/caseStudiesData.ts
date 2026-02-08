@@ -1,4 +1,5 @@
 import { CaseStudy } from '../types';
+import polewearImage from '../assets/polewear.jpg';
 
 export const caseStudies: CaseStudy[] = [
   // 1. Du lịch & Dịch vụ Giải trí
@@ -185,7 +186,7 @@ export const caseStudies: CaseStudy[] = [
     industry: 'Thời trang pole dance',
     category: 'Thể thao, Thời trang & Phong cách Sống',
     description: 'Fashion e-commerce với AI style advisor và virtual try-on',
-    image: 'https://images.pexels.com/photos/7289714/pexels-photo-7289714.jpeg?auto=compress&cs=tinysrgb&w=600',
+    image: polewearImage,
     tags: ['E-commerce', 'AI Fashion', 'AR Try-on']
   },
   {
