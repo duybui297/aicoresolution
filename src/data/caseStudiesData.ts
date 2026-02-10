@@ -1,5 +1,35 @@
 import { CaseStudy } from '../types';
-import polewearImage from '../assets/polewear.jpg';
+import anabasRestaurantImg from '../assets/casestudies/Banner_Anabas_Restaurant.png';
+import chauKitchenImg from '../assets/casestudies/chau kitchen & bar.jpg';
+import tanNhatSuongImg from '../assets/casestudies/tan nhat suong.jpg';
+import veThamQuanSapaImg from '../assets/casestudies/vethamquansapa.webp';
+import massageBongLaiCacImg from '../assets/casestudies/massagebonglaicac.png';
+import superfitImg from '../assets/casestudies/Superfit.jpg';
+import duHocIccImg from '../assets/casestudies/Du hoc ICC.png';
+import duHocHangKangImg from '../assets/casestudies/Du học Hangkang.jpg';
+import tamLyGiaoDucHanhPhucImg from '../assets/casestudies/tamlygiaoduchanhphuc.png';
+import thuaPhatLaiTrongTinImg from '../assets/casestudies/thuaphatlaitrongtin.jpg';
+import luxHoldingsImg from '../assets/casestudies/lux.jpg';
+import royalEyelashImg from '../assets/casestudies/royal-eyelash.png';
+import thaoMocCongHeImg from '../assets/casestudies/thaomocconghe.png';
+import stellaNailsImg from '../assets/casestudies/stellanail.png';
+import daiThanhPharmaImg from '../assets/casestudies/daithanhparma.png';
+import tiemHoa1989Img from '../assets/casestudies/1989.png';
+import mhSportImg from '../assets/casestudies/Minhhong-sport.png';
+import rosePolewearImg from '../assets/casestudies/rosepolewear.jpeg';
+import shomeLuxuryImg from '../assets/casestudies/1.4-SLIDE-1.webp';
+import decalXeIuImg from '../assets/casestudies/decalxeiu.png';
+import kotiChargeImg from '../assets/casestudies/koticharge.png';
+import mewsicPetShopImg from '../assets/casestudies/mewsic.png';
+import petNatureImg from '../assets/casestudies/winvn.jpg';
+import tWolfImg from '../assets/casestudies/twolf.jpg';
+import pcMasterImg from '../assets/casestudies/aiwolf.jpg';
+import thienAnProImg from '../assets/casestudies/thienanpro.png';
+import deviaSteelImg from '../assets/casestudies/deviasteel.png';
+import jicoWoodImg from '../assets/casestudies/jico.jpg';
+import vaceraImg from '../assets/casestudies/vacera.jpg';
+import sonX900TitanImg from '../assets/casestudies/sonx900titan.png';
+import xeNangSImg from '../assets/casestudies/xenang.jpg';
 
 export const caseStudies: CaseStudy[] = [
   // 1. Du lịch & Dịch vụ Giải trí
@@ -9,8 +39,8 @@ export const caseStudies: CaseStudy[] = [
     name: 'Anabas Restaurant',
     industry: 'Nhà hàng đặc sản',
     category: 'Du lịch & Dịch vụ Giải trí',
-    description: 'Hệ thống đặt bàn và quản lý nhà hàng với AI chatbot hỗ trợ khách hàng 24/7',
-    image: 'https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg?auto=compress&cs=tinysrgb&w=600',
+    description: 'Famous specialty restaurant in Hoi An Ancient Town serving cao lau, mi quang, fresh grilled seafood in cozy friendly atmosphere.',
+    image: anabasRestaurantImg,
     tags: ['Website', 'AI Chatbot', 'Booking System']
   },
   {
@@ -19,8 +49,8 @@ export const caseStudies: CaseStudy[] = [
     name: 'Chau Kitchen & Bar',
     industry: 'Nhà hàng fusion',
     category: 'Du lịch & Dịch vụ Giải trí',
-    description: 'Restaurant & bar với AI menu optimization và event management',
-    image: 'https://images.pexels.com/photos/941861/pexels-photo-941861.jpeg?auto=compress&cs=tinysrgb&w=600',
+    description: 'Châu Kitchen & Bar Hoi An delicious Asian-European fusion dishes charming century-old house serving international guests professionally.',
+    image: chauKitchenImg,
     tags: ['Website', 'AI Menu', 'Reservation']
   },
   {
@@ -29,8 +59,8 @@ export const caseStudies: CaseStudy[] = [
     name: 'Tân Nhật Sương Hotel',
     industry: 'Khách sạn nghỉ dưỡng',
     category: 'Du lịch & Dịch vụ Giải trí',
-    description: 'Hotel management với AI dynamic pricing và guest experience optimization',
-    image: 'https://images.pexels.com/photos/258154/pexels-photo-258154.jpeg?auto=compress&cs=tinysrgb&w=600',
+    description: 'Affordable quality Tan Nhat Suong Hotel Binh Dinh comfortable rooms pool gym near attractions free wifi parking relaxed stay.',
+    image: tanNhatSuongImg,
     tags: ['Booking', 'AI Pricing', 'CRM']
   },
   {
@@ -39,18 +69,18 @@ export const caseStudies: CaseStudy[] = [
     name: 'Vé Tham Quan Sapa',
     industry: 'Vé tham quan du lịch',
     category: 'Du lịch & Dịch vụ Giải trí',
-    description: 'Travel booking platform với AI itinerary planner và price prediction',
-    image: 'https://images.pexels.com/photos/1659438/pexels-photo-1659438.jpeg?auto=compress&cs=tinysrgb&w=600',
+    description: 'Official Sapa attraction tickets including Fansipan cable car Cat Cat village best prices fast online booking convenient.',
+    image: veThamQuanSapaImg,
     tags: ['Booking', 'AI Planning', 'Travel']
   },
   {
     id: 10,
     url: 'https://massagebonglaicacdn.com.vn/',
-    name: 'Massage Bồng Lai Cà Đăng',
+    name: 'Massage Bồng Lai Các',
     industry: 'Dịch vụ massage',
     category: 'Du lịch & Dịch vụ Giải trí',
-    description: 'Spa booking platform với AI therapist matching và customer preferences',
-    image: 'https://images.pexels.com/photos/3757942/pexels-photo-3757942.jpeg?auto=compress&cs=tinysrgb&w=600',
+    description: 'Premium 5-star Bồng Lai Các Massage Da Nang luxurious space professional therapists diverse relaxing packages attractive options.',
+    image: massageBongLaiCacImg,
     tags: ['Booking', 'AI Matching', 'CRM']
   },
   {
@@ -59,8 +89,8 @@ export const caseStudies: CaseStudy[] = [
     name: 'Superfit Hoi An',
     industry: 'Phòng gym du lịch',
     category: 'Du lịch & Dịch vụ Giải trí',
-    description: 'Gym management system với AI workout planner và member tracking',
-    image: 'https://images.pexels.com/photos/1552252/pexels-photo-1552252.jpeg?auto=compress&cs=tinysrgb&w=600',
+    description: "Hoi An's top modern gym with state-of-the-art equipment airy space ideal for tourists locals bilingual service great amenities.",
+    image: superfitImg,
     tags: ['Management', 'AI Trainer', 'Mobile App']
   },
 
@@ -71,8 +101,8 @@ export const caseStudies: CaseStudy[] = [
     name: 'Du Học ICC',
     industry: 'Tư vấn du học Nhật',
     category: 'Giáo dục & Tư vấn Chuyên môn',
-    description: 'Study abroad consulting với AI university matching và application support',
-    image: 'https://images.pexels.com/photos/1454360/pexels-photo-1454360.jpeg?auto=compress&cs=tinysrgb&w=600',
+    description: 'ICC Study Abroad reliable Japan consulting high visa success scholarships full support for Vietnamese students.',
+    image: duHocIccImg,
     tags: ['Portal', 'AI Matching', 'Education']
   },
   {
@@ -81,8 +111,8 @@ export const caseStudies: CaseStudy[] = [
     name: 'Du Học Hàn Kang',
     industry: 'Tư vấn du học Hàn',
     category: 'Giáo dục & Tư vấn Chuyên môn',
-    description: 'Korea study consulting với AI language assessment và visa guidance',
-    image: 'https://images.pexels.com/photos/289737/pexels-photo-289737.jpeg?auto=compress&cs=tinysrgb&w=600',
+    description: 'Hankang Study Abroad leads Korea consulting Da Nang top scholarships high visa intensive Korean training.',
+    image: duHocHangKangImg,
     tags: ['Portal', 'AI Assessment', 'Education']
   },
   {
@@ -91,8 +121,8 @@ export const caseStudies: CaseStudy[] = [
     name: 'Tâm Lý Giáo Dục Hạnh Phúc',
     industry: 'Giáo dục tâm lý',
     category: 'Giáo dục & Tư vấn Chuyên môn',
-    description: 'Mental health platform với AI counseling support và mood tracking',
-    image: 'https://images.pexels.com/photos/4101143/pexels-photo-4101143.jpeg?auto=compress&cs=tinysrgb&w=600',
+    description: 'Happiness Special Education Center supports autistic children developmental disorders through in-depth psychological intervention programs effectively.',
+    image: tamLyGiaoDucHanhPhucImg,
     tags: ['Portal', 'AI Counseling', 'Healthcare']
   },
   {
@@ -101,8 +131,8 @@ export const caseStudies: CaseStudy[] = [
     name: 'Thừa Phát Lại Trọng Tín',
     industry: 'Dịch vụ pháp lý tư vấn',
     category: 'Giáo dục & Tư vấn Chuyên môn',
-    description: 'Legal service platform với AI document processing và case management',
-    image: 'https://images.pexels.com/photos/6077326/pexels-photo-6077326.jpeg?auto=compress&cs=tinysrgb&w=600',
+    description: 'Legal service platform with AI document processing and case management',
+    image: thuaPhatLaiTrongTinImg,
     tags: ['Portal', 'AI Document', 'Legal Tech']
   },
   {
@@ -111,8 +141,8 @@ export const caseStudies: CaseStudy[] = [
     name: 'Lux Holdings',
     industry: 'Tư vấn bất động sản',
     category: 'Giáo dục & Tư vấn Chuyên môn',
-    description: 'Real estate platform với AI property valuation và market analysis',
-    image: 'https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=600',
+    description: 'Top high-end real estate distributor exclusive agent for Vinhomes Masterise Sun Group featuring major nationwide premium projects reliably.',
+    image: luxHoldingsImg,
     tags: ['Portal', 'AI Analytics', 'CRM']
   },
 
@@ -123,8 +153,8 @@ export const caseStudies: CaseStudy[] = [
     name: 'Royal Eyelash',
     industry: 'Eyelash & phụ kiện',
     category: 'Làm đẹp & Chăm sóc Cá nhân',
-    description: 'Beauty service booking với AI style recommendation và before/after visualization',
-    image: 'https://images.pexels.com/photos/3993449/pexels-photo-3993449.jpeg?auto=compress&cs=tinysrgb&w=600',
+    description: 'Royal Eyelash Vietnam specializes in eyelash extensions false lashes premium care products professional safe quality for customers.',
+    image: royalEyelashImg,
     tags: ['Booking', 'AI Beauty', 'Mobile App']
   },
   {
@@ -133,8 +163,8 @@ export const caseStudies: CaseStudy[] = [
     name: 'Thảo Mộc Công Hẻ',
     industry: 'Sản phẩm thảo mộc chăm sóc',
     category: 'Làm đẹp & Chăm sóc Cá nhân',
-    description: 'Health supplement store với AI health advisor và personalized recommendations',
-    image: 'https://images.pexels.com/photos/1549200/pexels-photo-1549200.jpeg?auto=compress&cs=tinysrgb&w=600',
+    description: 'Herbal technology brand offering natural shampoo toothpaste body wash safe gentle daily care for the whole family.',
+    image: thaoMocCongHeImg,
     tags: ['E-commerce', 'AI Advisor', 'Healthcare']
   },
   {
@@ -143,8 +173,8 @@ export const caseStudies: CaseStudy[] = [
     name: 'Stella Nails',
     industry: 'Nail & spa',
     category: 'Làm đẹp & Chăm sóc Cá nhân',
-    description: 'Nail salon booking với AI design preview và customer loyalty program',
-    image: 'https://images.pexels.com/photos/3997379/pexels-photo-3997379.jpeg?auto=compress&cs=tinysrgb&w=600',
+    description: 'Stella Nails & Spa Canada expert nail care creative manicures pedicures stunning unique designs professionally.',
+    image: stellaNailsImg,
     tags: ['Booking', 'AI Design', 'Beauty']
   },
   {
@@ -153,8 +183,8 @@ export const caseStudies: CaseStudy[] = [
     name: 'Đại Thành Pharma',
     industry: 'Dược phẩm & thực phẩm chức năng',
     category: 'Làm đẹp & Chăm sóc Cá nhân',
-    description: 'Pharmaceutical e-commerce với AI prescription checking và drug interaction alert',
-    image: 'https://images.pexels.com/photos/356040/pexels-photo-356040.jpeg?auto=compress&cs=tinysrgb&w=600',
+    description: 'Dai Thanh Pharma manufactures trusted pharmaceuticals supplements focused on family daily health wellness.',
+    image: daiThanhPharmaImg,
     tags: ['E-commerce', 'AI Healthcare', 'B2B/B2C']
   },
   {
@@ -163,8 +193,8 @@ export const caseStudies: CaseStudy[] = [
     name: 'Tiệm Hoa 1989',
     industry: 'Hoa tươi & quà tặng cá nhân',
     category: 'Làm đẹp & Chăm sóc Cá nhân',
-    description: 'Online flower shop với AI image search và delivery optimization',
-    image: 'https://images.pexels.com/photos/931177/pexels-photo-931177.jpeg?auto=compress&cs=tinysrgb&w=600',
+    description: 'Trusted fresh flower shop in Da Nang offering bouquets gift baskets boxes, fast 60-minute delivery with daily imported high-quality flowers.',
+    image: tiemHoa1989Img,
     tags: ['E-commerce', 'AI Search', 'Logistics']
   },
 
@@ -175,8 +205,8 @@ export const caseStudies: CaseStudy[] = [
     name: 'MH Sport',
     industry: 'Cửa hàng thể thao',
     category: 'Thể thao, Thời trang & Phong cách Sống',
-    description: 'Sports retail platform với AI size recommendation và inventory management',
-    image: 'https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?auto=compress&cs=tinysrgb&w=600',
+    description: 'MinhongSport online sports supermarket selling football badminton pickleball shoes apparel accessories top brands great prices custom printing available.',
+    image: mhSportImg,
     tags: ['E-commerce', 'AI Sizing', 'Inventory']
   },
   {
@@ -185,8 +215,8 @@ export const caseStudies: CaseStudy[] = [
     name: 'Rose Polewear',
     industry: 'Thời trang pole dance',
     category: 'Thể thao, Thời trang & Phong cách Sống',
-    description: 'Fashion e-commerce với AI style advisor và virtual try-on',
-    image: polewearImage,
+    description: 'Rosepolewear pole dance activewear sexy comfortable modern designs for passionate active women fitness enthusiasts.',
+    image: rosePolewearImg,
     tags: ['E-commerce', 'AI Fashion', 'AR Try-on']
   },
   {
@@ -195,8 +225,8 @@ export const caseStudies: CaseStudy[] = [
     name: 'Shome Luxury',
     industry: 'Thiết kế nội thất luxury',
     category: 'Thể thao, Thời trang & Phong cách Sống',
-    description: 'E-commerce platform với AI recommendation và AR visualization',
-    image: 'https://images.pexels.com/photos/1350789/pexels-photo-1350789.jpeg?auto=compress&cs=tinysrgb&w=600',
+    description: 'Leading Vietnam luxury interior design and construction brand specializing in villas apartments offices with Scandinavian Indochine elegant unique styles.',
+    image: shomeLuxuryImg,
     tags: ['E-commerce', 'AI Recommendation', 'AR']
   },
   {
@@ -205,8 +235,8 @@ export const caseStudies: CaseStudy[] = [
     name: 'Decal Xe Iu',
     industry: 'Decal xe cá nhân hóa',
     category: 'Thể thao, Thời trang & Phong cách Sống',
-    description: 'Auto decal service với AI design tool và visualization on car',
-    image: 'https://images.pexels.com/photos/3802508/pexels-photo-3802508.jpeg?auto=compress&cs=tinysrgb&w=600',
+    description: 'Decal Xe iu custom motorcycle car stickers personalized high-quality fade-resistant nationwide fast delivery service.',
+    image: decalXeIuImg,
     tags: ['Service', 'AI Design', 'Visualization']
   },
   {
@@ -215,8 +245,8 @@ export const caseStudies: CaseStudy[] = [
     name: 'Koti Charge',
     industry: 'Trạm sạc xe điện lifestyle',
     category: 'Thể thao, Thời trang & Phong cách Sống',
-    description: 'EV charging platform với AI station finder và usage optimization',
-    image: 'https://images.pexels.com/photos/110844/pexels-photo-110844.jpeg?auto=compress&cs=tinysrgb&w=600',
+    description: 'KotiCharge provides fast convenient electric vehicle charging stations supporting green eco-friendly sustainable mobility future.',
+    image: kotiChargeImg,
     tags: ['Platform', 'AI Optimization', 'IoT']
   },
 
@@ -227,18 +257,18 @@ export const caseStudies: CaseStudy[] = [
     name: 'Mewsic Pet Shop',
     industry: 'Cửa hàng thú cưng',
     category: 'Thú cưng & Sản phẩm Tiêu dùng',
-    description: 'Pet care platform với AI health monitoring và grooming booking',
-    image: 'https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=600',
+    description: 'Mewsic Pet Shop provides pet food toys accessories grooming spa boarding services for dogs cats fast convenient delivery.',
+    image: mewsicPetShopImg,
     tags: ['E-commerce', 'AI Healthcare', 'Booking']
   },
   {
     id: 32,
     url: 'https://petnature.vn/',
-    name: 'Pet Nature',
+    name: 'WinVN',
     industry: 'Sản phẩm thú cưng tự nhiên',
     category: 'Thú cưng & Sản phẩm Tiêu dùng',
-    description: 'Natural pet food store với AI nutritional planner',
-    image: 'https://images.pexels.com/photos/1108099/pexels-photo-1108099.jpeg?auto=compress&cs=tinysrgb&w=600',
+    description: 'WinVN offers natural eco-friendly pet care products food accessories safe gentle for beloved dogs and cats.',
+    image: petNatureImg,
     tags: ['E-commerce', 'AI Nutrition', 'Organic']
   },
   {
@@ -247,18 +277,18 @@ export const caseStudies: CaseStudy[] = [
     name: 'T-Wolf',
     industry: 'Phụ kiện máy tính tiêu dùng',
     category: 'Thú cưng & Sản phẩm Tiêu dùng',
-    description: 'Gaming gear store với AI PC builder và compatibility checker',
-    image: 'https://images.pexels.com/photos/2582937/pexels-photo-2582937.jpeg?auto=compress&cs=tinysrgb&w=600',
+    description: 'T-WOLF tech store specializes in gaming keyboards mice speakers high-quality KBM combos perfect for passionate gamers enthusiasts.',
+    image: tWolfImg,
     tags: ['E-commerce', 'AI Assistant', 'Configuration']
   },
   {
     id: 33,
     url: 'https://pcmaster.vn/',
-    name: 'PC Master',
+    name: 'AIWOLF',
     industry: 'Linh kiện máy tính',
     category: 'Thú cưng & Sản phẩm Tiêu dùng',
-    description: 'Computer components store với AI build optimizer',
-    image: 'https://images.pexels.com/photos/2582937/pexels-photo-2582937.jpeg?auto=compress&cs=tinysrgb&w=600',
+    description: 'AIWOLF sells high-performance computer components graphics cards motherboards PC building accessories for gamers professionals.',
+    image: pcMasterImg,
     tags: ['E-commerce', 'AI Hardware', 'Tech']
   },
   {
@@ -267,8 +297,8 @@ export const caseStudies: CaseStudy[] = [
     name: 'Thiên An Pro',
     industry: 'Vật tư tiêu dùng công nghiệp',
     category: 'Thú cưng & Sản phẩm Tiêu dùng',
-    description: 'Electrical equipment store với AI product matching và installation guide',
-    image: 'https://images.pexels.com/photos/257736/pexels-photo-257736.jpeg?auto=compress&cs=tinysrgb&w=600',
+    description: 'Thien An Pro distributes industrial supplies technical equipment comprehensive reliable solutions for manufacturing businesses nationwide.',
+    image: thienAnProImg,
     tags: ['E-commerce', 'AI Assistant', 'B2B']
   },
 
@@ -279,8 +309,8 @@ export const caseStudies: CaseStudy[] = [
     name: 'Devia Steel',
     industry: 'Cửa thép công nghiệp',
     category: 'Xây dựng, Vật liệu & Thiết bị Công nghiệp',
-    description: 'Manufacturing management với AI production optimization và quality control',
-    image: 'https://images.pexels.com/photos/1216589/pexels-photo-1216589.jpeg?auto=compress&cs=tinysrgb&w=600',
+    description: 'Deviasteel manufactures durable industrial steel doors rolling shutters high-quality building materials for factories large projects reliably.',
+    image: deviaSteelImg,
     tags: ['ERP', 'AI Optimization', 'IoT']
   },
   {
@@ -289,8 +319,8 @@ export const caseStudies: CaseStudy[] = [
     name: 'Jico Wood',
     industry: 'Cửa gỗ composite',
     category: 'Xây dựng, Vật liệu & Thiết bị Công nghiệp',
-    description: 'Wooden furniture store với AI design customization và price estimation',
-    image: 'https://images.pexels.com/photos/1350587/pexels-photo-1350587.jpeg?auto=compress&cs=tinysrgb&w=600',
+    description: 'Jicowood specializes in premium composite wood doors waterproof soundproof durable beautiful for modern homes buildings.',
+    image: jicoWoodImg,
     tags: ['E-commerce', 'AI Customization', '3D']
   },
   {
@@ -299,8 +329,8 @@ export const caseStudies: CaseStudy[] = [
     name: 'Vacera',
     industry: 'Gạch & vật liệu trang trí',
     category: 'Xây dựng, Vật liệu & Thiết bị Công nghiệp',
-    description: 'Ceramic & sanitary ware với AI bathroom designer và product recommendation',
-    image: 'https://images.pexels.com/photos/1103970/pexels-photo-1103970.jpeg?auto=compress&cs=tinysrgb&w=600',
+    description: 'Vacera produces flexible tiles mosaics decorative stones modern interior exterior designs superior quality variety.',
+    image: vaceraImg,
     tags: ['E-commerce', 'AI Design', 'B2B/B2C']
   },
   {
@@ -309,8 +339,8 @@ export const caseStudies: CaseStudy[] = [
     name: 'Sơn X900 Titan',
     industry: 'Sơn & vật liệu chống thấm',
     category: 'Xây dựng, Vật liệu & Thiết bị Công nghiệp',
-    description: 'Construction material store với AI color matching và quantity calculator',
-    image: 'https://images.pexels.com/photos/1669754/pexels-photo-1669754.jpeg?auto=compress&cs=tinysrgb&w=600',
+    description: 'X900 Titan premium waterproof wall paint durable color retention excellent protection for long-term construction projects.',
+    image: sonX900TitanImg,
     tags: ['E-commerce', 'AI Calculator', 'B2B']
   },
   {
@@ -319,8 +349,8 @@ export const caseStudies: CaseStudy[] = [
     name: 'Xe Nâng S',
     industry: 'Xe nâng & thiết bị công nghiệp',
     category: 'Xây dựng, Vật liệu & Thiết bị Công nghiệp',
-    description: 'Forklift service platform với AI maintenance prediction và fleet management',
-    image: 'https://images.pexels.com/photos/1267338/pexels-photo-1267338.jpeg?auto=compress&cs=tinysrgb&w=600',
+    description: 'Leading forklift rental repair sales service reliable industrial lifting equipment solutions across Vietnam.',
+    image: xeNangSImg,
     tags: ['B2B', 'AI Maintenance', 'IoT']
   }
 ];

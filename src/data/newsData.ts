@@ -2,6 +2,15 @@ import openClawImage from '../assets/openclaw_article.png';
 import openClawDetail1 from '../assets/openclaw_detail_1.png';
 import openClawDetail2 from '../assets/openclaw_detail_2.png';
 import openClawDetail3 from '../assets/openclaw_detail_3.png';
+import bai2Image from '../assets/bai2.png';
+import bai21Image from '../assets/bai21.png';
+import bai23Image from '../assets/bai23.png';
+import bai3Image from '../assets/bai3.png';
+import bai31Image from '../assets/bai31.png';
+import bai32Image from '../assets/bai32.png';
+import bai4Image from '../assets/bai4.png';
+import bai4Image2 from '../assets/bai4-2.png';
+import bai4Image3 from '../assets/bai4-3.png';
 
 export interface BlogPost {
     id: number;
@@ -21,6 +30,21 @@ export interface BlogPost {
 
 export const BLOG_POSTS: BlogPost[] = [
     {
+        id: 4,
+        slugs: {
+            en: 'tokens-in-ai-understanding-the-currency-of-artificial-intelligence',
+            vi: 'token-trong-ai-hieu-ve-tien-te-cua-tri-tue-nhan-tao'
+        },
+        title: 'news.posts.post4.title',
+        excerpt: 'news.posts.post4.excerpt',
+        content: 'news.posts.post4.content',
+        contentImages: [bai4Image2, bai4Image3],
+        category: 'news.categories.trends',
+        date: '05 Mar 2026',
+        author: '',
+        image: bai4Image
+    },
+    {
         id: 1,
         slugs: {
             en: 'openclaw-and-the-moment-ai-crosses-the-control-line',
@@ -38,29 +62,31 @@ export const BLOG_POSTS: BlogPost[] = [
     {
         id: 2,
         slugs: {
-            en: 'chatbot-integration-guide-for-smes',
-            vi: 'huong-dan-tich-hop-chatbot-cho-doanh-nghiep-sme'
+            en: 'ai-in-the-it-era-is-learning-to-code-still-necessary',
+            vi: 'ai-trong-thoi-dai-it-lieu-co-con-can-hoc-lap-trinh'
         },
         title: 'news.posts.post2.title',
         excerpt: 'news.posts.post2.excerpt',
         content: 'news.posts.post2.content',
+        contentImages: [bai21Image, bai23Image],
         category: 'news.categories.tips',
         date: '05 Oct 2025',
         author: '',
-        image: 'https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&q=80&w=800'
+        image: bai2Image
     },
     {
         id: 3,
         slugs: {
-            en: 'ai-core-solutions-expands-team',
-            vi: 'ai-core-solutions-mo-rong-doi-ngu'
+            en: 'ai-is-making-building-cheaper-and-thats-the-real-issue',
+            vi: 'ai-khien-viec-build-tro-nen-re-va-do-moi-la-van-de'
         },
         title: 'news.posts.post3.title',
         excerpt: 'news.posts.post3.excerpt',
         content: 'news.posts.post3.content',
+        contentImages: [bai3Image, bai32Image],
         category: 'news.categories.company',
         date: '28 Sep 2025',
         author: '',
-        image: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=800'
+        image: bai31Image
     }
 ];

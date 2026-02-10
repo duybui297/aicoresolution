@@ -12,7 +12,9 @@
         "companyName": "AI Core Solutions",
         "tagline": "AI-Powered Development",
         "contact": "Liên hệ",
-        "news": "Tin tức"
+        "news": "Tin tức",
+        "community": "Cộng đồng",
+        "products": "Sản phẩm"
     },
     "news": {
         "title": "Tin Tức & Sự Kiện",
@@ -27,20 +29,120 @@
                 "content": "Đến nay, trí tuệ nhân tạo không còn là khái niệm xa vời, mà len lỏi vào từng ngóc ngách cuộc sống. Và rồi, OpenClaw xuất hiện, khiến tôi phải dừng lại mà suy ngẫm: Liệu chúng ta đã thực sự sẵn sàng để AI không còn là kẻ quan sát, mà trở thành người hành động ngay trong hệ thống của chính mình?\n\nHồi xưa, AI mang lại cảm giác an toàn. Nó trả lời câu hỏi, gợi ý ý tưởng, thậm chí viết lách thay ta, nhưng luôn ở đằng sau một bức tường vô hình. Quyền kiểm soát vẫn thuộc về con người, không lay chuyển. Thế nhưng, khi những AI agent như thế này bắt đầu mở trình duyệt, đọc file, gửi tin nhắn, và thao tác trực tiếp trên máy tính, mọi thứ thay đổi. Không còn là chuyện AI thông minh đến đâu nữa, mà là ta có dám giao phó hay không. OpenClaw chính là minh chứng sống động cho ranh giới mong manh ấy.\n\nTôi khuyên bạn, đừng vội trao quyền quá sớm, dù sự háo hức có lớn đến đâu. Điều làm OpenClaw khác biệt không phải ở khả năng trò chuyện hay mô hình AI đằng sau, mà ở việc nó được xây dựng để tiếp cận toàn bộ hệ thống mà không có lớp bảo vệ nào. Không sandbox, không rào chắn cứng nhắc. Nếu bạn cho phép, nó sẽ hành động như chính bạn – và đó là một bước nhảy vọt đầy rủi ro.\n\nTừ kinh nghiệm của tôi, khi làm việc với bất kỳ \"tác nhân\" mới nào, dù người hay máy, điều quan trọng nhất không phải tốc độ hay hiệu quả ban đầu, mà là sự thấu hiểu. Bạn cần nắm được cách nó diễn giải lệnh, phản ứng với những khoảng trống ngữ cảnh, và nhất là, nó thất bại theo kiểu gì. Trao full quyền cho AI trước khi nắm rõ những điều đó, chẳng khác nào thả một nhân viên mới vào môi trường sản xuất ngay ngày đầu. Rủi ro không xuất phát từ ý đồ xấu, mà từ sự non nớt trong thiết kế và kỳ vọng của chính chúng ta.\n\n{{IMAGE_0}}\n\nKhả năng thực hiện nhiệm vụ không phải lúc nào cũng đi đôi với độ tin cậy. Trong những lần thử nghiệm thực tế với OpenClaw, tôi thấy nó làm được nhiều việc: mở trình duyệt, kiểm tra liên kết hỏng, thao tác giao diện, thậm chí tương tác qua Telegram. Với các tác vụ đơn giản, lặp lại, ấn tượng ban đầu thật sự mạnh mẽ. Nhưng sau một thời gian gắn bó, sự thật dần lộ rõ: Nó vẫn cần được dẫn dắt từng bước, hiếm khi chủ động thực sự, và thường dừng ở mức \"biết cách làm\" chứ chưa đạt đến \"biết khi nào nên làm\".\n\nĐiều này không phải thất bại, mà là lời nhắc nhở rằng AI agent ngày nay vẫn giống như một thực tập sinh đầy quyền lực hơn là một đồng nghiệp độc lập. Nếu bạn kỳ vọng cao hơn thế, thất vọng sẽ là điều không tránh khỏi. Tôi đã thấy điều tương tự ở nhiều công cụ trước đây – chúng hứa hẹn thay đổi, nhưng cuối cùng vẫn cần bàn tay con người để định hướng.\n\n{{IMAGE_1}}\n\nBảo mật, với tôi, không phải là một tính năng tùy chọn, mà là trách nhiệm cốt lõi. OpenClaw khá thẳng thắn khi tự nhận mình \"risky\", cảnh báo rõ ràng về việc cấp quyền và khuyên người dùng phải am hiểu an ninh. Đó là sự trung thực đáng quý, nhưng cũng đồng nghĩa với việc đẩy hết gánh nặng sang vai chúng ta. Khi AI có thể chạm vào trình duyệt, tài khoản, file và các kênh liên lạc, ranh giới giữa một lỗi nhỏ và thảm họa lớn chỉ cách nhau một sợi chỉ. Trong bối cảnh ấy, cách tiếp cận khôn ngoan không nằm ở việc viết lệnh hoàn hảo, mà ở sự cách ly nghiêm ngặt: máy riêng, tài khoản riêng, dữ liệu không nhạy cảm. Không có cách ly, sự tự chủ của AI không còn là sáng tạo nữa, mà trở thành một ván cược đầy may rủi.\n\nCuối cùng, thực thi không bao giờ thay thế được tư duy. OpenClaw giỏi ở vai trò công cụ hành động, nhưng nó không thể đảm đương việc lập chiến lược, ưu tiên, hay phán đoán trong những tình huống mơ hồ. Hầu hết công việc thực tế không khó vì thao tác, mà khó vì ngữ cảnh phức tạp. Cho đến khi AI học được cách \"không nên làm gì\" tốt như \"nên làm gì\", con người vẫn phải giữ vai trò dẫn dắt – không chỉ giám sát, mà còn định hình.\n\n{{IMAGE_2}}\n\nOpenClaw không phải thất bại, cũng chưa phải đỉnh cao của tương lai AI agent. Nó là một lát cắt chân thực về giai đoạn chuyển tiếp chúng ta đang trải qua: từ AI thụ động sang AI có quyền hành động. Giá trị thực sự của nó nằm ở những câu hỏi nó khơi dậy: Chúng ta sẵn sàng giao quyền cho AI đến mức nào, và với những điều kiện gì? Đó không chỉ là vấn đề kỹ thuật. Đó là về trách nhiệm – trách nhiệm của chúng ta với chính mình và với thế giới mà chúng ta đang xây dựng."
             },
             "post2": {
-                "title": "Hướng dẫn tích hợp Chatbot cho doanh nghiệp SME",
-                "excerpt": "Các bước đơn giản để tự động hóa chăm sóc khách hàng 24/7.",
-                "content": "Nội dung bài viết đang được cập nhật..."
+                "title": "AI trong Thời Đại IT: Liệu Có Còn Cần Học Lập Trình?",
+                "excerpt": "Nếu nhìn lại lịch sử, bạn sẽ thấy: mỗi bước nhảy công nghệ đều kéo theo một câu hỏi rất giống câu hỏi hôm nay. AI trong IT không phải là một ngoại lệ. Nó không đặt dấu chấm hết cho lập trình, mà đặt dấu chấm hết cho một cách hiểu rất hẹp về lập trình.",
+                "content": "AI trong Thời Đại IT: Liệu Có Còn Cần Học Lập Trình?\n\nChưa bao giờ trong lịch sử ngành IT, câu hỏi “có còn cần học lập trình không?” lại xuất hiện dày đặc như hiện nay. Nó không chỉ được hỏi bởi sinh viên năm nhất, mà còn bởi những kỹ sư đã đi làm 7–10 năm, những manager bắt đầu thấy AI viết code nhanh hơn team của mình, và cả founder đang tự hỏi liệu đội ngũ kỹ thuật có còn cần đông như trước.\n\nCâu hỏi này không xuất phát từ sự lười biếng. Nó xuất phát từ sự đứt gãy niềm tin: niềm tin rằng “học giỏi lập trình” sẽ bảo đảm cho một con đường nghề nghiệp ổn định trong dài hạn.\n\nVà để trả lời câu hỏi đó một cách công bằng, chúng ta cần gạt bỏ cả hai thái cực:\n- Một bên là sự hoảng loạn: AI sẽ giết chết lập trình viên\n- Bên còn lại là sự tự trấn an: AI chỉ là công cụ, mọi thứ vẫn như cũ\n\nSự thật, như thường lệ, nằm ở một tầng sâu hơn nhiều.\n\n{{IMAGE_0}}\n\n### 1. Mỗi cuộc cách mạng công nghệ đều đặt lại câu hỏi về “giá trị con người”\n\nNếu nhìn lại lịch sử, bạn sẽ thấy: mỗi bước nhảy công nghệ đều kéo theo một câu hỏi rất giống câu hỏi hôm nay.\n- Khi máy dệt ra đời, người ta hỏi: có còn cần thợ dệt không?\n- Khi Excel phổ biến, người ta hỏi: có còn cần kế toán tay không?\n- Khi low-code xuất hiện, người ta hỏi: có còn cần developer?\n\nĐiều thú vị là: con người hiếm khi biến mất khỏi hệ thống. Nhưng vai trò của họ thì luôn bị tái định nghĩa.\n\nAI trong IT không phải là một ngoại lệ. Nó không đặt dấu chấm hết cho lập trình, mà đặt dấu chấm hết cho một cách hiểu rất hẹp về lập trình.\n\n### 2. Vấn đề không nằm ở việc AI viết được code — mà ở chỗ code đã bị “commoditized”\n\nTrong kinh tế học, khi một thứ trở nên: Dễ tạo ra - Rẻ - Dễ sao chép - Không khác biệt… thì giá trị của nó giảm mạnh.\n\nCode đang đi đúng con đường đó. Ngày nay:\n- Viết một REST API không còn là kỹ năng hiếm\n- Dựng một UI CRUD không còn tạo lợi thế cạnh tranh\n- Copy–paste một kiến trúc “best practice” không còn đảm bảo thành công\n\nAI không làm việc này xảy ra — nó chỉ tăng tốc quá trình. Điều này dẫn đến một sự thật khó chấp nhận với nhiều người trong ngành: Viêc “biết code” không còn đồng nghĩa với việc “tạo ra giá trị”.\n\n{{IMAGE_1}}\n\n### 3. Nhưng IT chưa bao giờ chỉ là code\n\nNếu hỏi một hệ thống IT thất bại vì lý do gì, câu trả lời hiếm khi là “Vì code sai cú pháp”. Thường thì nó là:\n- Hiểu sai bài toán\n- Thiết kế sai abstraction\n- Đánh giá thấp độ phức tạp khi scale\n- Quyết định kỹ thuật ngắn hạn vì áp lực deadline\n- Không lường trước hành vi người dùng\n\nNhững thứ này không nằm trong code. Chúng nằm trong tư duy trước khi code được viết ra.\n\nAI có thể viết code thay bạn, nhưng:\n- Nó không chịu trách nhiệm nếu decision đó sai\n- Nó không sống với hệ quả của một kiến trúc tồi sau 2 năm\n- Nó không phải người giải thích với business vì sao hệ thống không thể “sửa nhanh”\n\nNói thẳng ra: AI không có accountability.\n\n### 4. Lập trình là cách con người học cách tư duy chính xác\n\nMột lý do quan trọng khác khiến lập trình vẫn cần thiết — thậm chí còn quan trọng hơn trước — nằm ở chỗ ít người để ý: lập trình là bài tập rèn tư duy, không chỉ là kỹ năng tạo sản phẩm.\n\nHọc lập trình dạy bạn:\n- Chia nhỏ vấn đề phức tạp\n- Nghĩ theo luồng nhân quả\n- Nhận diện trạng thái và biến đổi\n- Chấp nhận rằng hệ thống không bao giờ hoàn hảo\n\nNhững người chưa từng học lập trình một cách nghiêm túc thường gặp khó khăn khi làm việc với hệ thống lớn, đặt câu hỏi đúng cho AI, hay đánh giá xem output của AI là “đủ tốt” hay “nguy hiểm”. Vì thế, nghịch lý là: Càng dùng AI nhiều, bạn càng cần nền tảng lập trình vững.\n\n### 5. AI đang phơi bày một sự thật khó chịu trong ngành IT\n\nTrong nhiều năm, ngành IT đã dung dưỡng một lớp kỹ sư: Giỏi framework nhưng yếu tư duy, thuộc pattern nhưng không hiểu lý do tồn tại, làm tốt khi có spec rõ nhưng lúng túng khi vấn đề mơ hồ. AI làm lộ rõ điều này.\n\nKhi AI có thể generate code, refactor, viết test, gợi ý kiến trúc… thì phần việc còn lại của con người là ra quyết định trong vùng xám. Và không phải ai trong IT cũng sẵn sàng cho điều đó.\n\n### 6. Sự phân hoá trong ngành IT sẽ mạnh hơn, không yếu đi\n\nAI không “xoá sổ” lập trình viên. Nó tăng biên độ chênh lệch giữa các nhóm:\n- Người hiểu sâu hệ thống → leverage AI để đi nhanh hơn\n- Người chỉ biết làm theo → bị thay thế hoặc bị đẩy xuống giá rẻ\n\nTrong tương lai gần, thị trường sẽ không thiếu “người biết code”. Nó thiếu người hiểu vì sao code đó nên tồn tại.\n\n### 7. Vậy học lập trình như thế nào là đúng trong thời đại AI?\n\nCâu trả lời không phải là “học nhiều ngôn ngữ hơn”, mà là học sâu hơn, trừu tượng hơn. Hãy học:\n- Nguyên lý thiết kế hệ thống\n- Tư duy kiến trúc\n- Trade-off kỹ thuật\n- Hiểu cách AI hoạt động, giới hạn và bias của nó\n- Cách kiểm soát và review output của AI\n\nLập trình lúc này không còn là “gõ code”, mà là: đối thoại với máy móc bằng tư duy của một kỹ sư có trách nhiệm.\n\n### 8. Câu hỏi cuối cùng: bạn muốn đứng ở đâu trong chuỗi giá trị?\n\nAI buộc mỗi người trong IT phải tự trả lời một câu hỏi rất cá nhân: Tôi muốn là người ra quyết định, hay người chờ lệnh?\n\nNếu bạn chỉ muốn nhận task, viết code theo hướng dẫn, không chịu trách nhiệm về bức tranh lớn… thì đúng, AI sẽ khiến con đường đó ngày càng hẹp.\n\nNhưng nếu bạn muốn hiểu bản chất vấn đề, dẫn dắt giải pháp, chịu trách nhiệm cho hệ thống và con người… thì lập trình vẫn là nền tảng không thể thay thế.\n\n### Kết luận\n\nAI không làm IT trở nên dễ hơn. Nó chỉ làm cho sự hời hợt không còn chỗ ẩn nấp.\n\nHọc lập trình vẫn cần. Nhưng học để trở thành người suy nghĩ, không phải người gõ phím.\n\nVà có lẽ, đây mới là thời điểm mà lập trình quay trở lại đúng bản chất cao quý nhất của nó: một công cụ để con người hiểu và kiến tạo những hệ thống phức tạp — có trách nhiệm."
             },
             "post3": {
-                "title": "AI Core Solutions mở rộng đội ngũ lên 40 nhân sự",
-                "excerpt": "Chúng tôi chào đón các tài năng mới để phục vụ khách hàng tốt hơn.",
-                "content": "Nội dung bài viết đang được cập nhật..."
+                "title": "AI Khiến Việc Build Trở Nên Rẻ — Và Đó Mới Là Vấn Đề",
+                "excerpt": "Việc xây dựng một sản phẩm chưa bao giờ dễ như hôm nay, nhưng việc tạo ra một sản phẩm đáng tồn tại thì chưa bao giờ khó đến vậy.",
+                "content": "Có một nghịch lý đang dần trở thành bình thường trong thế giới công nghệ:\n\nViệc xây dựng một sản phẩm chưa bao giờ dễ như hôm nay, nhưng việc tạo ra một sản phẩm đáng tồn tại thì chưa bao giờ khó đến vậy.\n\nAI, no-code, low-code, cloud, open-source — tất cả đang cùng lúc làm một việc: kéo rào cản kỹ thuật xuống gần bằng 0.\n\nMột cá nhân, với một chiếc laptop và vài công cụ AI, giờ đây có thể: Build một MVP trong vài ngày, deploy toàn bộ hệ thống mà không cần đội infra, viết landing page, content, thậm chí cả pitch deck.\n\nVà chính điều đó đặt ra một câu hỏi rất khó chịu: Khi ai cũng có thể build sản phẩm, lợi thế cạnh tranh thực sự nằm ở đâu?\n\n### 1. \"Build được\" không còn là lợi thế — nó là điều kiện tối thiểu\n\nTrong quá khứ, việc xây dựng được một sản phẩm đã là một rào cản lớn: Cần đội ngũ kỹ thuật mạnh, cần vốn, cần thời gian dài để đưa ý tưởng ra thị trường.\n\nNgày nay, \"build được\" chỉ còn là giấy thông hành để bước vào cuộc chơi. Nếu chiến lược cạnh tranh của bạn vẫn dựa trên: \"Chúng tôi build nhanh\", \"Chúng tôi dùng công nghệ mới\", \"Chúng tôi có AI\"… thì bạn đang cạnh tranh ở tầng thấp nhất, nơi AI san bằng tất cả.\n\n### 2. Khi tốc độ không còn là vũ khí, tốc độ trở thành bẫy\n\nNhiều đội ngũ hiện nay tự hào vì: Time-to-market cực nhanh, release liên tục, feature dày đặc. Nhưng trong một thế giới mà mọi người đều nhanh, nhanh không còn tạo khác biệt.\n\nNgược lại, nó tạo ra một cái bẫy nguy hiểm: build nhanh → học chậm → chết sớm.\n\nSản phẩm không chết vì build chậm. Sản phẩm chết vì: Giải quyết sai vấn đề, giải quyết đúng vấn đề nhưng sai người, giải quyết đúng người nhưng sai thời điểm. Những thứ này không thể được \"đẩy nhanh\" bằng AI.\n\n### 3. Lợi thế cạnh tranh đang dịch chuyển từ \"execution\" sang \"insight\"\n\nKhi execution trở nên rẻ, insight trở nên đắt.\n\nInsight ở đây không phải là: Ý tưởng hay, một feature độc đáo. Mà là: Hiểu sâu một nỗi đau mà người khác chỉ thấy bề mặt, nhìn thấy một constraint mà thị trường đang bỏ qua, hiểu hành vi người dùng ở tầng thực tế, không phải slide.\n\nAI có thể tổng hợp dữ liệu. Nó không sống trong bối cảnh của khách hàng. Nó không chịu hậu quả của một quyết định sai. Insight thật đến từ việc va chạm với thực tế.\n\n{{IMAGE_0}}\n\n### 4. Sản phẩm mạnh không thắng nhờ tính năng — mà nhờ positioning\n\nTrong một thị trường mà mọi feature đều có thể bị sao chép rất nhanh, câu hỏi không còn là: \"Sản phẩm của bạn làm được gì?\". Mà là: \"Vì sao sản phẩm này tồn tại, và dành cho ai — chính xác?\".\n\nRất nhiều sản phẩm thất bại không phải vì kém, mà vì: Không nói được câu chuyện rõ ràng, không có \"kẻ thù\" cụ thể để đánh, không dám loại bỏ phần lớn thị trường. Cạnh tranh ngày nay là cạnh tranh về nhận thức, không chỉ về chức năng.\n\n### 5. Thứ khó copy nhất không phải là công nghệ — mà là tổ chức\n\nCông nghệ có thể bị clone. UI có thể bị copy. Feature có thể bị reverse engineer.\n\nNhưng thứ rất khó sao chép là: Cách đội ngũ ra quyết định, cách ưu tiên giữa mâu thuẫn, văn hoá chấp nhận trade-off, tốc độ học từ thất bại thật.\n\nAI không thể thay bạn xây dựng một tổ chức biết học. Và trong dài hạn, tổ chức chính là sản phẩm lớn nhất.\n\n### 6. Khi ai cũng build được, người thắng là người dám không build\n\nMột trong những nghịch lý lớn nhất của thời đại AI là: khả năng không làm mới trở thành lợi thế chiến lược.\n\nBiết: Không build thêm feature, không chạy theo trend, không chiều theo mọi yêu cầu khách hàng… đòi hỏi bản lĩnh và sự rõ ràng mà rất ít đội ngũ có. AI giúp bạn build mọi thứ. Chỉ con người mới quyết định được thứ gì không nên tồn tại.\n\n{{IMAGE_1}}\n\n### 7. Cạnh tranh trong tương lai là cuộc chơi của sự kiên định\n\nKhi sản phẩm được build nhanh, thị trường sẽ ồn ào hơn: Nhiều launch hơn, nhiều announcement hơn, nhiều \"AI-powered\" hơn.\n\nTrong sự ồn ào đó, lợi thế không thuộc về người hét to nhất, mà thuộc về người: Đi đủ lâu, giữ được trục giá trị, không đánh mất bản sắc khi scale.\n\nSự kiên định trở thành một dạng moat mới — một moat mà AI không thể tạo hộ bạn.\n\n### Kết luận\n\nKhi ai cũng có thể build sản phẩm, build không còn là câu hỏi chiến lược.\n\nCâu hỏi thật sự là: Bạn hiểu thị trường sâu đến đâu? Bạn dám chọn bỏ điều gì? Bạn xây tổ chức để học, hay chỉ để ship?\n\nAI làm cho sản phẩm dễ sinh ra hơn. Nhưng chính vì thế, chỉ những sản phẩm có lý do tồn tại đủ mạnh mới sống sót.\n\nTrong một thế giới mà ai cũng có thể build, người thắng không phải là người build giỏi nhất — mà là người hiểu rõ nhất mình đang chơi cuộc chơi nào."
+            },
+            "post4": {
+                "title": "Token Trong AI: Hiểu Về \"Tiền Tệ\" Của Trí Tuệ Nhân Tạo",
+                "excerpt": "Từ việc xử lý dữ liệu đến chi phí vận hành, token đang định hình nên một hệ sinh thái kinh tế mới mẻ. Khám phá token là gì, tại sao gọi là \"Token Economy\", và ai sẽ chiến thắng trong cuộc đua này.",
+                "content": "Trong thế giới AI đang bùng nổ ngày nay, khái niệm \"token\" đã trở thành một thuật ngữ quen thuộc nhưng không phải ai cũng hiểu rõ. Từ việc xử lý dữ liệu đến chi phí vận hành, token đang định hình nên một hệ sinh thái kinh tế mới mẻ. Trong bài viết này, chúng ta sẽ khám phá token là gì, số lượng token cần cho các tác vụ AI, lý do gọi là \"Token Economy\", mức độ \"burn\" token khủng khiếp ra sao, và cuối cùng, ai sẽ là người chiến thắng trong cuộc đua này.\n\n## Token Là Gì?\n\nToken, trong ngữ cảnh AI – đặc biệt là các mô hình ngôn ngữ lớn (Large Language Models – LLMs) như GPT, Grok hay Llama – không phải là đồng tiền kỹ thuật số như trong blockchain. Thay vào đó, token là đơn vị cơ bản nhất để xử lý văn bản và dữ liệu đầu vào/đầu ra.\n\nHãy tưởng tượng văn bản của bạn được \"cắt nhỏ\" thành các mảnh. Một token có thể là một từ hoàn chỉnh (như \"apple\"), một phần từ (subword, như \"un\" trong \"understand\"), hoặc thậm chí một ký tự đặc biệt. Các mô hình AI sử dụng token để mã hóa và dự đoán dữ liệu. Ví dụ, câu \"Hello, world!\" có thể được chia thành khoảng 3-4 token tùy theo tokenizer (công cụ phân tích token).\n\nTại sao token quan trọng? Vì LLMs hoạt động dựa trên transformer architecture, nơi mỗi token được xử lý trong ngữ cảnh của các token khác. Số lượng token quyết định độ phức tạp, chi phí tính toán và chất lượng đầu ra. Các công ty như OpenAI hay xAI sử dụng token để đo lường \"tiêu thụ\" tài nguyên AI.\n\n## Số Lượng Token Cho Các Tác Vụ AI\n\nĐặc trưng lớn nhất của AI hiện đại là chi phí tính toán (và token) tăng không tuyến tính. Lấy mức tiêu thụ cho một cuộc chat văn bản cơ bản làm mốc 1x:\n\n- Chat văn bản thông thường → khoảng 1x token (prompt ngắn, trả lời ngắn).\n- Hiểu/tạo hình ảnh → khoảng 10x (hình ảnh được chia thành hàng nghìn patch, mỗi patch thành token).\n- Mô hình suy luận nâng cao (như chain-of-thought, o1-style reasoning) → thường 100x trở lên (quá trình suy nghĩ nội bộ tạo ra hàng loạt token ẩn trước khi ra output cuối).\n- Video ngắn (khoảng 10 giây) → có thể lên tới 3,000x (video bị chia thành các frame, mỗi frame được tokenize giống hình ảnh, dẫn đến chuỗi cực dài).\n- Nghiên cứu sâu / agentic workflow → dễ dàng 1,000,000x hoặc hơn (gọi tool nhiều lần, tìm kiếm web, lặp lại, context dài, retry – tất cả nhân lên token burn).\n\n{{IMAGE_0}}\n\nSố lượng token cần thiết phụ thuộc vào độ dài và phức tạp của nhiệm vụ. Dưới đây là một số ví dụ điển hình:\n\n**Tác vụ đơn giản (chat cơ bản):** Một câu hỏi ngắn như \"Thời tiết hôm nay?\" có thể dùng 10-20 token cho input và output. Tổng cộng dưới 50 token.\n\n**Tác vụ trung bình (viết bài, tóm tắt):** Viết một bài blog 500 từ có thể yêu cầu 500-1.000 token input (nếu có prompt chi tiết) và lên đến 1.000 token output.\n\n**Tác vụ phức tạp (phân tích dữ liệu, code generation):** Xử lý một tài liệu dài 10.000 từ hoặc huấn luyện mô hình có thể tiêu tốn hàng triệu token. Ví dụ, fine-tuning một mô hình AI có thể cần hàng tỷ token từ dataset.\n\nGiá dịch vụ AI được tính theo token: các nhà cung cấp charge theo triệu token (ví dụ: $X input / $Y output cho mỗi 1 triệu token). Token vì thế trở thành thước đo năng suất lao động số hóa – đo lường được bao nhiêu \"suy nghĩ\" hay \"công việc\" mà AI thực hiện trên một đơn vị tài nguyên.\n\n## Token Đang Thay Thế Sức Lao Động Con Người – Và Tạo Ra Token Economy Thật Sự\n\nHãy nhìn vào bước nhảy vọt về năng suất: Một tác vụ deep research mà trước đây một analyst phải mất cả tuần để hoàn thành, giờ AI có thể làm trong 30 phút với chi phí khoảng 1 USD (tùy mô hình và mức sử dụng). Một lần chạy như vậy có thể tiêu tốn hàng triệu token qua tìm kiếm, tổng hợp, suy luận.\n\nHiệu ứng thay thế này rất mạnh mẽ:\n\n- **Token output trở thành đơn vị kinh tế mới** đại diện cho giá trị tạo ra.\n- Khi AI đảm nhận các công việc có giá trị kinh tế (nghiên cứu, phân tích, lập trình, sáng tạo nội dung), token bắt đầu thay thế cho lao động số hóa.\n- **Kinh tế hóa AI:** Token đo lường chi phí. Người dùng \"mua\" token để sử dụng AI, tương tự mua hàng hóa. Các công ty AI như OpenAI kiếm hàng tỷ USD từ việc bán API dựa trên token usage.\n- **Tích hợp với blockchain:** Một số dự án kết hợp AI với crypto, như Fetch.ai hay SingularityNET, nơi token (như FET hoặc AGIX) dùng để thanh toán dịch vụ AI trên mạng lưới phi tập trung. Token Economy ở đây tạo ra một thị trường nơi AI \"làm việc\" và được thưởng token.\n- **Bền vững và hiệu quả:** Token khuyến khích tối ưu hóa – người dùng học cách prompt ngắn gọn để tiết kiệm token, giống như tiết kiệm tiền. Điều này thúc đẩy sự phát triển của AI hiệu quả hơn, giảm lãng phí tài nguyên.\n\nKết quả là một Token Economy thực sự đang hình thành. Trong tương lai, một phần GDP có thể gắn liền với lượng token chất lượng cao được tạo ra và tiêu thụ – tương tự như năng lượng hay compute từng là động lực tăng trưởng kinh tế. Nhiều lãnh đạo công nghệ đã ví data center như \"nhà máy sản xuất token\", và hiệu suất token-per-watt-per-dollar có thể trực tiếp liên quan đến tăng trưởng kinh tế - xã hội.\n\n## Quy Mô Token Của AI Đã Tiệm Cận – Và Ở Một Số Phân Khúc Vượt Qua – Quy Mô Giao Tiếp Của Loài Người\n\nToàn nhân loại tạo ra khoảng 50 quadrillion token/năm qua giao tiếp nói và viết (ước tính dựa trên số từ trung bình, quy đổi ~0.75–1 từ = 1 token).\n\n{{IMAGE_1}}\n\nSo sánh với AI:\n\n- **OpenAI** xử lý hàng trăm nghìn tỷ đến vài quadrillion token mỗi năm (với đỉnh API hàng tỷ token/phút và hàng chục công ty doanh nghiệp vượt 1 nghìn tỷ token/năm).\n- **Google** báo cáo khoảng 1.3 quadrillion token/tháng vào cuối 2025 (qua Search, Gemini và các bề mặt khác), vượt xa nhiều đối thủ.\n- **Quy mô cá nhân:** Một người dùng trung bình có thể \"burn\" hàng nghìn token/ngày qua chat AI. Với hàng triệu người dùng, tổng token burn toàn cầu có thể lên đến hàng tỷ mỗi giờ.\n- **Quy mô doanh nghiệp:** Huấn luyện một mô hình như GPT-4 tiêu tốn hàng triệu USD điện năng, tương đương hàng nghìn tỷ token (từ dataset khổng lồ). Ví dụ, OpenAI báo cáo chi phí huấn luyện GPT-3 lên đến 4.6 triệu USD, với token burn ước tính hàng nghìn tỷ.\n- **Tác động môi trường:** Mỗi token yêu cầu điện năng – ước tính 1.000 token tương đương năng lượng cho một bóng đèn LED sáng 1 giờ. Với AI toàn cầu, token burn góp phần vào 2-3% tiêu thụ điện thế giới, tương đương ngành hàng không. Các trung tâm dữ liệu của Google hay Microsoft \"đốt\" token ở mức khủng, dẫn đến lo ngại về biến đổi khí hậu.\n\nAI đang nhanh chóng đạt – và ở một số lĩnh vực đã vượt – quy mô xử lý thông tin tương đương toàn bộ giao tiếp của loài người. Đây không chỉ là con số, mà là dấu hiệu máy móc bắt đầu xử lý thông tin ở mức độ loài.\n\nNếu không tối ưu, token burn có thể làm phá sản các startup AI nhỏ, vì chi phí GPU và điện năng ngày càng cao."
             }
         },
         "categories": {
             "trends": "AI Trends",
             "tips": "Tech Tips",
             "company": "Company News"
+        }
+    },
+    "community": {
+        "hero": {
+            "badge": "CONNECT & GROW",
+            "title": "Cộng đồng & Sự kiện",
+            "subtitle": "Kết nối với các chuyên gia hàng đầu, tham gia các buổi workshop chuyên sâu và mở rộng mạng lưới quan hệ trong ngành công nghệ & AI."
+        },
+        "event": {
+            "free": "Miễn phí",
+            "paid": "Vé có phí",
+            "upcoming": "Sắp diễn ra",
+            "ended": "Đã kết thúc",
+            "full": "Hết chỗ",
+            "open": "Đang mở",
+            "online": "Trực tuyến",
+            "registeredOf": "{{count}}/{{max}} đã đăng ký",
+            "registerBtn": "Đăng ký tham gia ngay",
+            "limitedSeats": "* Vé {{price}}. Số lượng có hạn.",
+            "intro": "Giới thiệu",
+            "agenda": "Lịch trình",
+            "seatsCount": "{{registered}}/{{max}} đăng ký"
+        },
+        "tabs": {
+            "upcoming": "Sắp diễn ra ({{count}})",
+            "past": "Đã diễn ra ({{count}})"
+        },
+        "empty": {
+            "title": "Chưa có sự kiện nào",
+            "subtitle": "Vui lòng quay lại sau."
+        },
+        "newsletter": {
+            "title": "Đừng bỏ lỡ các sự kiện hấp dẫn!",
+            "subtitle": "Đăng ký nhận tin để được thông báo sớm nhất về các buổi workshop và vé Early Bird.",
+            "placeholder": "Email của bạn",
+            "button": "Đăng ký ngay"
+        },
+        "form": {
+            "title": "Đăng ký tham gia",
+            "fullName": "Họ và tên",
+            "fullNamePlaceholder": "Nguyễn Văn A",
+            "phone": "Số điện thoại",
+            "phonePlaceholder": "0905 xxx xxx",
+            "email": "Email",
+            "emailPlaceholder": "example@email.com",
+            "note": "Ghi chú (nếu có)",
+            "notePlaceholder": "Câu hỏi cho diễn giả...",
+            "submitFree": "Đăng ký miễn phí",
+            "submitPaid": "Thanh toán {{amount}}",
+            "privacy": "Bằng việc đăng ký, bạn đồng ý với chính sách bảo mật của chúng tôi.",
+            "successTitle": "Đăng ký thành công!",
+            "successMsg": "Cảm ơn bạn đã đăng ký tham gia. Chúng tôi đã gửi email xác nhận đến",
+            "done": "Hoàn tất",
+            "fullTitle": "Sự kiện đã hết chỗ",
+            "fullSubtitle": "Vui lòng theo dõi các sự kiện tiếp theo."
+        },
+        "materials": {
+            "title": "Nhận tài liệu & Video record",
+            "subtitle": "Đăng ký để nhận trọn bộ slide, video và highlight note của sự kiện này.",
+            "successTitle": "Đăng ký thành công!",
+            "successMsg": "Tài liệu sẽ được gửi qua email của bạn.",
+            "send": "Gửi tài liệu cho tôi"
+        },
+        "payment": {
+            "title": "Thanh toán an toàn",
+            "selectMethod": "Vui lòng chọn phương thức thanh toán cho số tiền",
+            "vietqr": "VietQR / PayOS",
+            "vietqrSub": "Quét mã QR bằng ứng dụng ngân hàng",
+            "momo": "MoMo / ZaloPay",
+            "momoSub": "Ví điện tử phổ biến",
+            "scanGuide": "Mở App Ngân hàng và quét mã QR trên. Hệ thống sẽ tự động xác nhận sau vài giây.",
+            "waiting": "Đang chờ thanh toán...",
+            "processing": "Đang xử lý giao dịch...",
+            "processingNote": "Vui lòng không tắt trình duyệt.",
+            "successTitle": "Thanh toán thành công!",
+            "successNote": "Bạn sẽ được chuyển hướng ngay lập tức.",
+            "simulate": "Click để giả lập đã thanh toán"
+        },
+        "admin": {
+            "title": "Admin Dashboard",
+            "loginTitle": "Đăng nhập quản trị",
+            "loginBtn": "Đăng nhập",
+            "wrongPass": "Mật khẩu không đúng!",
+            "eventList": "Danh sách sự kiện",
+            "regList": "Danh sách đăng ký tham gia",
+            "noReg": "Chưa có lượt đăng ký nào.",
+            "selectEvent": "Chọn một sự kiện để xem danh sách đăng ký",
+            "colName": "Họ tên",
+            "colContact": "Liên hệ",
+            "colStatus": "Trạng thái",
+            "colDate": "Ngày đăng ký",
+            "paid": "Đã thanh toán",
+            "paidFree": "Miễn phí",
+            "pending": "Chờ thanh toán",
+            "regCount": "{{count}} đăng ký"
         }
     },
     "hero": {
@@ -197,9 +299,9 @@
         },
         "contact": {
             "title": "Liên Hệ",
-            "email": "contact@aicoresolution.vn",
-            "phone": "+84 123 456 789",
-            "address": "Đà Nẵng, Việt Nam"
+            "email": "info@aicorelabs.net",
+            "phone": "+84 869 17 18 12",
+            "address": "101 Nguyễn Du, Thạch Thang, Hải Châu, Đà Nẵng"
         },
         "copyright": "© 2025 AI Core Solutions. All rights reserved.",
         "privacyPolicy": "Privacy Policy",
@@ -238,37 +340,37 @@
             "construction": "Xây dựng, Vật liệu & Thiết bị Công nghiệp"
         },
         "items": {
-            "1": "Hệ thống đặt bàn và quản lý nhà hàng với AI chatbot hỗ trợ khách hàng 24/7",
-            "12": "Restaurant & bar với AI tối ưu hóa menu và quản lý sự kiện",
-            "8": "Quản lý khách sạn với AI định giá động và tối ưu trải nghiệm khách hàng",
-            "23": "Nền tảng đặt vé du lịch với AI lên kế hoạch lịch trình và dự đoán giá",
-            "10": "Nền tảng đặt lịch Spa với AI gợi ý trị liệu viên và sở thích khách hàng",
-            "6": "Hệ thống quản lý phòng Gym với AI lên kế hoạch tập luyện và theo dõi hội viên",
-            "25": "Tư vấn du học với AI gợi ý trường đại học và hỗ trợ hồ sơ",
-            "26": "Tư vấn du học Hàn Quốc với AI đánh giá ngôn ngữ và hướng dẫn visa",
-            "16": "Nền tảng sức khỏe tâm thần với AI hỗ trợ tư vấn và theo dõi tâm trạng",
+            "1": "Nhà hàng đặc sản nổi tiếng Phố Cổ Hội An, phục vụ cao lầu, mì Quảng, hải sản nướng tươi ngon trong không gian ấm cúng thân thiện.",
+            "12": "Nhà hàng Châu Kitchen & Bar Hội An fusion Á-Âu ngon miệng, không gian nhà cổ ấm cúng phục vụ du khách quốc tế chuyên nghiệp.",
+            "8": "Khách sạn Tân Nhật Sương Bình Định giá tốt, phòng tiện nghi hồ bơi gym, gần điểm du lịch với wifi miễn phí đậu xe thoải mái.",
+            "23": "Vé tham quan Sapa chính hãng bao gồm cáp treo Fansipan bản Cát Cát, giá tốt đặt online nhanh chóng tiện lợi.",
+            "10": "Massage Bồng Lai Các Đà Nẵng 5 sao cao cấp, không gian sang trọng kỹ thuật viên chuyên nghiệp, combo thư giãn đa dạng hấp dẫn.",
+            "6": "Phòng gym hiện đại hàng đầu Hội An, thiết bị tối tân không gian thoáng đãng, phù hợp du khách địa phương với dịch vụ song ngữ tiện nghi.",
+            "25": "Du học ICC tư vấn du học Nhật Bản uy tín, hỗ trợ visa hồ sơ học bổng thành công cao cho học viên Việt Nam.",
+            "26": "Du học Hankang dẫn đầu tư vấn du học Hàn Quốc Đà Nẵng, săn học bổng visa cao đào tạo tiếng Hàn chuyên sâu.",
+            "16": "Trung tâm giáo dục đặc biệt Hạnh Phúc hỗ trợ trẻ tự kỷ rối loạn phát triển qua chương trình tâm lý can thiệp chuyên sâu hiệu quả.",
             "29": "Nền tảng dịch vụ pháp lý với AI xử lý tài liệu và quản lý hồ sơ",
-            "4": "Nền tảng bất động sản với AI định giá tài sản và phân tích thị trường",
-            "13": "Đặt lịch dịch vụ làm đẹp với AI gợi ý phong cách và mô phỏng trước/sau",
-            "11": "Cửa hàng thực phẩm chức năng với AI tư vấn sức khỏe và gợi ý cá nhân hóa",
-            "30": "Đặt lịch tiệm Nail với AI xem trước mẫu thiết kế và chương trình khách hàng thân thiết",
-            "31": "Thương mại điện tử dược phẩm với AI kiểm tra đơn thuốc và cảnh báo tương tác thuốc",
-            "3": "Shop hoa online với AI tìm kiếm bằng hình ảnh và tối ưu hóa giao hàng",
-            "5": "Nền tảng bán lẻ thể thao với AI gợi ý size và quản lý tồn kho",
-            "18": "Thương mại điện tử thời trang với AI tư vấn phong cách và thử đồ ảo",
-            "2": "Nền tảng thương mại điện tử với AI gợi ý sản phẩm và mô phỏng AR",
-            "20": "Dịch vụ decal xe với công cụ thiết kế AI và mô phỏng trên xe",
-            "21": "Nền tảng sạc xe điện với AI tìm trạm sạc và tối ưu hóa sử dụng",
-            "7": "Nền tảng chăm sóc thú cưng với AI theo dõi sức khỏe và đặt lịch grooming",
-            "32": "Cửa hàng thức ăn thú cưng tự nhiên với AI lên kế hoạch dinh dưỡng",
-            "9": "Cửa hàng Gaming gear với AI xây dựng cấu hình PC và kiểm tra tương thích",
-            "33": "Cửa hàng linh kiện máy tính với AI tối ưu hóa cấu hình build",
-            "17": "Cửa hàng thiết bị điện với AI gợi ý sản phẩm phù hợp và hướng dẫn lắp đặt",
-            "15": "Quản lý sản xuất với AI tối ưu hóa quy trình và kiểm soát chất lượng",
-            "19": "Cửa hàng nội thất gỗ với AI tùy chỉnh thiết kế và ước tính giá",
-            "24": "Gạch & thiết bị vệ sinh với AI thiết kế phòng tắm và gợi ý sản phẩm",
-            "27": "Cửa hàng vật liệu xây dựng với AI phối màu và tính toán số lượng",
-            "28": "Nền tảng dịch vụ xe nâng với AI dự đoán bảo trì và quản lý đội xe"
+            "4": "Đơn vị phân phối bất động sản cao cấp hàng đầu, đại lý độc quyền Vinhomes Masterise Sun Group với dự án lớn toàn quốc uy tín.",
+            "13": "Royal Eyelash Việt Nam chuyên nối mi mi giả phụ kiện chăm sóc mi cao cấp, chất lượng chuyên nghiệp an toàn cho khách hàng.",
+            "11": "Thương hiệu sản phẩm thảo mộc công nghệ, dầu gội kem đánh răng sữa tắm tự nhiên an toàn lành tính cho cả gia đình hàng ngày.",
+            "30": "Stella Nails & Spa Canada cung cấp dịch vụ nail làm đẹp móng tay chân chuyên nghiệp thiết kế độc đáo sáng tạo.",
+            "31": "Đại Thành Pharma sản xuất dược phẩm thực phẩm chức năng chất lượng cao hỗ trợ sức khỏe hàng ngày cho gia đình.",
+            "3": "Tiệm hoa tươi uy tín Đà Nẵng, cung cấp bó hoa giỏ hoa hộp hoa đa dạng, giao nhanh 60 phút, hoa nhập khẩu tươi đẹp hàng ngày.",
+            "5": "Siêu thị thể thao MinhongSport bán giày dép quần áo bóng đá cầu lông pickleball, phụ kiện đa thương hiệu giá tốt in ấn theo yêu cầu.",
+            "18": "Rosepolewear thời trang pole dance quần áo tập luyện sexy thoải mái, thiết kế hiện đại dành cho phụ nữ yêu thể thao năng động.",
+            "2": "Thương hiệu thiết kế thi công nội thất cao cấp Việt Nam, chuyên biệt thự căn hộ văn phòng với phong cách Scandinavian Indochine sang trọng độc đáo.",
+            "20": "Decal Xe iu thiết kế tem xe máy ô tô cá nhân hóa chất lượng cao chống phai màu, giao hàng toàn quốc nhanh chóng.",
+            "21": "KotiCharge cung cấp trạm sạc xe điện nhanh tiện lợi hỗ trợ di chuyển xanh thân thiện môi trường bền vững cho tương lai.",
+            "7": "Cửa hàng thú cưng Mewsic cung cấp thức ăn phụ kiện đồ chơi, dịch vụ spa tắm rửa lưu trú cho chó mèo, giao hàng nhanh chóng tiện lợi.",
+            "32": "WinVN cung cấp sản phẩm chăm sóc thú cưng tự nhiên thức ăn phụ kiện an toàn thân thiện môi trường dành cho chó mèo yêu quý.",
+            "9": "Cửa hàng phụ kiện công nghệ T-WOLF chuyên bàn phím chuột gaming loa combo KBM chất lượng cao dành cho game thủ đam mê.",
+            "33": "AIWOLF bán linh kiện máy tính card đồ họa mainboard phụ kiện build PC gaming hiệu suất cao cho game thủ chuyên nghiệp.",
+            "17": "Thiên An Pro phân phối vật tư khu công nghiệp thiết bị kỹ thuật, giải pháp toàn diện đáng tin cậy cho doanh nghiệp sản xuất.",
+            "15": "Deviasteel sản xuất cửa thép công nghiệp cửa cuốn vật liệu xây dựng bền bỉ chất lượng cao cho nhà xưởng công trình lớn.",
+            "19": "Jicowood chuyên cửa gỗ nhựa composite cao cấp chống nước cách âm bền đẹp phù hợp nhà ở công trình hiện đại.",
+            "24": "Vacera sản xuất gạch linh hoạt mosaic đá trang trí nội ngoại thất đa dạng mẫu mã hiện đại chất lượng vượt trội.",
+            "27": "Sơn X900 Titan chống thấm tường cao cấp bền màu bảo vệ bề mặt hiệu quả cho công trình xây dựng lâu dài.",
+            "28": "Xe nâng chuyên cho thuê sửa chữa bán xe nâng hàng đầu, thiết bị nâng hạ công nghiệp đáng tin cậy chất lượng."
         }
     },
     "contact": {
@@ -282,6 +384,9 @@
         "message": "Tin nhắn",
         "messagePlaceholder": "Mô tả sơ qua về dự án...",
         "submit": "Gửi Yêu Cầu Tư Vấn",
+        "successTitle": "Gửi tin nhắn thành công!",
+        "successMessage": "Cảm ơn bạn đã liên hệ. Đội ngũ của chúng tôi sẽ phản hồi trong vòng 24 giờ.",
+        "sendAnother": "Gửi tin nhắn khác",
         "subjects": {
             "aiIntegration": "Tích hợp AI vào hệ thống",
             "webApp": "Triển khai Web/App",
@@ -291,8 +396,57 @@
         "info": {
             "title": "Thông Tin Liên Hệ",
             "headquarters": "Trụ sở chính",
-            "address": "123 Đường Nguyễn Văn Linh, Quận Hải Châu, TP. Đà Nẵng, Việt Nam",
-            "hours": "(08:00 - 17:30, Thứ 2 - Thứ 6)"
+            "address": "101 Nguyễn Du, Thạch Thang Hải Châu Đà Nẵng",
+            "zaloLabel": "Zalo",
+            "zalo": "0342 609 366"
+        }
+    },
+    "products": {
+        "hero": {
+            "title": "<1>Sản phẩm</1> của chúng tôi",
+            "titlePart1": "Sản phẩm ",
+            "titleHighlight": "của chúng tôi",
+            "description": "Khám phá bộ công cụ tiên tiến được thiết kế để tăng tốc chuyển đổi số và thúc đẩy tăng trưởng kinh doanh."
+        },
+        "waitingList": {
+            "title": "Sản phẩm sắp ra mắt",
+            "description": "Chúng tôi đang xây dựng thế hệ công cụ AI tiếp theo. Đăng ký để nhận quyền truy cập sớm và cập nhật độc quyền.",
+            "placeholder": "Nhập địa chỉ email của bạn",
+            "button": "Đăng ký ngay",
+            "disclaimer": "Không spam. Hủy đăng ký bất cứ lúc nào.",
+            "successMessage": "Bạn đã vào danh sách! Chúng tôi sẽ thông báo qua",
+            "errorMessage": "Có lỗi xảy ra, vui lòng thử lại."
+        },
+        "upcoming": {
+            "product1": {
+                "title": "AI Chatbot Học Từ Tri Thức Doanh Nghiệp",
+                "description": "Một chatbot AI thông minh được huấn luyện trực tiếp từ tài liệu, website và kho tri thức nội bộ của doanh nghiệp. Hệ thống có thể trả lời câu hỏi một cách chính xác theo ngữ cảnh, giúp tự động hóa hỗ trợ khách hàng, giảm khối lượng công việc thủ công và đảm bảo thông tin được cung cấp nhất quán trong toàn tổ chức.",
+                "eta": "DỰ KIẾN THÁNG 4/2026"
+            },
+            "product2": {
+                "title": "Công Cụ Dịch Tài Liệu Bằng AI",
+                "description": "Một công cụ AI mạnh mẽ giúp dịch tài liệu tự động trong khi vẫn giữ nguyên cấu trúc và định dạng của file. Hệ thống hỗ trợ nhiều loại tài liệu và ngôn ngữ khác nhau, giúp doanh nghiệp nhanh chóng chuyển đổi báo cáo, hướng dẫn và tài liệu nội bộ với độ chính xác cao và giảm thiểu chỉnh sửa thủ công.",
+                "eta": "DỰ KIẾN THÁNG 4/2026"
+            }
+        },
+        "cta": {
+            "title": "Sẵn sàng chuyển đổi doanh nghiệp?",
+            "description": "Liên hệ với đội ngũ của chúng tôi để thảo luận về cách các sản phẩm sắp ra mắt có thể giúp bạn đạt được mục tiêu.",
+            "button": "Liên hệ tư vấn"
+        },
+        "detail": {
+            "back": "Quay lại Sản phẩm",
+            "gallery": "Thư viện hình ảnh",
+            "overview": "Tổng quan",
+            "features": "Tính năng",
+            "benefits": "Lợi ích chính",
+            "benefitsComingSoon": "Chi tiết lợi ích sẽ sớm được cập nhật.",
+            "actions": "Hành động",
+            "liveDemo": "Xem Demo",
+            "contactSales": "Liên hệ tư vấn",
+            "techStack": "Công nghệ sử dụng",
+            "techStackNA": "Chưa cập nhật",
+            "learnMore": "Xem thêm"
         }
     },
     "services": {

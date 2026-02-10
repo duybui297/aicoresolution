@@ -22,6 +22,14 @@ export const ROUTE_PATHS = {
     contact: {
         vi: '/lien-he',
         en: '/contact'
+    },
+    community: {
+        vi: '/cong-dong',
+        en: '/community'
+    },
+    products: {
+        vi: '/san-pham',
+        en: '/products'
     }
 };
 

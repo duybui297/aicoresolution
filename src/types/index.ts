@@ -26,6 +26,40 @@ export interface CaseStudy {
   tags: string[];
 }
 
+export interface Speaker {
+  name: string;
+  role: string;
+  avatar: string;
+}
+
+export interface Event {
+  id: string;
+  title: string | { vi: string; en: string };
+  description: string | { vi: string; en: string };
+  date: string;
+  location: string;
+  image: string;
+  price: number;
+  maxSeats: number;
+  registeredCount: number;
+  status: 'open' | 'full' | 'closed';
+  isOnline: boolean;
+  isFeatured: boolean;
+  speaker?: Speaker;
+  agenda: string[] | { vi: string[]; en: string[] };
+}
+
+export interface Registration {
+  id: string;
+  eventId: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  note: string;
+  paymentStatus: 'paid' | 'free' | 'pending';
+  registeredAt: string;
+}
+
 export interface TimelineEvent {
   year: string;
   teamSize: number;

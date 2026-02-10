@@ -86,9 +86,9 @@ export default function CaseStudies() {
           {filteredCases.map((study) => (
             <div
               key={study.id}
-              className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2"
+              className="group bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 flex flex-col h-full"
             >
-              <div className="relative h-56 overflow-hidden bg-slate-100">
+              <div className="relative h-56 overflow-hidden bg-slate-100 flex-shrink-0">
                 <img
                   src={study.image}
                   alt={study.name}
@@ -97,7 +97,7 @@ export default function CaseStudies() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </div>
 
-              <div className="p-6">
+              <div className="p-6 flex-1 flex flex-col">
                 <div className="flex items-start justify-between mb-3">
                   <h3 className="text-xl font-bold text-slate-900 group-hover:text-blue-600 transition-colors flex-1">
                     {study.name}
@@ -112,15 +112,15 @@ export default function CaseStudies() {
                   </a>
                 </div>
 
-                <div className="inline-block bg-blue-50 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full mb-3">
+                <div className="inline-block bg-blue-50 text-blue-700 text-xs font-semibold px-3 py-1 rounded-full mb-3 self-start">
                   {t(categoryTranslationKey[study.category])}
                 </div>
 
-                <p className="text-slate-600 text-sm leading-relaxed mb-4">
+                <p className="text-slate-600 text-sm leading-relaxed mb-4 flex-1">
                   {t(`caseStudiesPage.items.${study.id}`)}
                 </p>
 
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 mt-auto">
                   {study.tags.map((tag, index) => (
                     <div
                       key={index}
@@ -133,7 +133,7 @@ export default function CaseStudies() {
                 </div>
               </div>
 
-              <div className="px-6 pb-6">
+              <div className="px-6 pb-6 mt-auto">
                 <a
                   href={study.url}
                   target="_blank"
