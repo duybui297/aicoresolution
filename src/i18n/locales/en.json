@@ -12,7 +12,9 @@
         "companyName": "AI Core Solutions",
         "tagline": "AI-Powered Development",
         "contact": "Contact",
-        "news": "News"
+        "news": "News",
+        "community": "Community",
+        "products": "Products"
     },
     "news": {
         "title": "News & Events",
@@ -27,20 +29,120 @@
                 "content": "To this day, artificial intelligence is no longer a distant concept—it has quietly permeated every corner of our lives. And then OpenClaw appeared, forcing me to pause and reflect: are we truly ready for AI to stop being a mere observer and start acting directly within our own systems?\n\nIn the past, AI felt safe. It answered questions, suggested ideas, even wrote on our behalf—but always from behind an invisible wall. Control remained firmly in human hands. That certainty, however, begins to erode when AI agents like this can open browsers, read files, send messages, and operate directly on a computer. At that point, the question is no longer how intelligent AI is, but whether we are prepared to entrust it with real authority. OpenClaw is a vivid illustration of how thin that boundary has become.\n\nMy advice is simple: don’t grant full permissions too quickly, no matter how tempting it may be. What sets OpenClaw apart is not its conversational ability or the model behind it, but the fact that it is designed to access the entire system without protective layers—no sandbox, no hard guardrails. If you allow it, it will act as you would. That is a significant leap forward—and a risky one.\n\nFrom my experience, when working with any new “agent,” human or machine, the most critical factor is not speed or initial efficiency, but understanding. You need to know how it interprets instructions, how it reacts to gaps in context, and, most importantly, how it fails. Granting full control to an AI before understanding these aspects is no different from throwing a new hire straight into a production environment on day one. The risk rarely comes from malicious intent, but from immature design and our own misplaced expectations.\n\n{{IMAGE_0}}\n\nExecution capability does not always correlate with reliability. In hands-on tests with OpenClaw, I’ve seen it handle a wide range of tasks: opening browsers, checking broken links, interacting with user interfaces, even communicating via Telegram. For simple, repetitive tasks, the initial impression is genuinely strong. But over time, reality becomes clearer: it still needs step-by-step guidance, rarely shows true initiative, and tends to stop at “knowing how to do something” rather than “knowing when it should be done.”\n\nThis is not a failure—it’s a reminder that today’s AI agents are closer to highly empowered interns than to truly independent colleagues. If you expect more, disappointment is inevitable. I’ve seen the same pattern with many tools before: bold promises of transformation, followed by the enduring need for human direction.\n\n{{IMAGE_1}}\n\nFor me, security is not an optional feature; it is a core responsibility. OpenClaw is refreshingly candid in labeling itself as “risky,” clearly warning users about permission grants and advising that only those with security expertise should proceed. That honesty is commendable, but it also means the burden is squarely on us. When AI can touch browsers, accounts, files, and communication channels, the distance between a minor mistake and a major incident is razor-thin. In that context, the smartest approach is not perfect prompting, but strict isolation: separate machines, separate accounts, non-sensitive data. Without isolation, AI autonomy stops being creative and becomes a gamble.\n\nUltimately, execution will never replace thinking. OpenClaw excels as an action-oriented tool, but it cannot take on strategy, prioritization, or judgment in ambiguous situations. Most real-world work isn’t hard because of operations—it’s hard because of complex context. Until AI learns “what not to do” as well as “what to do,” humans must remain in the driver’s seat—not just supervising, but shaping direction.\n\n{{IMAGE_2}}\n\nOpenClaw is neither a failure nor the pinnacle of AI agents. It is a realistic snapshot of the transitional phase we are living through: from passive AI to AI with the power to act. Its true value lies in the questions it raises: how much authority are we willing to give AI, and under what conditions? That is not merely a technical question—it is a question of responsibility. Our responsibility to ourselves, and to the world we are in the process of building."
             },
             "post2": {
-                "title": "Chatbot Integration Guide for SMEs",
-                "excerpt": "Simple steps to automate customer service 24/7.",
-                "content": "Content coming soon..."
+                "title": "AI in the IT Era: Do We Still Need to Learn Programming?",
+                "excerpt": "History shows a recurring pattern. Every major technological leap forces society to ask the same fundamental question. AI in IT is no exception. It does not end programming—it ends a narrow, outdated interpretation of programming.",
+                "content": "AI in the IT Era: Do We Still Need to Learn Programming?\n\nNever before in the history of the IT industry has the question “Do we still need to learn programming?” been asked so frequently—and so anxiously. It is no longer just students at the beginning of their careers who are asking it. Engineers with 7–10 years of experience are asking it. Engineering managers who see AI writing code faster than their teams are asking it. Founders, quietly recalculating headcount and cost structures, are asking it too.\n\nThis question does not come from laziness. It comes from a collapse of certainty—the long-held belief that “being good at programming” guarantees a stable, long-term career in tech.\n\nTo answer this question honestly, we must avoid two dangerous extremes:\n- Panic: AI will kill programmers.\n- Denial: AI is just another tool; nothing really changes.\n\nAs usual, the truth lies much deeper.\n\n{{IMAGE_0}}\n\n### 1. Every technological revolution redefines human value\n\nHistory shows a recurring pattern. Every major technological leap forces society to ask the same fundamental question.\n- When mechanical looms appeared: Do we still need weavers?\n- When spreadsheets became widespread: Do we still need manual accountants?\n- When low-code platforms emerged: Do we still need developers?\n\nWhat’s interesting is this: humans rarely disappear from the system. But their roles are relentlessly redefined.\n\nAI in IT is no exception. It does not end programming—it ends a narrow, outdated interpretation of programming.\n\n### 2. The real issue is not that AI can write code, but that code itself has become commoditized\n\nIn economics, when something becomes: Easy to produce - Cheap - Easily replicated - Undifferentiated… its value collapses.\n\nCode is following this exact trajectory. Today:\n- Writing a REST API is no longer a rare skill\n- Building a CRUD UI offers little competitive advantage\n- Copying “best-practice” architectures no longer guarantees success\n\nAI did not start this trend. It simply accelerated it. This leads to an uncomfortable truth for many in the industry: Knowing how to write code is no longer the same as creating value.\n\n{{IMAGE_1}}\n\n### 3. But IT was never really about code\n\nWhen systems fail, the reason is almost never “Because the syntax was wrong.” Much more often, it’s because:\n- The problem was misunderstood\n- The abstractions were poorly designed\n- Complexity was underestimated during scale\n- Short-term technical decisions were made under deadline pressure\n- User behavior was misunderstood\n\nThese failures do not live in code. They live in thinking that happens before code is written.\n\nAI can generate code for you—but:\n- It does not bear responsibility when decisions are wrong\n- It does not live with the consequences of bad architecture two years later\n- It does not have to explain to the business why the system cannot be “fixed quickly”\n\nPut bluntly: AI has no accountability.\n\n### 4. Programming is how humans learn to think precisely\n\nOne of the most overlooked reasons programming still matters—perhaps more than ever—is this: Programming trains the mind.\n\nLearning programming teaches you how to:\n- Decompose complex problems\n- Think in cause-and-effect chains\n- Manage state and transformation\n- Accept that systems are never perfect\n\nPeople who have never learned programming seriously often struggle to: Work with large, interconnected systems, ask the right questions of AI, or judge whether AI output is “good enough” or dangerously wrong. This creates a paradox: The more you rely on AI, the more essential a solid programming foundation becomes.\n\n### 5. AI is exposing an uncomfortable truth in the IT industry\n\nFor years, the industry has tolerated a class of engineers who: Know frameworks but lack depth, memorize patterns without understanding why they exist, perform well with clear specs but collapse in ambiguity.\n\nAI exposes this mercilessly. When AI can generate code, refactor, write tests, suggest architectures… the remaining human work lies in decision-making under uncertainty. And not everyone in IT is prepared for that.\n\n### 6. The IT industry will polarize—more, not less\n\nAI will not eliminate programmers. It will amplify the gap between them:\n- Those who deeply understand systems will leverage AI to move faster\n- Those who only follow instructions will be replaced or pushed into lower-value roles\n\nThe future market will not lack people who “can code.” It will lack people who understand why the code should exist at all.\n\n### 7. So how should we learn programming in the AI era?\n\nThe answer is not “learn more languages.” It is learn deeper, more abstractly. Learn:\n- System design principles\n- Architectural thinking\n- Technical trade-offs\n- How AI systems work—and where they fail\n- How to control, review, and take responsibility for AI output\n\nProgramming is no longer about typing code. It is about: Conducting a disciplined dialogue with machines, grounded in responsibility.\n\n### 8. The real question: where do you want to stand in the value chain?\n\nAI forces every IT professional to confront a deeply personal question: Do I want to make decisions—or merely execute them?\n\nIf your goal is to: Receive tasks, implement instructions, avoid responsibility for the bigger picture… then yes, AI will steadily narrow that path.\n\nBut if you aim to: Understand the true nature of problems, shape solutions, take ownership of systems and their impact on people… then programming remains an irreplaceable foundation.\n\n### Conclusion\n\nAI does not make IT easier. It simply removes the places where superficial understanding can hide.\n\nLearning programming still matters. But not to become a faster typist—to become a clearer thinker.\n\nPerhaps this is programming’s return to its most meaningful role: A discipline that enables humans to understand, design, and take responsibility for complex systems."
             },
             "post3": {
-                "title": "AI Core Solutions Expands Team to 40 Employees",
-                "excerpt": "We welcome new talents to better serve our customers.",
-                "content": "Content coming soon..."
+                "title": "AI is making building cheaper — and that's the real issue.",
+                "excerpt": "Building a product has never been easier. Building a product worth existing has never been harder.",
+                "content": "We are entering a paradoxical era in technology:\n\nBuilding a product has never been easier. Building a product worth existing has never been harder.\n\nAI, no-code and low-code platforms, cloud infrastructure, and open-source ecosystems are all doing the same thing at once: driving the technical barrier to entry close to zero.\n\nToday, a single person with a laptop and a handful of AI tools can: Build an MVP in days, deploy production-grade systems without an infrastructure team, generate landing pages, content, and even pitch decks.\n\nAnd that reality forces an uncomfortable question: When anyone can build a product, where does real competitive advantage come from?\n\n### 1. \"Being able to build\" is no longer an advantage — it's the entry ticket\n\nIn the past, building a product itself was a moat: You needed strong engineering talent, you needed capital, you needed time.\n\nToday, being able to build is merely the price of admission. If your competitive narrative still relies on: \"We build fast\", \"We use cutting-edge technology\", \"We're AI-powered\"… then you are competing at the lowest layer—the very layer AI is designed to flatten.\n\n### 2. When speed stops being a weapon, it becomes a trap\n\nMany teams pride themselves on: Extremely short time-to-market, frequent releases, feature-heavy roadmaps. But in a world where everyone moves fast, speed no longer differentiates.\n\nWorse, it creates a dangerous illusion: build fast → learn slowly → die early.\n\nProducts rarely fail because they were built too slowly. They fail because: They solved the wrong problem, they solved the right problem for the wrong users, they solved the right problem for the right users at the wrong time. None of these can be accelerated by AI.\n\n### 3. Competitive advantage is shifting from execution to insight\n\nWhen execution becomes cheap, insight becomes expensive.\n\nInsight is not: A clever idea, a novel feature. Real insight means: Understanding a pain point others only see superficially, recognizing constraints the market ignores, grasping real user behavior—not slide-deck abstractions.\n\nAI can synthesize information. It cannot live inside a customer's reality. It does not suffer the consequences of being wrong. True insight is earned through direct exposure to reality.\n\n{{IMAGE_0}}\n\n### 4. Strong products don't win on features — they win on positioning\n\nIn a market where features can be copied almost instantly, the real question is no longer: \"What does your product do?\". But: \"Why does this product exist—and exactly who is it for?\".\n\nMany products fail not because they are bad, but because: They tell no clear story, they have no specific enemy to fight, they refuse to exclude most of the market. Modern competition is a battle for mindshare, not functionality.\n\n### 5. The hardest thing to copy isn't technology — it's the organization\n\nTechnology can be cloned. UI can be copied. Features can be reverse-engineered.\n\nWhat is extremely difficult to replicate is: How a team makes decisions, how it prioritizes under conflict, its culture of trade-offs, its ability to learn from real failure.\n\nAI cannot build a learning organization for you. In the long run, the organization becomes the product.\n\n### 6. When everyone can build, the winners are those who dare not to\n\nOne of the greatest paradoxes of the AI era is this: The ability to not build becomes a strategic advantage.\n\nKnowing when to: Not add another feature, not chase trends, not comply with every customer request… requires clarity and discipline that very few teams possess. AI helps you build everything. Only humans can decide what should not exist.\n\n{{IMAGE_1}}\n\n### 7. Future competition is a game of conviction, not noise\n\nAs products become easier to build, markets become louder: More launches, more announcements, more \"AI-powered\" claims.\n\nIn this noise, advantage does not belong to the loudest voice, but to the team that: Stays in the game long enough, maintains a clear value axis, preserves identity while scaling.\n\nConviction becomes a new kind of moat—one that AI cannot manufacture for you.\n\n### Conclusion\n\nWhen anyone can build a product, building is no longer a strategic question.\n\nThe real questions are: How deeply do you understand your market? What are you brave enough to exclude? Are you building an organization that learns—or merely one that ships?\n\nAI makes products easier to create. But that is precisely why only products with a strong reason to exist will survive.\n\nIn a world where anyone can build, the winners won't be those who build best—but those who understand which game they are actually playing."
+            },
+            "post4": {
+                "title": "Tokens in AI: Understanding the \"Currency\" of Artificial Intelligence",
+                "excerpt": "From data processing to operational costs, tokens are shaping an entirely new economic ecosystem. Explore what tokens are, why the term \"Token Economy\" matters, and who may emerge as the winners in this race.",
+                "content": "In today's rapidly expanding AI landscape, the concept of a token has become ubiquitous—yet not everyone fully understands its significance. From data processing to operational costs, tokens are shaping an entirely new economic ecosystem. This article explores what tokens are, how many are required for various AI tasks, why the term \"Token Economy\" is increasingly relevant, the staggering scale of token \"burn,\" and ultimately, who may emerge as the winners in this race.\n\n## What Is a Token?\n\nIn the context of AI—particularly with Large Language Models (LLMs) such as OpenAI's GPT series, xAI's Grok, or Meta's LLaMA—a token is not a cryptocurrency unit as in blockchain systems. Instead, it is the most fundamental unit used to process textual input and output.\n\nThink of your text as being segmented into smaller pieces. A token may represent:\n- A full word (e.g., \"apple\"),\n- A subword unit (e.g., \"un\" in \"understand\"),\n- Or even a punctuation mark or special character.\n\nAI models use tokens to encode and predict data. For example, the sentence \"Hello, world!\" may be divided into approximately 3–4 tokens, depending on the tokenizer (the tool responsible for token segmentation).\n\nWhy are tokens critical? Because LLMs operate on a transformer architecture, where each token is processed in relation to others within a contextual window. The total number of tokens directly determines computational complexity, processing cost, and output quality. Companies such as OpenAI and xAI measure AI resource consumption in tokens.\n\n## Token Consumption Across AI Tasks\n\nA defining characteristic of modern AI systems is that computational cost—and therefore token usage—scales non-linear. Using a basic text chat as a 1x baseline:\n\n- Standard text chat → ~1x token usage (short prompt, short response).\n- Image understanding or generation → ~10x (images are divided into thousands of patches, each converted into tokens).\n- Advanced reasoning models (e.g., chain-of-thought, o1-style reasoning) → 100x or more (internal reasoning generates large volumes of hidden tokens before producing the final output).\n- Short video generation (~10 seconds) → up to 3,000x (video frames are tokenized similarly to images, resulting in extremely long sequences).\n- Deep research / agentic workflows → easily 1,000,000x or more (multiple tool calls, web searches, iterative refinement, long context windows, retries—all multiplying token burn).\n\n{{IMAGE_0}}\n\n**Simple tasks (basic chat):** A short query like \"What's the weather today?\" may consume 10–20 input tokens and a similar number for output—typically under 50 tokens total.\n\n**Medium-complexity tasks (blog writing, summarization):** Writing a 500-word blog post may require 500–1,000 input tokens (depending on prompt detail) and up to 1,000 output tokens.\n\n**Complex tasks (data analysis, code generation):** Processing a 10,000-word document or training a model can consume millions of tokens. Fine-tuning a model may require billions of tokens from training datasets.\n\nAI services are priced per token. Providers charge per million tokens (e.g., $X per million input tokens and $Y per million output tokens). Tokens thus become a measurable unit of digital productivity—quantifying how much \"thinking\" or \"work\" an AI system performs per resource unit.\n\n## Tokens as a Substitute for Human Labor — The Emergence of a True Token Economy\n\nConsider the productivity leap: A deep research task that previously required an analyst a full week can now be completed by AI in 30 minutes at a cost of approximately $1 (depending on the model and usage). A single such run may consume millions of tokens across search, synthesis, and reasoning processes.\n\nThis substitution effect is profound:\n\n- **Token output becomes a new economic unit** representing value creation.\n- As AI performs economically valuable tasks (research, analysis, coding, content creation), tokens effectively substitute digital labor.\n- **AI monetization is tokenized:** Users purchase tokens to access AI capabilities, much like buying commodities. Companies such as OpenAI generate billions in revenue from token-based API usage.\n- **Blockchain integration:** Some projects merge AI with crypto infrastructure. For example, Fetch.ai and SingularityNET use tokens (e.g., FET, AGIX) to pay for AI services on decentralized networks, forming a marketplace where AI agents \"work\" and are compensated in tokens.\n- **Efficiency incentives:** Token-based pricing encourages optimization. Users learn to write concise prompts to reduce token consumption—similar to minimizing operational expenses. This dynamic drives innovation in efficiency and resource conservation.\n\nA genuine Token Economy is emerging. In the future, a portion of GDP may correlate with the volume of high-quality tokens generated and consumed—similar to how energy or compute capacity historically drove economic growth. Many technology leaders describe data centers as \"token factories,\" where token-per-watt-per-dollar efficiency may directly influence socio-economic growth.\n\n## AI Token Scale vs. Human Communication Scale\n\nHumanity collectively generates approximately 50 quadrillion tokens per year through spoken and written communication (estimated from average word counts, roughly 0.75–1 word per token).\n\n{{IMAGE_1}}\n\nBy comparison:\n\n- **OpenAI** processes hundreds of trillions to several quadrillion tokens annually, with API peaks reaching billions of tokens per minute and dozens of enterprise clients exceeding one trillion tokens per year.\n- **Google** reported approximately 1.3 quadrillion tokens per month by late 2025 across Search, Gemini, and other services—surpassing many competitors.\n- **Individual scale:** An average user may burn thousands of tokens per day via AI chat. With millions of users, global token burn can reach billions per hour.\n- **Enterprise scale:** Training a model such as GPT-4 costs millions of dollars in electricity and consumes trillions of tokens from massive datasets. OpenAI reported that training GPT-3 alone cost approximately $4.6 million, with token burn estimated in the trillions.\n- **Environmental Impact:** Each token requires electricity. Rough estimates suggest that 1,000 tokens may consume energy equivalent to powering an LED bulb for one hour. At global scale, AI token burn may account for 2–3% of worldwide electricity consumption—comparable to the aviation industry. Data centers operated by companies such as Google and Microsoft consume enormous energy volumes, raising legitimate climate concerns.\n\nAI systems are rapidly approaching—and in certain domains surpassing—the scale of total human communication processing. This is not merely a numerical milestone; it signals that machines are beginning to process information at a species-level magnitude.\n\nWithout aggressive optimization, uncontrolled token burn could bankrupt smaller AI startups, as GPU and electricity costs continue to escalate."
             }
         },
         "categories": {
             "trends": "AI Trends",
             "tips": "Tech Tips",
             "company": "Company News"
+        }
+    },
+    "community": {
+        "hero": {
+            "badge": "CONNECT & GROW",
+            "title": "Community & Events",
+            "subtitle": "Connect with top experts, join in-depth workshops, and expand your professional network in the tech & AI industry."
+        },
+        "event": {
+            "free": "Free",
+            "paid": "Paid Ticket",
+            "upcoming": "Upcoming",
+            "ended": "Ended",
+            "full": "Full",
+            "open": "Open",
+            "online": "Online",
+            "registeredOf": "{{count}}/{{max}} registered",
+            "registerBtn": "Register Now",
+            "limitedSeats": "* Ticket {{price}}. Limited seats.",
+            "intro": "About",
+            "agenda": "Agenda",
+            "seatsCount": "{{registered}}/{{max}} registered"
+        },
+        "tabs": {
+            "upcoming": "Upcoming ({{count}})",
+            "past": "Past ({{count}})"
+        },
+        "empty": {
+            "title": "No events yet",
+            "subtitle": "Please check back later."
+        },
+        "newsletter": {
+            "title": "Don't miss our exciting events!",
+            "subtitle": "Subscribe to get notified first about workshops and Early Bird tickets.",
+            "placeholder": "Your email",
+            "button": "Subscribe"
+        },
+        "form": {
+            "title": "Register to Attend",
+            "fullName": "Full Name",
+            "fullNamePlaceholder": "John Doe",
+            "phone": "Phone Number",
+            "phonePlaceholder": "+84 905 xxx xxx",
+            "email": "Email",
+            "emailPlaceholder": "example@email.com",
+            "note": "Note (optional)",
+            "notePlaceholder": "Questions for the speaker...",
+            "submitFree": "Register for Free",
+            "submitPaid": "Pay {{amount}}",
+            "privacy": "By registering, you agree to our privacy policy.",
+            "successTitle": "Registration Successful!",
+            "successMsg": "Thank you for registering. We have sent a confirmation email to",
+            "done": "Done",
+            "fullTitle": "Event is Full",
+            "fullSubtitle": "Please follow our upcoming events."
+        },
+        "materials": {
+            "title": "Get Materials & Video Recording",
+            "subtitle": "Register to receive the full slide deck, video, and highlight notes for this event.",
+            "successTitle": "Registration Successful!",
+            "successMsg": "Materials will be sent to your email.",
+            "send": "Send me the materials"
+        },
+        "payment": {
+            "title": "Secure Payment",
+            "selectMethod": "Please select a payment method for the amount",
+            "vietqr": "VietQR / PayOS",
+            "vietqrSub": "Scan QR code with your banking app",
+            "momo": "MoMo / ZaloPay",
+            "momoSub": "Popular e-wallets",
+            "scanGuide": "Open your Banking App and scan the QR code above. The system will confirm automatically in a few seconds.",
+            "waiting": "Waiting for payment...",
+            "processing": "Processing transaction...",
+            "processingNote": "Please do not close the browser.",
+            "successTitle": "Payment Successful!",
+            "successNote": "You will be redirected immediately.",
+            "simulate": "Click to simulate payment"
+        },
+        "admin": {
+            "title": "Admin Dashboard",
+            "loginTitle": "Admin Login",
+            "loginBtn": "Login",
+            "wrongPass": "Wrong password!",
+            "eventList": "Event List",
+            "regList": "Registration List",
+            "noReg": "No registrations yet.",
+            "selectEvent": "Select an event to view registrations",
+            "colName": "Full Name",
+            "colContact": "Contact",
+            "colStatus": "Status",
+            "colDate": "Registered At",
+            "paid": "Paid",
+            "paidFree": "Free",
+            "pending": "Pending Payment",
+            "regCount": "{{count}} registered"
         }
     },
     "hero": {
@@ -197,9 +299,9 @@
         },
         "contact": {
             "title": "Contact",
-            "email": "contact@aicoresolution.vn",
-            "phone": "+84 123 456 789",
-            "address": "Da Nang, Vietnam"
+            "email": "info@aicorelabs.net",
+            "phone": "+84 869 17 18 12",
+            "address": "101 Nguyen Du, Thach Thang Hai Chau Da Nang"
         },
         "copyright": "© 2025 AI Core Solutions. All rights reserved.",
         "privacyPolicy": "Privacy Policy",
@@ -221,7 +323,7 @@
     },
     "caseStudiesPage": {
         "title": "Featured Projects",
-        "description": "Discover successful projects we have implemented for clients across various industries",
+        "description": "Discover the successful projects we have delivered for clients across a wide range of industries.",
         "searchPlaceholder": "Search by name, industry or category...",
         "showing": "Showing",
         "projects": "projects",
@@ -238,37 +340,37 @@
             "construction": "Construction, Materials & Industrial Equipment"
         },
         "items": {
-            "1": "Table reservation and restaurant management system with AI chatbot support 24/7",
-            "12": "Restaurant & bar with AI menu optimization and event management",
-            "8": "Hotel management with AI dynamic pricing and guest experience optimization",
-            "23": "Travel booking platform with AI itinerary planner and price prediction",
-            "10": "Spa booking platform with AI therapist matching and customer preferences",
-            "6": "Gym management system with AI workout planner and member tracking",
-            "25": "Study abroad consulting with AI university matching and application support",
-            "26": "Korea study consulting with AI language assessment and visa guidance",
-            "16": "Mental health platform with AI counseling support and mood tracking",
+            "1": "Famous specialty restaurant in Hoi An Ancient Town serving cao lau, mi quang, fresh grilled seafood in cozy friendly atmosphere.",
+            "12": "Châu Kitchen & Bar Hoi An delicious Asian-European fusion dishes charming century-old house serving international guests professionally.",
+            "8": "Affordable quality Tan Nhat Suong Hotel Binh Dinh comfortable rooms pool gym near attractions free wifi parking relaxed stay.",
+            "23": "Official Sapa attraction tickets including Fansipan cable car Cat Cat village best prices fast online booking convenient.",
+            "10": "Premium 5-star Bồng Lai Các Massage Da Nang luxurious space professional therapists diverse relaxing packages attractive options.",
+            "6": "Hoi An's top modern gym with state-of-the-art equipment airy space ideal for tourists locals bilingual service great amenities.",
+            "25": "ICC Study Abroad reliable Japan consulting high visa success scholarships full support for Vietnamese students.",
+            "26": "Hankang Study Abroad leads Korea consulting Da Nang top scholarships high visa intensive Korean training.",
+            "16": "Happiness Special Education Center supports autistic children developmental disorders through in-depth psychological intervention programs effectively.",
             "29": "Legal service platform with AI document processing and case management",
-            "4": "Real estate platform with AI property valuation and market analysis",
-            "13": "Beauty service booking with AI style recommendation and before/after visualization",
-            "11": "Health supplement store with AI health advisor and personalized recommendations",
-            "30": "Nail salon booking with AI design preview and customer loyalty program",
-            "31": "Pharmaceutical e-commerce with AI prescription checking and drug interaction alert",
-            "3": "Online flower shop with AI image search and delivery optimization",
-            "5": "Sports retail platform with AI size recommendation and inventory management",
-            "18": "Fashion e-commerce with AI style advisor and virtual try-on",
-            "2": "E-commerce platform with AI recommendation and AR visualization",
-            "20": "Auto decal service with AI design tool and visualization on car",
-            "21": "EV charging platform with AI station finder and usage optimization",
-            "7": "Pet care platform with AI health monitoring and grooming booking",
-            "32": "Natural pet food store with AI nutritional planner",
-            "9": "Gaming gear store with AI PC builder and compatibility checker",
-            "33": "Computer components store with AI build optimizer",
-            "17": "Electrical equipment store with AI product matching and installation guide",
-            "15": "Manufacturing management with AI production optimization and quality control",
-            "19": "Wooden furniture store with AI design customization and price estimation",
-            "24": "Ceramic & sanitary ware with AI bathroom designer and product recommendation",
-            "27": "Construction material store with AI color matching and quantity calculator",
-            "28": "Forklift service platform with AI maintenance prediction and fleet management"
+            "4": "Top high-end real estate distributor exclusive agent for Vinhomes Masterise Sun Group featuring major nationwide premium projects reliably.",
+            "13": "Royal Eyelash Vietnam specializes in eyelash extensions false lashes premium care products professional safe quality for customers.",
+            "11": "Herbal technology brand offering natural shampoo toothpaste body wash safe gentle daily care for the whole family.",
+            "30": "Stella Nails & Spa Canada expert nail care creative manicures pedicures stunning unique designs professionally.",
+            "31": "Dai Thanh Pharma manufactures trusted pharmaceuticals supplements focused on family daily health wellness.",
+            "3": "Trusted fresh flower shop in Da Nang offering bouquets gift baskets boxes, fast 60-minute delivery with daily imported high-quality flowers.",
+            "5": "MinhongSport online sports supermarket selling football badminton pickleball shoes apparel accessories top brands great prices custom printing available.",
+            "18": "Rosepolewear pole dance activewear sexy comfortable modern designs for passionate active women fitness enthusiasts.",
+            "2": "Leading Vietnam luxury interior design and construction brand specializing in villas apartments offices with Scandinavian Indochine elegant unique styles.",
+            "20": "Decal Xe iu custom motorcycle car stickers personalized high-quality fade-resistant nationwide fast delivery service.",
+            "21": "KotiCharge provides fast convenient electric vehicle charging stations supporting green eco-friendly sustainable mobility future.",
+            "7": "Mewsic Pet Shop provides pet food toys accessories grooming spa boarding services for dogs cats fast convenient delivery.",
+            "32": "WinVN offers natural eco-friendly pet care products food accessories safe gentle for beloved dogs and cats.",
+            "9": "T-WOLF tech store specializes in gaming keyboards mice speakers high-quality KBM combos perfect for passionate gamers enthusiasts.",
+            "33": "AIWOLF sells high-performance computer components graphics cards motherboards PC building accessories for gamers professionals.",
+            "17": "Thien An Pro distributes industrial supplies technical equipment comprehensive reliable solutions for manufacturing businesses nationwide.",
+            "15": "Deviasteel manufactures durable industrial steel doors rolling shutters high-quality building materials for factories large projects reliably.",
+            "19": "Jicowood specializes in premium composite wood doors waterproof soundproof durable beautiful for modern homes buildings.",
+            "24": "Vacera produces flexible tiles mosaics decorative stones modern interior exterior designs superior quality variety.",
+            "27": "X900 Titan premium waterproof wall paint durable color retention excellent protection for long-term construction projects.",
+            "28": "Leading forklift rental repair sales service reliable industrial lifting equipment solutions across Vietnam."
         }
     },
     "contact": {
@@ -282,6 +384,9 @@
         "message": "Message",
         "messagePlaceholder": "Brief description of the project...",
         "submit": "Send Consultation Request",
+        "successTitle": "Message Sent Successfully!",
+        "successMessage": "Thank you for reaching out. Our team will contact you within 24 hours.",
+        "sendAnother": "Send another message",
         "subjects": {
             "aiIntegration": "AI Integration into System",
             "webApp": "Web/App Deployment",
@@ -291,8 +396,57 @@
         "info": {
             "title": "Contact Information",
             "headquarters": "Headquarters",
-            "address": "123 Nguyen Van Linh Street, Hai Chau District, Da Nang City, Vietnam",
-            "hours": "(08:00 - 17:30, Mon - Fri)"
+            "address": "101 Nguyen Du, Thach Thang Hai Chau Da Nang",
+            "zaloLabel": "Zalo",
+            "zalo": "0342 609 366"
+        }
+    },
+    "products": {
+        "hero": {
+            "title": "Our <1>Products</1>",
+            "titlePart1": "Our ",
+            "titleHighlight": "Products",
+            "description": "Discover our suite of cutting-edge tools designed to accelerate your digital transformation and drive business growth."
+        },
+        "waitingList": {
+            "title": "Upcoming Innovations",
+            "description": "We're building the next generation of AI tools. Join the waitlist to get early access and exclusive updates.",
+            "placeholder": "Enter your email address",
+            "button": "Join Waitlist",
+            "disclaimer": "No spam. Unsubscribe anytime.",
+            "successMessage": "You're on the list! We'll notify you at",
+            "errorMessage": "An error occurred, please try again."
+        },
+        "upcoming": {
+            "product1": {
+                "title": "AI Chatbot Trained on Your Business Knowledge",
+                "description": "An intelligent AI chatbot that learns directly from your company's documents, website, and internal knowledge base. It provides accurate, context-aware answers to customers and employees, helping automate support, reduce manual workload, and deliver consistent information across your organization.",
+                "eta": "COMING APRIL 2026"
+            },
+            "product2": {
+                "title": "AI Document Translator",
+                "description": "A powerful AI tool that automatically translates documents while preserving formatting and structure. It supports multiple file types and languages, enabling businesses to quickly convert reports, manuals, and internal documents with high accuracy and minimal manual editing.",
+                "eta": "COMING APRIL 2026"
+            }
+        },
+        "cta": {
+            "title": "Ready to transform your business?",
+            "description": "Get in touch with our team to discuss how our upcoming products can help you achieve your goals.",
+            "button": "Contact Sales"
+        },
+        "detail": {
+            "back": "Back to Products",
+            "gallery": "Product Gallery",
+            "overview": "Overview",
+            "features": "Features",
+            "benefits": "Key Benefits",
+            "benefitsComingSoon": "Detailed benefits coming soon.",
+            "actions": "Actions",
+            "liveDemo": "Live Demo",
+            "contactSales": "Contact Sales",
+            "techStack": "Tech Stack",
+            "techStackNA": "Not specified",
+            "learnMore": "Learn More"
         }
     },
     "services": {

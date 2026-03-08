@@ -1,5 +1,6 @@
-import { Mail, Phone, MapPin, Sparkles, Facebook, Linkedin, Twitter } from 'lucide-react';
+import { Mail, Phone, MapPin, Facebook, Linkedin } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import logo from '../assets/logo.gif';
 
 export default function Footer() {
   const { t } = useTranslation();
@@ -9,27 +10,18 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4">
         <div className="grid md:grid-cols-4 gap-12 mb-12">
           <div className="col-span-2">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="p-2 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl">
-                <Sparkles className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <div className="text-xl font-bold">{t('nav.companyName')}</div>
-                <div className="text-xs text-blue-300">{t('nav.tagline')}</div>
-              </div>
+            <div className="mb-6">
+              <img src={logo} alt="AI Core Solutions" className="h-24 w-auto object-contain rounded-xl" />
             </div>
             <p className="text-slate-300 leading-relaxed mb-6">
               {t('footer.description')}
             </p>
             <div className="flex gap-4">
-              <a href="#" className="p-2 bg-slate-800 rounded-lg hover:bg-blue-600 transition-colors">
+              <a href="https://www.facebook.com/aicoresolutions" target="_blank" rel="noopener noreferrer" className="p-2 bg-slate-800 rounded-lg hover:bg-blue-600 transition-colors">
                 <Facebook className="w-5 h-5" />
               </a>
-              <a href="#" className="p-2 bg-slate-800 rounded-lg hover:bg-blue-600 transition-colors">
+              <a href="https://www.linkedin.com/company/aicorelabs/" target="_blank" rel="noopener noreferrer" className="p-2 bg-slate-800 rounded-lg hover:bg-blue-600 transition-colors">
                 <Linkedin className="w-5 h-5" />
-              </a>
-              <a href="#" className="p-2 bg-slate-800 rounded-lg hover:bg-blue-600 transition-colors">
-                <Twitter className="w-5 h-5" />
               </a>
             </div>
           </div>

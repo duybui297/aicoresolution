@@ -8,6 +8,8 @@ import CaseStudiesPage from './pages/CaseStudiesPage';
 import InsightsPage from './pages/InsightsPage';
 import NewsDetailPage from './pages/NewsDetailPage';
 import ContactPage from './pages/Contact';
+import CommunityPage from './pages/CommunityPage';
+import Products from './pages/Products';
 import { useDocumentMeta } from './hooks/useDocumentMeta';
 import { ROUTE_PATHS } from './utils/routeConstants';
 
@@ -47,6 +49,14 @@ function App() {
           {/* Contact Routes */}
           <Route path={ROUTE_PATHS.contact.vi} element={<ContactPage />} />
           <Route path={ROUTE_PATHS.contact.en} element={<ContactPage />} />
+
+          {/* Community Routes */}
+          <Route path={ROUTE_PATHS.community.vi} element={<CommunityPage />} />
+          <Route path={ROUTE_PATHS.community.en} element={<CommunityPage />} />
+
+          {/* Products Routes */}
+          <Route path={ROUTE_PATHS.products.vi} element={<Products />} />
+          <Route path={ROUTE_PATHS.products.en} element={<Products />} />
         </Routes>
       </main>
       <Footer />

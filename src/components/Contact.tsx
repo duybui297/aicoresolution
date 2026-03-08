@@ -1,5 +1,6 @@
 import { MapPin, Mail, Phone } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
+import { ZaloIcon } from './icons/ZaloIcon';
 
 export default function Contact() {
     const { t } = useTranslation();
@@ -59,7 +60,7 @@ export default function Contact() {
                                 </div>
                                 <div>
                                     <h4 className="font-bold text-slate-900">{t('contact.info.headquarters', 'Trụ sở chính')}</h4>
-                                    <p className="text-slate-600">{t('contact.info.address', '123 Đường Nguyễn Văn Linh, Quận Hải Châu, TP. Đà Nẵng, Việt Nam')}</p>
+                                    <p className="text-slate-600">{t('contact.info.address', '101 Nguyễn Du, Thạch Thang Hải Châu Đà Nẵng')}</p>
                                 </div>
                             </li>
                             <li className="flex items-start">
@@ -68,8 +69,7 @@ export default function Contact() {
                                 </div>
                                 <div>
                                     <h4 className="font-bold text-slate-900">Email</h4>
-                                    <p className="text-slate-600">contact@aicoresolutions.vn</p>
-                                    <p className="text-slate-600">support@aicoresolutions.vn</p>
+                                    <p className="text-slate-600">info@aicorelabs.net</p>
                                 </div>
                             </li>
                             <li className="flex items-start">
@@ -78,25 +78,31 @@ export default function Contact() {
                                 </div>
                                 <div>
                                     <h4 className="font-bold text-slate-900">Hotline</h4>
-                                    <p className="text-slate-600">+84 905 123 456</p>
-                                    <p className="text-slate-600 text-sm">{t('contact.info.hours', '(08:00 - 17:30, Thứ 2 - Thứ 6)')}</p>
+                                    <p className="text-slate-600">+84 869 17 18 12</p>
+                                </div>
+                            </li>
+                            <li className="flex items-start">
+                                <div className="bg-blue-100 p-3 rounded-lg mr-4">
+                                    <ZaloIcon className="w-6 h-6 text-blue-600" />
+                                </div>
+                                <div>
+                                    <h4 className="font-bold text-slate-900">{t('contact.info.zaloLabel')}</h4>
+                                    <p className="text-slate-600">{t('contact.info.zalo')}</p>
                                 </div>
                             </li>
                         </ul>
 
-                        {/* Simulated Map */}
-                        <div className="w-full h-64 bg-slate-200 rounded-xl relative overflow-hidden group">
-                            <img
-                                src="https://picsum.photos/seed/map/800/400"
-                                alt="Map location"
-                                className="w-full h-full object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-500"
-                            />
-                            <div className="absolute inset-0 flex items-center justify-center">
-                                <div className="bg-white/90 backdrop-blur px-4 py-2 rounded shadow-lg text-sm font-bold flex items-center">
-                                    <MapPin className="w-4 h-4 text-red-500 mr-2" />
-                                    AI Core Office
-                                </div>
-                            </div>
+                        {/* Map */}
+                        <div className="w-full h-80 bg-slate-200 rounded-xl relative overflow-hidden group shadow-lg">
+                            <iframe
+                                width="100%"
+                                height="100%"
+                                style={{ border: 0 }}
+                                loading="lazy"
+                                allowFullScreen
+                                src="https://maps.google.com/maps?width=100%25&height=600&hl=en&q=101%20Nguyen%20Du,%20Thach%20Thang,%20Hai%20Chau,%20Da%20Nang&t=&z=16&ie=UTF8&iwloc=B&output=embed"
+                            >
+                            </iframe>
                         </div>
                     </div>
                 </div>

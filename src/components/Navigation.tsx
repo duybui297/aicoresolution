@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import logo from '../assets/logo_new.jpg';
+import logo from '../assets/logo.png';
 import { Menu, X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'react-router-dom';
@@ -17,7 +17,9 @@ export default function Navigation() {
     { id: 'home', label: t('nav.home'), path: ROUTE_PATHS.home[lang] },
     { id: 'services', label: t('nav.services'), path: ROUTE_PATHS.services[lang] },
     { id: 'case-studies', label: t('nav.caseStudies'), path: ROUTE_PATHS.caseStudies[lang] },
+    { id: 'products', label: t('nav.products'), path: ROUTE_PATHS.products[lang] },
     { id: 'news', label: t('nav.news'), path: ROUTE_PATHS.news[lang] },
+    { id: 'community', label: t('nav.community'), path: ROUTE_PATHS.community[lang] },
     { id: 'contact', label: t('nav.contact'), path: ROUTE_PATHS.contact[lang] }
   ];
 
@@ -31,11 +33,11 @@ export default function Navigation() {
   };
 
   return (
-    <nav className="bg-white shadow-md sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4">
-        <div className="flex items-center justify-between h-20">
-          <Link to="/" className="flex items-center gap-3 cursor-pointer">
-            <img src={logo} alt="Company Logo" className="h-16 w-auto rounded-xl object-contain" />
+    <nav className="bg-white shadow-md sticky top-0 z-50 h-24">
+      <div className="max-w-7xl mx-auto px-4 h-full">
+        <div className="flex items-center justify-between h-full">
+          <Link to="/" className="flex h-full items-center gap-3 cursor-pointer">
+            <img src={logo} alt="Company Logo" className="h-full w-auto object-contain" />
           </Link>
 
           <div className="hidden md:flex items-center gap-2">
