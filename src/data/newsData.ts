@@ -11,6 +11,8 @@ import bai32Image from '../assets/bai32.png';
 import bai4Image from '../assets/bai4.png';
 import bai4Image2 from '../assets/bai4-2.png';
 import bai4Image3 from '../assets/bai4-3.png';
+import antigravity_1 from '../assets/antigravity_1.png';
+import antigravity_2 from '../assets/antigravity_2.png';
 
 export interface BlogPost {
     id: number;
@@ -29,6 +31,21 @@ export interface BlogPost {
 }
 
 export const BLOG_POSTS: BlogPost[] = [
+    {
+        id: 5,
+        slugs: {
+            en: 'antigravity-ai-guide-for-developers',
+            vi: 'huong-dan-su-dung-ai-antigravity'
+        },
+        title: 'news.posts.post5.title',
+        excerpt: 'news.posts.post5.excerpt',
+        content: 'news.posts.post5.content',
+        contentImages: [antigravity_1, antigravity_2],
+        category: 'news.categories.trends',
+        date: '09 Mar 2026',
+        author: 'Duy Bui',
+        image: openClawImage
+    },
     {
         id: 4,
         slugs: {
