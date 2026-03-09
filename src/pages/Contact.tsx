@@ -131,7 +131,7 @@ export default function Contact() {
                 </div>
                 <div>
                   <h4 className="font-bold text-slate-900">Hotline</h4>
-                  <p className="text-slate-600">+84 869 17 18 12</p>
+                  <p className="text-slate-600">{t('contact.info.phone')}</p>
                 </div>
               </li>
               <li className="flex items-start">
