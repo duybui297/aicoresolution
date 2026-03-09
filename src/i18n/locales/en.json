@@ -46,7 +46,7 @@
             "post5": {
                 "title": "How to use Antigravity AI for Developers",
                 "excerpt": "A comprehensive guide on leveraging Antigravity to speed up your coding workflow.",
-                "content": "Enter the detailed content of the article here..."
+                "content": "Antigravity là một trợ lý AI lập trình vô cùng mạnh mẽ, hoạt động như một Developer thực thụ bên cạnh bạn.\n\n### 1. Khởi chạy Antigravity\nĐể bắt đầu, bạn cần cài đặt extention Antigravity trong VSCode. Giao diện cực kỳ trực quan giúp bạn giao tiếp bằng ngôn ngữ tự nhiên.\n\n{{IMAGE_0}}\n\n### 2. Yêu cầu sửa lỗi (Fix Bugs)\nTính năng mạnh nhất của AI này là đọc Codebase gốc của bạn. Khi dự án lỗi, bạn chỉ cần gạch đầu dòng báo lỗi, AI sẽ tự dò tìm file và đề xuất mã fix.\n\n{{IMAGE_1}}\n\n### 3. Tự động hóa quá trình Deploy\nNếu bạn không rành về GitHub Actions hay Vercel, hãy nhờ AI tạo ra các kịch bản `.yml` và cấu hình hệ thống máy chủ chỉ bằng 1 câu lệnh.\n\nChúc bạn code vui vẻ với Antigravity!"
             }
         },
         "categories": {
