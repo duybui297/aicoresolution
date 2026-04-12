@@ -7,6 +7,7 @@ import com.aicoresolution.backend.user.entity.CmsUser;
 import com.aicoresolution.backend.user.entity.UserRole;
 import com.aicoresolution.backend.user.repository.CmsUserRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -19,13 +20,19 @@ public class AuthService implements CommandLineRunner {
     private final CmsUserRepository cmsUserRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
+    private final String seedAdminUsername;
+    private final String seedAdminPassword;
 
     public AuthService(CmsUserRepository cmsUserRepository,
             PasswordEncoder passwordEncoder,
-            JwtService jwtService) {
+            JwtService jwtService,
+            @Value("${APP_SEED_ADMIN_USERNAME}") String seedAdminUsername,
+            @Value("${APP_SEED_ADMIN_PASSWORD}") String seedAdminPassword) {
         this.cmsUserRepository = cmsUserRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
+        this.seedAdminUsername = seedAdminUsername;
+        this.seedAdminPassword = seedAdminPassword;
     }
 
     public LoginResponse login(LoginRequest request) {
@@ -42,13 +49,13 @@ public class AuthService implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        if (cmsUserRepository.findByUsername("admin").isPresent()) {
+        if (cmsUserRepository.findByUsername(seedAdminUsername).isPresent()) {
             return;
         }
 
         CmsUser defaultAdmin = new CmsUser();
-        defaultAdmin.setUsername("admin");
-        defaultAdmin.setPasswordHash(passwordEncoder.encode("admin123"));
+        defaultAdmin.setUsername(seedAdminUsername);
+        defaultAdmin.setPasswordHash(passwordEncoder.encode(seedAdminPassword));
         defaultAdmin.setRole(UserRole.ADMIN);
         defaultAdmin.setCreatedAt(OffsetDateTime.now());
         cmsUserRepository.save(defaultAdmin);
