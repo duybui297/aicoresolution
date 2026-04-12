@@ -22,3 +22,12 @@ dist-ssr
 *.sw?
 .env
 *claude.md
+
+# Backend build/runtime artifacts
+backend/target/
+backend/uploads/
+backend/.env
+backend/.env.*
+!backend/.env.example
+backend/docker-compose.yml
+!backend/docker-compose.example.yml
