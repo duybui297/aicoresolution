@@ -30,11 +30,38 @@ API base URL: `http://localhost:8080`
 
 Copy `.env.example` values into your shell or system env.
 
-- `DB_URL` (default: `jdbc:postgresql://localhost:5432/aicoresolution`)
-- `DB_USERNAME` (default: `postgres`)
-- `DB_PASSWORD` (default: `postgres`)
-- `APP_CORS_ALLOWED_ORIGINS` (default: `http://localhost:5173,http://127.0.0.1:5173`)
-- `APP_UPLOAD_DIR` (default: `D:/Works/uploads`)
+## Admin bootstrap
+
+On startup, the backend seeds an admin account if the username does not exist yet.
+The credentials come from environment variables:
+
+- `APP_SEED_ADMIN_USERNAME`
+- `APP_SEED_ADMIN_PASSWORD`
+
+Use these values when calling `POST /api/auth/login`.
+
+## Database tables
+
+- `users`
+  - `id` (UUID, PK)
+  - `username` (unique)
+  - `password_hash`
+  - `role`
+  - `created_at`
+
+- `posts`
+  - `id` (UUID, PK)
+  - `title`
+  - `slug` (unique)
+  - `excerpt`
+  - `content`
+  - `thumbnail_url`
+  - `status` (`DRAFT` or `PUBLISHED`)
+  - `published_at`
+  - `created_at`
+  - `updated_at`
+  - `created_by` (FK -> `users.id`)
+  - `updated_by` (FK -> `users.id`)
 
 ## Endpoints
 
@@ -47,5 +74,52 @@ Response:
 ```json
 {
   "status": "ok"
+}
+```
+
+### Auth
+
+- `POST /api/auth/login`
+  - Request body:
+
+```json
+{
+  "username": "your_admin_username",
+  "password": "your_admin_password"
+}
+```
+
+- Response body:
+
+```json
+{
+  "accessToken": "...",
+  "tokenType": "Bearer",
+  "expiresInSeconds": 7200
+}
+```
+
+### Public posts
+
+- `GET /api/posts?page=0&size=10`
+- `GET /api/posts/{slug}`
+
+### Admin posts (requires Bearer token)
+
+- `GET /api/admin/posts?page=0&size=10`
+- `GET /api/admin/posts/{id}`
+- `POST /api/admin/posts`
+- `PUT /api/admin/posts/{id}`
+- `DELETE /api/admin/posts/{id}`
+
+### Admin media (requires Bearer token)
+
+- `POST /api/admin/media/upload` (multipart form-data, field: `file`)
+
+Response body:
+
+```json
+{
+  "url": "/uploads/<filename>"
 }
 ```
