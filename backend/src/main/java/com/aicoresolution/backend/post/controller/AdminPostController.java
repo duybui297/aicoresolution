@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.UUID;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
 @RequestMapping("/api/admin/posts")
+@PreAuthorize("hasAnyRole('ADMIN', 'EDITOR', 'AUTHOR', 'CONTRIBUTOR')")
 public class AdminPostController {
 
     private final PostService postService;
@@ -39,7 +39,7 @@ public class AdminPostController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<PostResponse> getById(@PathVariable UUID id) {
+    public ResponseEntity<PostResponse> getById(@PathVariable Long id) {
         return ResponseEntity.ok(postService.getAdminById(id));
     }
 
@@ -52,7 +52,7 @@ public class AdminPostController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PostResponse> update(@PathVariable UUID id,
+    public ResponseEntity<PostResponse> update(@PathVariable Long id,
             @Valid @RequestBody PostUpsertRequest request,
             Authentication authentication) {
         AuthenticatedUser authenticatedUser = (AuthenticatedUser) authentication.getPrincipal();
@@ -60,7 +60,7 @@ public class AdminPostController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse> delete(@PathVariable UUID id) {
+    public ResponseEntity<ApiResponse> delete(@PathVariable Long id) {
         postService.delete(id);
         return ResponseEntity.ok(new ApiResponse(true, "Post deleted"));
     }
