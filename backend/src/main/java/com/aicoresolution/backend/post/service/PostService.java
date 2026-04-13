@@ -15,8 +15,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.OffsetDateTime;
-import java.util.UUID;
+import java.time.LocalDateTime;
 
 @Service
 public class PostService {
@@ -30,7 +29,7 @@ public class PostService {
     }
 
     @Transactional
-    public PostResponse create(PostUpsertRequest request, UUID creatorId) {
+    public PostResponse create(PostUpsertRequest request, Long creatorId) {
         if (postRepository.existsBySlugIgnoreCase(request.getSlug())) {
             throw new IllegalArgumentException("Slug already exists");
         }
@@ -41,14 +40,15 @@ public class PostService {
                 .orElseThrow(() -> new EntityNotFoundException("Creator user not found"));
         post.setCreatedBy(creator);
         post.setUpdatedBy(creator);
-        post.setCreatedAt(OffsetDateTime.now());
-        post.setUpdatedAt(OffsetDateTime.now());
+        post.setAuthor(creator);
+        post.setCreatedAt(LocalDateTime.now());
+        post.setUpdatedAt(LocalDateTime.now());
 
         return toResponse(postRepository.save(post));
     }
 
     @Transactional
-    public PostResponse update(UUID id, PostUpsertRequest request, UUID updaterId) {
+    public PostResponse update(Long id, PostUpsertRequest request, Long updaterId) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Post not found"));
         CmsUser updater = cmsUserRepository.findById(updaterId)
@@ -61,26 +61,26 @@ public class PostService {
 
         applyPostData(post, request);
         post.setUpdatedBy(updater);
-        post.setUpdatedAt(OffsetDateTime.now());
+        post.setUpdatedAt(LocalDateTime.now());
         return toResponse(postRepository.save(post));
     }
 
     @Transactional
-    public void delete(UUID id) {
-        if (!postRepository.existsById(id)) {
-            throw new EntityNotFoundException("Post not found");
-        }
-        postRepository.deleteById(id);
+    public void delete(Long id) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Post not found"));
+        post.setDeletedAt(LocalDateTime.now());
+        postRepository.save(post);
     }
 
     @Transactional(readOnly = true)
     public Page<PostResponse> listAdmin(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "updatedAt"));
-        return postRepository.findAll(pageable).map(this::toResponse);
+        return postRepository.findAllNotDeleted(pageable).map(this::toResponse);
     }
 
     @Transactional(readOnly = true)
-    public PostResponse getAdminById(UUID id) {
+    public PostResponse getAdminById(Long id) {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Post not found"));
         return toResponse(post);
@@ -89,7 +89,7 @@ public class PostService {
     @Transactional(readOnly = true)
     public Page<PostResponse> listPublished(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return postRepository.findByStatusOrderByPublishedAtDesc(PostStatus.PUBLISHED, pageable).map(this::toResponse);
+        return postRepository.findPublishedNotDeleted(PostStatus.PUBLISHED, pageable).map(this::toResponse);
     }
 
     @Transactional(readOnly = true)
@@ -102,13 +102,36 @@ public class PostService {
     private void applyPostData(Post post, PostUpsertRequest request) {
         post.setTitle(request.getTitle().trim());
         post.setSlug(request.getSlug().trim());
-        post.setExcerpt(request.getExcerpt().trim());
+        post.setExcerpt(request.getExcerpt() == null ? null : request.getExcerpt().trim());
         post.setContent(request.getContent().trim());
         post.setThumbnailUrl(request.getThumbnailUrl() == null ? null : request.getThumbnailUrl().trim());
         post.setStatus(request.getStatus());
+        // Bổ sung các trường mới nếu cần
+        post.setMetaTitle(request.getMetaTitle());
+        post.setMetaDescription(request.getMetaDescription());
+        post.setMetaKeywords(request.getMetaKeywords());
+        post.setCanonicalUrl(request.getCanonicalUrl());
+        post.setRobotsMeta(request.getRobotsMeta());
+        post.setOgTitle(request.getOgTitle());
+        post.setOgDescription(request.getOgDescription());
+        post.setOgImage(request.getOgImage());
+        post.setOgType(request.getOgType());
+        post.setTwitterCard(request.getTwitterCard());
+        post.setTwitterTitle(request.getTwitterTitle());
+        post.setTwitterDescription(request.getTwitterDescription());
+        post.setTwitterImage(request.getTwitterImage());
+        post.setSchemaType(request.getSchemaType());
+        post.setSchemaJson(request.getSchemaJson());
+        post.setLocale(request.getLocale());
+        post.setReadingTime(request.getReadingTime());
+        post.setWordCount(request.getWordCount());
+        post.setViewCount(request.getViewCount());
+        post.setCommentCount(request.getCommentCount());
+        post.setFeatured(request.getFeatured());
+        post.setAllowComments(request.getAllowComments());
 
         if (request.getStatus() == PostStatus.PUBLISHED && post.getPublishedAt() == null) {
-            post.setPublishedAt(OffsetDateTime.now());
+            post.setPublishedAt(LocalDateTime.now());
         }
 
         if (request.getStatus() == PostStatus.DRAFT) {
@@ -123,13 +146,40 @@ public class PostService {
         response.setSlug(post.getSlug());
         response.setExcerpt(post.getExcerpt());
         response.setContent(post.getContent());
+        response.setContentFormat(post.getContentFormat());
         response.setThumbnailUrl(post.getThumbnailUrl());
+        response.setThumbnailAlt(post.getThumbnailAlt());
         response.setStatus(post.getStatus());
         response.setPublishedAt(post.getPublishedAt());
+        response.setScheduledAt(post.getScheduledAt());
+        response.setMetaTitle(post.getMetaTitle());
+        response.setMetaDescription(post.getMetaDescription());
+        response.setMetaKeywords(post.getMetaKeywords());
+        response.setCanonicalUrl(post.getCanonicalUrl());
+        response.setRobotsMeta(post.getRobotsMeta());
+        response.setOgTitle(post.getOgTitle());
+        response.setOgDescription(post.getOgDescription());
+        response.setOgImage(post.getOgImage());
+        response.setOgType(post.getOgType());
+        response.setTwitterCard(post.getTwitterCard());
+        response.setTwitterTitle(post.getTwitterTitle());
+        response.setTwitterDescription(post.getTwitterDescription());
+        response.setTwitterImage(post.getTwitterImage());
+        response.setSchemaType(post.getSchemaType());
+        response.setSchemaJson(post.getSchemaJson());
+        response.setLocale(post.getLocale());
+        response.setReadingTime(post.getReadingTime());
+        response.setWordCount(post.getWordCount());
+        response.setViewCount(post.getViewCount());
+        response.setCommentCount(post.getCommentCount());
+        response.setFeatured(post.getFeatured());
+        response.setAllowComments(post.getAllowComments());
+        response.setAuthorId(post.getAuthor().getId());
+        response.setCreatedById(post.getCreatedBy() != null ? post.getCreatedBy().getId() : null);
+        response.setUpdatedById(post.getUpdatedBy() != null ? post.getUpdatedBy().getId() : null);
         response.setCreatedAt(post.getCreatedAt());
         response.setUpdatedAt(post.getUpdatedAt());
-        response.setCreatedById(post.getCreatedBy().getId());
-        response.setUpdatedById(post.getUpdatedBy() == null ? null : post.getUpdatedBy().getId());
+        response.setDeletedAt(post.getDeletedAt());
         return response;
     }
 }

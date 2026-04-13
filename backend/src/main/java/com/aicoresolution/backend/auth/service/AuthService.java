@@ -5,6 +5,7 @@ import com.aicoresolution.backend.auth.dto.LoginResponse;
 import com.aicoresolution.backend.security.JwtService;
 import com.aicoresolution.backend.user.entity.CmsUser;
 import com.aicoresolution.backend.user.entity.UserRole;
+import com.aicoresolution.backend.user.entity.UserStatus;
 import com.aicoresolution.backend.user.repository.CmsUserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,7 +13,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 
 @Service
 public class AuthService implements CommandLineRunner {
@@ -43,6 +44,10 @@ public class AuthService implements CommandLineRunner {
             throw new BadCredentialsException("Invalid username or password");
         }
 
+        if (user.getStatus() != UserStatus.ACTIVE) {
+            throw new BadCredentialsException("User account is not active");
+        }
+
         String token = jwtService.generateAccessToken(user.getId(), user.getUsername(), user.getRole().name());
         return new LoginResponse(token, "Bearer", jwtService.getAccessTokenTtlSeconds());
     }
@@ -55,9 +60,13 @@ public class AuthService implements CommandLineRunner {
 
         CmsUser defaultAdmin = new CmsUser();
         defaultAdmin.setUsername(seedAdminUsername);
+        defaultAdmin.setEmail("admin@localhost");
         defaultAdmin.setPasswordHash(passwordEncoder.encode(seedAdminPassword));
+        defaultAdmin.setFullName("Administrator");
         defaultAdmin.setRole(UserRole.ADMIN);
-        defaultAdmin.setCreatedAt(OffsetDateTime.now());
+        defaultAdmin.setStatus(UserStatus.ACTIVE);
+        defaultAdmin.setCreatedAt(LocalDateTime.now());
+        defaultAdmin.setUpdatedAt(LocalDateTime.now());
         cmsUserRepository.save(defaultAdmin);
     }
 }
