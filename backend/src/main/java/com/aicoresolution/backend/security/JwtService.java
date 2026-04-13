@@ -11,7 +11,6 @@ import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
-import java.util.UUID;
 
 @Service
 public class JwtService {
@@ -25,7 +24,7 @@ public class JwtService {
         this.accessTokenTtl = Duration.ofMinutes(accessTokenMinutes);
     }
 
-    public String generateAccessToken(UUID userId, String username, String role) {
+    public String generateAccessToken(Long userId, String username, String role) {
         Instant now = Instant.now();
         Instant expiry = now.plus(accessTokenTtl);
 
