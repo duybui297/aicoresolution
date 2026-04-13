@@ -37,11 +37,15 @@ public class AuthService implements CommandLineRunner {
     }
 
     public LoginResponse login(LoginRequest request) {
-        CmsUser user = cmsUserRepository.findByUsername(request.getUsername().trim())
-                .orElseThrow(() -> new BadCredentialsException("Invalid username or password"));
+        String username = request.getUsername().trim();
+
+        // Try to find user by username first, then by email
+        CmsUser user = cmsUserRepository.findByUsername(username)
+                .or(() -> cmsUserRepository.findByEmail(username))
+                .orElseThrow(() -> new BadCredentialsException("Invalid username/email or password"));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
-            throw new BadCredentialsException("Invalid username or password");
+            throw new BadCredentialsException("Invalid username/email or password");
         }
 
         if (user.getStatus() != UserStatus.ACTIVE) {
