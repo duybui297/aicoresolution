@@ -1,75 +1,148 @@
 package com.aicoresolution.backend.post.entity;
 
 import com.aicoresolution.backend.user.entity.CmsUser;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ForeignKey;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Index;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-
-import java.time.OffsetDateTime;
-import java.util.UUID;
+import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "posts", indexes = {
         @Index(name = "idx_posts_slug", columnList = "slug", unique = true),
-        @Index(name = "idx_posts_status_published_at", columnList = "status,publishedAt")
+        @Index(name = "idx_posts_status_published_at", columnList = "status,published_at")
 })
 public class Post {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(nullable = false, length = 220)
+    @Column(nullable = false, length = 255)
     private String title;
 
-    @Column(nullable = false, unique = true, length = 220)
+    @Column(nullable = false, unique = true, length = 255)
     private String slug;
 
-    @Column(nullable = false, length = 500)
+    @Column(length = 500)
     private String excerpt;
 
-    @Column(nullable = false, length = 30000)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
-    @Column(length = 1000)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "content_format", columnDefinition = "content_format_enum")
+    private ContentFormat contentFormat = ContentFormat.HTML;
+
+    @Column(name = "thumbnail_url", length = 500)
     private String thumbnailUrl;
 
+    @Column(name = "thumbnail_alt", length = 300)
+    private String thumbnailAlt;
+
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
-    private PostStatus status;
+    @Column(nullable = false, columnDefinition = "post_status")
+    private PostStatus status = PostStatus.DRAFT;
 
-    @Column
-    private OffsetDateTime publishedAt;
+    @Column(name = "published_at")
+    private LocalDateTime publishedAt;
 
-    @Column(nullable = false)
-    private OffsetDateTime createdAt;
+    @Column(name = "scheduled_at")
+    private LocalDateTime scheduledAt;
 
-    @Column(nullable = false)
-    private OffsetDateTime updatedAt;
+    @Column(name = "meta_title", length = 160)
+    private String metaTitle;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "created_by", nullable = false, foreignKey = @ForeignKey(name = "fk_posts_created_by_users"))
+    @Column(name = "meta_description", length = 300)
+    private String metaDescription;
+
+    @Column(name = "meta_keywords", length = 500)
+    private String metaKeywords;
+
+    @Column(name = "canonical_url", length = 500)
+    private String canonicalUrl;
+
+    @Column(name = "robots_meta", length = 50)
+    private String robotsMeta = "index,follow";
+
+    @Column(name = "og_title", length = 200)
+    private String ogTitle;
+
+    @Column(name = "og_description", length = 500)
+    private String ogDescription;
+
+    @Column(name = "og_image", length = 500)
+    private String ogImage;
+
+    @Column(name = "og_type", length = 50)
+    private String ogType = "article";
+
+    @Column(name = "twitter_card", length = 50)
+    private String twitterCard = "summary_large_image";
+
+    @Column(name = "twitter_title", length = 200)
+    private String twitterTitle;
+
+    @Column(name = "twitter_description", length = 500)
+    private String twitterDescription;
+
+    @Column(name = "twitter_image", length = 500)
+    private String twitterImage;
+
+    @Column(name = "schema_type", length = 50)
+    private String schemaType = "NewsArticle";
+
+    @Column(name = "schema_json", columnDefinition = "jsonb")
+    private String schemaJson;
+
+    @Column(length = 10)
+    private String locale = "vi-VN";
+
+    @Column(name = "reading_time")
+    private Integer readingTime;
+
+    @Column(name = "word_count")
+    private Integer wordCount;
+
+    @Column(name = "view_count")
+    private Long viewCount = 0L;
+
+    @Column(name = "comment_count")
+    private Integer commentCount = 0;
+
+    @Column(name = "featured")
+    private Boolean featured = false;
+
+    @Column(name = "allow_comments")
+    private Boolean allowComments = true;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "author_id", nullable = false)
+    private CmsUser author;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "created_by")
     private CmsUser createdBy;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "updated_by", nullable = false, foreignKey = @ForeignKey(name = "fk_posts_updated_by_users"))
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "updated_by")
     private CmsUser updatedBy;
 
-    public UUID getId() {
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
+
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
+
+    // Getters/setters (chỉ ví dụ vài trường, bạn bổ sung tiếp nếu cần)
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -105,12 +178,28 @@ public class Post {
         this.content = content;
     }
 
+    public ContentFormat getContentFormat() {
+        return contentFormat;
+    }
+
+    public void setContentFormat(ContentFormat contentFormat) {
+        this.contentFormat = contentFormat;
+    }
+
     public String getThumbnailUrl() {
         return thumbnailUrl;
     }
 
     public void setThumbnailUrl(String thumbnailUrl) {
         this.thumbnailUrl = thumbnailUrl;
+    }
+
+    public String getThumbnailAlt() {
+        return thumbnailAlt;
+    }
+
+    public void setThumbnailAlt(String thumbnailAlt) {
+        this.thumbnailAlt = thumbnailAlt;
     }
 
     public PostStatus getStatus() {
@@ -121,28 +210,204 @@ public class Post {
         this.status = status;
     }
 
-    public OffsetDateTime getPublishedAt() {
+    public LocalDateTime getPublishedAt() {
         return publishedAt;
     }
 
-    public void setPublishedAt(OffsetDateTime publishedAt) {
+    public void setPublishedAt(LocalDateTime publishedAt) {
         this.publishedAt = publishedAt;
     }
 
-    public OffsetDateTime getCreatedAt() {
-        return createdAt;
+    public LocalDateTime getScheduledAt() {
+        return scheduledAt;
     }
 
-    public void setCreatedAt(OffsetDateTime createdAt) {
-        this.createdAt = createdAt;
+    public void setScheduledAt(LocalDateTime scheduledAt) {
+        this.scheduledAt = scheduledAt;
     }
 
-    public OffsetDateTime getUpdatedAt() {
-        return updatedAt;
+    public String getMetaTitle() {
+        return metaTitle;
     }
 
-    public void setUpdatedAt(OffsetDateTime updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setMetaTitle(String metaTitle) {
+        this.metaTitle = metaTitle;
+    }
+
+    public String getMetaDescription() {
+        return metaDescription;
+    }
+
+    public void setMetaDescription(String metaDescription) {
+        this.metaDescription = metaDescription;
+    }
+
+    public String getMetaKeywords() {
+        return metaKeywords;
+    }
+
+    public void setMetaKeywords(String metaKeywords) {
+        this.metaKeywords = metaKeywords;
+    }
+
+    public String getCanonicalUrl() {
+        return canonicalUrl;
+    }
+
+    public void setCanonicalUrl(String canonicalUrl) {
+        this.canonicalUrl = canonicalUrl;
+    }
+
+    public String getRobotsMeta() {
+        return robotsMeta;
+    }
+
+    public void setRobotsMeta(String robotsMeta) {
+        this.robotsMeta = robotsMeta;
+    }
+
+    public String getOgTitle() {
+        return ogTitle;
+    }
+
+    public void setOgTitle(String ogTitle) {
+        this.ogTitle = ogTitle;
+    }
+
+    public String getOgDescription() {
+        return ogDescription;
+    }
+
+    public void setOgDescription(String ogDescription) {
+        this.ogDescription = ogDescription;
+    }
+
+    public String getOgImage() {
+        return ogImage;
+    }
+
+    public void setOgImage(String ogImage) {
+        this.ogImage = ogImage;
+    }
+
+    public String getOgType() {
+        return ogType;
+    }
+
+    public void setOgType(String ogType) {
+        this.ogType = ogType;
+    }
+
+    public String getTwitterCard() {
+        return twitterCard;
+    }
+
+    public void setTwitterCard(String twitterCard) {
+        this.twitterCard = twitterCard;
+    }
+
+    public String getTwitterTitle() {
+        return twitterTitle;
+    }
+
+    public void setTwitterTitle(String twitterTitle) {
+        this.twitterTitle = twitterTitle;
+    }
+
+    public String getTwitterDescription() {
+        return twitterDescription;
+    }
+
+    public void setTwitterDescription(String twitterDescription) {
+        this.twitterDescription = twitterDescription;
+    }
+
+    public String getTwitterImage() {
+        return twitterImage;
+    }
+
+    public void setTwitterImage(String twitterImage) {
+        this.twitterImage = twitterImage;
+    }
+
+    public String getSchemaType() {
+        return schemaType;
+    }
+
+    public void setSchemaType(String schemaType) {
+        this.schemaType = schemaType;
+    }
+
+    public String getSchemaJson() {
+        return schemaJson;
+    }
+
+    public void setSchemaJson(String schemaJson) {
+        this.schemaJson = schemaJson;
+    }
+
+    public String getLocale() {
+        return locale;
+    }
+
+    public void setLocale(String locale) {
+        this.locale = locale;
+    }
+
+    public Integer getReadingTime() {
+        return readingTime;
+    }
+
+    public void setReadingTime(Integer readingTime) {
+        this.readingTime = readingTime;
+    }
+
+    public Integer getWordCount() {
+        return wordCount;
+    }
+
+    public void setWordCount(Integer wordCount) {
+        this.wordCount = wordCount;
+    }
+
+    public Long getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(Long viewCount) {
+        this.viewCount = viewCount;
+    }
+
+    public Integer getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(Integer commentCount) {
+        this.commentCount = commentCount;
+    }
+
+    public Boolean getFeatured() {
+        return featured;
+    }
+
+    public void setFeatured(Boolean featured) {
+        this.featured = featured;
+    }
+
+    public Boolean getAllowComments() {
+        return allowComments;
+    }
+
+    public void setAllowComments(Boolean allowComments) {
+        this.allowComments = allowComments;
+    }
+
+    public CmsUser getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(CmsUser author) {
+        this.author = author;
     }
 
     public CmsUser getCreatedBy() {
@@ -159,5 +424,29 @@ public class Post {
 
     public void setUpdatedBy(CmsUser updatedBy) {
         this.updatedBy = updatedBy;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public LocalDateTime getDeletedAt() {
+        return deletedAt;
+    }
+
+    public void setDeletedAt(LocalDateTime deletedAt) {
+        this.deletedAt = deletedAt;
     }
 }
