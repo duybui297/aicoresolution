@@ -28,5 +28,6 @@ app:
   auth:
     jwt-secret: ${APP_JWT_SECRET}
     access-token-minutes: ${APP_ACCESS_TOKEN_MINUTES}
+    refresh-token-minutes: ${APP_REFRESH_TOKEN_MINUTES:10080}
   media:
     upload-dir: ${APP_UPLOAD_DIR:D:/Works/uploads}

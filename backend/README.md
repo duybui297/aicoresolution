@@ -79,6 +79,18 @@ Response:
 
 ### Auth
 
+- `POST /api/auth/register`
+  - Request body:
+
+```json
+{
+  "username": "new_user",
+  "email": "new_user@example.com",
+  "password": "password123",
+  "role": "AUTHOR"
+}
+```
+
 - `POST /api/auth/login`
   - Request body:
 
@@ -95,9 +107,32 @@ Response:
 {
   "accessToken": "...",
   "tokenType": "Bearer",
-  "expiresInSeconds": 7200
+  "expiresInSeconds": 7200,
+  "refreshToken": "...",
+  "userId": 1,
+  "role": "ADMIN"
 }
 ```
+
+- `POST /api/auth/refresh`
+  - Request body:
+
+```json
+{
+  "refreshToken": "..."
+}
+```
+
+- `POST /api/auth/logout`
+  - Request body:
+
+```json
+{
+  "refreshToken": "..."
+}
+```
+
+`logout` revokes the refresh token in memory, which is enough for local and Postman testing.
 
 ### Public posts
 

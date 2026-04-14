@@ -2,7 +2,11 @@ package com.aicoresolution.backend.auth.controller;
 
 import com.aicoresolution.backend.auth.dto.LoginRequest;
 import com.aicoresolution.backend.auth.dto.LoginResponse;
+import com.aicoresolution.backend.auth.dto.RegisterRequest;
+import com.aicoresolution.backend.auth.dto.TokenRequest;
+import com.aicoresolution.backend.common.ApiResponse;
 import com.aicoresolution.backend.auth.service.AuthService;
+import com.aicoresolution.backend.user.dto.UserResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,5 +27,20 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
         return ResponseEntity.ok(authService.login(request));
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<UserResponse> register(@Valid @RequestBody RegisterRequest request) {
+        return ResponseEntity.ok(authService.register(request));
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<LoginResponse> refresh(@Valid @RequestBody TokenRequest request) {
+        return ResponseEntity.ok(authService.refresh(request.getRefreshToken()));
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<ApiResponse> logout(@Valid @RequestBody TokenRequest request) {
+        return ResponseEntity.ok(authService.logout(request.getRefreshToken()));
     }
 }
