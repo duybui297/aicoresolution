@@ -1,4 +1,4 @@
-package com.aicoresolution.backend.user.dto;
+package com.aicoresolution.backend.auth.dto;
 
 import com.aicoresolution.backend.user.entity.UserRole;
 import com.aicoresolution.backend.user.entity.UserStatus;

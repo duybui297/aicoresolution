@@ -3,9 +3,8 @@ package com.aicoresolution.backend.auth.service;
 import com.aicoresolution.backend.auth.dto.LoginRequest;
 import com.aicoresolution.backend.auth.dto.LoginResponse;
 import com.aicoresolution.backend.auth.dto.RegisterRequest;
-import com.aicoresolution.backend.common.ApiResponse;
+import com.aicoresolution.backend.auth.dto.UserResponse;
 import com.aicoresolution.backend.security.JwtService;
-import com.aicoresolution.backend.user.dto.UserResponse;
 import com.aicoresolution.backend.user.entity.CmsUser;
 import com.aicoresolution.backend.user.entity.UserRole;
 import com.aicoresolution.backend.user.entity.UserStatus;
@@ -16,8 +15,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 
@@ -27,20 +24,17 @@ public class AuthService implements CommandLineRunner {
     private final CmsUserRepository cmsUserRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
-    private final RefreshTokenService refreshTokenService;
     private final String seedAdminUsername;
     private final String seedAdminPassword;
 
     public AuthService(CmsUserRepository cmsUserRepository,
             PasswordEncoder passwordEncoder,
             JwtService jwtService,
-            RefreshTokenService refreshTokenService,
             @Value("${APP_SEED_ADMIN_USERNAME}") String seedAdminUsername,
             @Value("${APP_SEED_ADMIN_PASSWORD}") String seedAdminPassword) {
         this.cmsUserRepository = cmsUserRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
-        this.refreshTokenService = refreshTokenService;
         this.seedAdminUsername = seedAdminUsername;
         this.seedAdminPassword = seedAdminPassword;
     }
@@ -97,42 +91,6 @@ public class AuthService implements CommandLineRunner {
         return buildLoginResponse(user);
     }
 
-    public LoginResponse refresh(String refreshToken) {
-        if (refreshTokenService.isRevoked(refreshToken)) {
-            throw new BadCredentialsException("Invalid refresh token");
-        }
-
-        var claims = jwtService.parseToken(refreshToken);
-        String tokenType = claims.get("typ", String.class);
-        if (!"refresh".equals(tokenType)) {
-            throw new BadCredentialsException("Invalid refresh token");
-        }
-
-        Long userId = Long.valueOf(claims.get("uid", String.class));
-        CmsUser user = cmsUserRepository.findById(userId)
-                .orElseThrow(() -> new BadCredentialsException("Invalid refresh token"));
-
-        if (user.getStatus() != UserStatus.ACTIVE) {
-            throw new BadCredentialsException("User account is not active");
-        }
-
-        refreshTokenService.revoke(refreshToken);
-        return buildLoginResponse(user);
-    }
-
-    public ApiResponse logout(String refreshToken) {
-        if (refreshToken == null || refreshToken.isBlank()) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Refresh token is required");
-        }
-
-        if (refreshTokenService.isRevoked(refreshToken)) {
-            return new ApiResponse(true, "Logged out");
-        }
-
-        refreshTokenService.revoke(refreshToken);
-        return new ApiResponse(true, "Logged out");
-    }
-
     @Override
     public void run(String... args) {
         if (cmsUserRepository.findByUsername(seedAdminUsername).isPresent()) {
@@ -153,8 +111,7 @@ public class AuthService implements CommandLineRunner {
 
     private LoginResponse buildLoginResponse(CmsUser user) {
         String accessToken = jwtService.generateAccessToken(user.getId(), user.getUsername(), user.getRole().name());
-        String refreshToken = jwtService.generateRefreshToken(user.getId(), user.getUsername(), user.getRole().name());
-        return new LoginResponse(accessToken, "Bearer", jwtService.getAccessTokenTtlSeconds(), refreshToken,
+        return new LoginResponse(accessToken, "Bearer", jwtService.getAccessTokenTtlSeconds(),
                 user.getId(), user.getRole().name());
     }
 
