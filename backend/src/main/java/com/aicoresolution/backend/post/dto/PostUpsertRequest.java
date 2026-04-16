@@ -10,11 +10,9 @@ import java.util.Map;
 
 public class PostUpsertRequest {
 
-    @NotBlank
     @Size(max = 255)
     private String title;
 
-    @NotBlank
     @Size(max = 255)
     @Pattern(regexp = "^[a-z0-9]+(?:-[a-z0-9]+)*$", message = "Slug must be lowercase and use hyphens only")
     private String slug;
@@ -22,10 +20,9 @@ public class PostUpsertRequest {
     @Size(max = 500)
     private String excerpt;
 
-    @NotBlank
     private String content;
 
-    private ContentFormat contentFormat = ContentFormat.HTML;
+    private ContentFormat contentFormat;
 
     @Size(max = 500)
     private String thumbnailUrl;
@@ -33,7 +30,6 @@ public class PostUpsertRequest {
     @Size(max = 300)
     private String thumbnailAlt;
 
-    @NotNull
     private PostStatus status;
 
     private String metaTitle;

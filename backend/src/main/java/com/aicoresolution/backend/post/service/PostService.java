@@ -73,6 +73,14 @@ public class PostService {
         postRepository.save(post);
     }
 
+    @Transactional
+    public void deleteMultiple(java.util.List<Long> ids) {
+        java.util.List<Post> posts = postRepository.findAllById(ids);
+        LocalDateTime now = LocalDateTime.now();
+        posts.forEach(post -> post.setDeletedAt(now));
+        postRepository.saveAll(posts);
+    }
+
     @Transactional(readOnly = true)
     public Page<PostResponse> listAdmin(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "updatedAt"));
@@ -87,34 +95,96 @@ public class PostService {
     }
 
     private void applyPostData(Post post, PostUpsertRequest request) {
-        post.setTitle(request.getTitle().trim());
-        post.setSlug(request.getSlug().trim());
-        post.setExcerpt(request.getExcerpt() == null ? null : request.getExcerpt().trim());
-        post.setContent(request.getContent().trim());
-        post.setThumbnailUrl(request.getThumbnailUrl() == null ? null : request.getThumbnailUrl().trim());
-        post.setStatus(request.getStatus());
-        post.setMetaTitle(request.getMetaTitle());
-        post.setMetaDescription(request.getMetaDescription());
-        post.setMetaKeywords(request.getMetaKeywords());
-        post.setCanonicalUrl(request.getCanonicalUrl());
-        post.setRobotsMeta(request.getRobotsMeta());
-        post.setOgTitle(request.getOgTitle());
-        post.setOgDescription(request.getOgDescription());
-        post.setOgImage(request.getOgImage());
-        post.setOgType(request.getOgType());
-        post.setTwitterCard(request.getTwitterCard());
-        post.setTwitterTitle(request.getTwitterTitle());
-        post.setTwitterDescription(request.getTwitterDescription());
-        post.setTwitterImage(request.getTwitterImage());
-        post.setSchemaType(request.getSchemaType());
-        post.setSchemaJson(request.getSchemaJson());
-        post.setLocale(request.getLocale());
-        post.setReadingTime(request.getReadingTime());
-        post.setWordCount(request.getWordCount());
-        post.setViewCount(request.getViewCount());
-        post.setCommentCount(request.getCommentCount());
-        post.setFeatured(request.getFeatured());
-        post.setAllowComments(request.getAllowComments());
+        if (request.getTitle() != null) {
+            post.setTitle(request.getTitle().trim());
+        }
+        if (request.getSlug() != null) {
+            post.setSlug(request.getSlug().trim());
+        }
+        if (request.getExcerpt() != null) {
+            post.setExcerpt(request.getExcerpt().trim());
+        }
+        if (request.getContent() != null) {
+            post.setContent(request.getContent().trim());
+        }
+        if (request.getContentFormat() != null) {
+            post.setContentFormat(request.getContentFormat());
+        }
+        if (request.getThumbnailUrl() != null) {
+            post.setThumbnailUrl(request.getThumbnailUrl().trim());
+        }
+        if (request.getThumbnailAlt() != null) {
+            post.setThumbnailAlt(request.getThumbnailAlt());
+        }
+        if (request.getStatus() != null) {
+            post.setStatus(request.getStatus());
+        }
+        if (request.getMetaTitle() != null) {
+            post.setMetaTitle(request.getMetaTitle());
+        }
+        if (request.getMetaDescription() != null) {
+            post.setMetaDescription(request.getMetaDescription());
+        }
+        if (request.getMetaKeywords() != null) {
+            post.setMetaKeywords(request.getMetaKeywords());
+        }
+        if (request.getCanonicalUrl() != null) {
+            post.setCanonicalUrl(request.getCanonicalUrl());
+        }
+        if (request.getRobotsMeta() != null) {
+            post.setRobotsMeta(request.getRobotsMeta());
+        }
+        if (request.getOgTitle() != null) {
+            post.setOgTitle(request.getOgTitle());
+        }
+        if (request.getOgDescription() != null) {
+            post.setOgDescription(request.getOgDescription());
+        }
+        if (request.getOgImage() != null) {
+            post.setOgImage(request.getOgImage());
+        }
+        if (request.getOgType() != null) {
+            post.setOgType(request.getOgType());
+        }
+        if (request.getTwitterCard() != null) {
+            post.setTwitterCard(request.getTwitterCard());
+        }
+        if (request.getTwitterTitle() != null) {
+            post.setTwitterTitle(request.getTwitterTitle());
+        }
+        if (request.getTwitterDescription() != null) {
+            post.setTwitterDescription(request.getTwitterDescription());
+        }
+        if (request.getTwitterImage() != null) {
+            post.setTwitterImage(request.getTwitterImage());
+        }
+        if (request.getSchemaType() != null) {
+            post.setSchemaType(request.getSchemaType());
+        }
+        if (request.getSchemaJson() != null) {
+            post.setSchemaJson(request.getSchemaJson());
+        }
+        if (request.getLocale() != null) {
+            post.setLocale(request.getLocale());
+        }
+        if (request.getReadingTime() != null) {
+            post.setReadingTime(request.getReadingTime());
+        }
+        if (request.getWordCount() != null) {
+            post.setWordCount(request.getWordCount());
+        }
+        if (request.getViewCount() != null) {
+            post.setViewCount(request.getViewCount());
+        }
+        if (request.getCommentCount() != null) {
+            post.setCommentCount(request.getCommentCount());
+        }
+        if (request.getFeatured() != null) {
+            post.setFeatured(request.getFeatured());
+        }
+        if (request.getAllowComments() != null) {
+            post.setAllowComments(request.getAllowComments());
+        }
 
         if (request.getStatus() == PostStatus.PUBLISHED && post.getPublishedAt() == null) {
             post.setPublishedAt(LocalDateTime.now());
