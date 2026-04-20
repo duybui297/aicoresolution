@@ -1,11 +1,16 @@
 package com.aicoresolution.backend.post.entity;
 
 import com.aicoresolution.backend.user.entity.CmsUser;
+import com.aicoresolution.backend.category.entity.Category;
+import com.aicoresolution.backend.tag.entity.Tag;
+import com.aicoresolution.backend.media.entity.Media;
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "posts", indexes = {
@@ -129,6 +134,18 @@ public class Post {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "updated_by")
     private CmsUser updatedBy;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "post_categories", joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<Category> categories = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "post_tags", joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
+    private Set<Tag> tags = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "post_media", joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "media_id"))
+    private Set<Media> media = new HashSet<>();
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
@@ -450,5 +467,29 @@ public class Post {
 
     public void setDeletedAt(LocalDateTime deletedAt) {
         this.deletedAt = deletedAt;
+    }
+
+    public Set<Category> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public Set<Media> getMedia() {
+        return media;
+    }
+
+    public void setMedia(Set<Media> media) {
+        this.media = media;
     }
 }
