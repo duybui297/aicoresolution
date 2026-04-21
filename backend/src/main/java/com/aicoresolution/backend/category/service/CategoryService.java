@@ -15,7 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 
 @Service
-public class CategoryService {
+@Transactional
+public class CategoryService implements ICategoryService {
 
     private final CategoryRepository categoryRepository;
 

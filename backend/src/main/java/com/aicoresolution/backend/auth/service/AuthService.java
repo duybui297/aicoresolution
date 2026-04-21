@@ -22,19 +22,19 @@ import org.springframework.web.server.ResponseStatusException;
 import java.time.LocalDateTime;
 
 @Service
-public class AuthService implements CommandLineRunner {
+public class AuthService implements IAuthService, CommandLineRunner {
 
     private final CmsUserRepository cmsUserRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
-    private final RefreshTokenService refreshTokenService;
+    private final IRefreshTokenService refreshTokenService;
     private final String seedAdminUsername;
     private final String seedAdminPassword;
 
     public AuthService(CmsUserRepository cmsUserRepository,
             PasswordEncoder passwordEncoder,
             JwtService jwtService,
-            RefreshTokenService refreshTokenService,
+            IRefreshTokenService refreshTokenService,
             @Value("${APP_SEED_ADMIN_USERNAME}") String seedAdminUsername,
             @Value("${APP_SEED_ADMIN_PASSWORD}") String seedAdminPassword) {
         this.cmsUserRepository = cmsUserRepository;

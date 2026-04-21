@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.server.ResponseStatusException;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.dao.DataIntegrityViolationException;
+import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -16,7 +18,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ApiResponse> handleValidationError(MethodArgumentNotValidException exception) {
         String message = exception.getBindingResult().getFieldErrors().isEmpty()
                 ? "Invalid request"
-                : exception.getBindingResult().getFieldErrors().get(0).getDefaultMessage();
+                : exception.getBindingResult().getFieldErrors().stream()
+                        .map(error -> error.getField() + ": " + error.getDefaultMessage())
+                        .collect(Collectors.joining(", "));
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(new ApiResponse(false, message));
@@ -46,8 +50,35 @@ public class GlobalExceptionHandler {
                 .body(new ApiResponse(false, exception.getReason() == null ? "Request failed" : exception.getReason()));
     }
 
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ApiResponse> handleDataIntegrityViolation(DataIntegrityViolationException exception) {
+        String message = exception.getMessage();
+        if (message != null && message.contains("unique")) {
+            message = "This record already exists (duplicate entry)";
+        } else if (message != null && message.contains("foreign key")) {
+            message = "Cannot delete: linked records exist";
+        } else {
+            message = "Data integrity error";
+        }
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(new ApiResponse(false, message));
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<ApiResponse> handleIllegalState(IllegalStateException exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ApiResponse(false, exception.getMessage()));
+    }
+
+    @ExceptionHandler(java.io.IOException.class)
+    public ResponseEntity<ApiResponse> handleIOError(java.io.IOException exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ApiResponse(false, "File operation failed: " + exception.getMessage()));
+    }
+
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ApiResponse> handleGenericError() {
+    public ResponseEntity<ApiResponse> handleGenericError(Exception exception) {
+        exception.printStackTrace(); // Log for debugging
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new ApiResponse(false, "Unexpected server error"));
     }

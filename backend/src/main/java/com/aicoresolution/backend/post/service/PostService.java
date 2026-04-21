@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 
 @Service
-public class PostService {
+public class PostService implements IPostService {
 
     private final PostRepository postRepository;
     private final CmsUserRepository cmsUserRepository;
@@ -28,6 +28,7 @@ public class PostService {
         this.cmsUserRepository = cmsUserRepository;
     }
 
+    @Override
     @Transactional
     public PostResponse create(PostUpsertRequest request, Long creatorId) {
         if (postRepository.existsBySlugIgnoreCase(request.getSlug())) {
@@ -47,6 +48,7 @@ public class PostService {
         return toResponse(postRepository.save(post));
     }
 
+    @Override
     @Transactional
     public PostResponse update(Long id, PostUpsertRequest request, Long updaterId) {
         Post post = postRepository.findById(id)
@@ -65,6 +67,7 @@ public class PostService {
         return toResponse(postRepository.save(post));
     }
 
+    @Override
     @Transactional
     public void delete(Long id) {
         Post post = postRepository.findById(id)
@@ -73,6 +76,7 @@ public class PostService {
         postRepository.save(post);
     }
 
+    @Override
     @Transactional
     public void deleteMultiple(java.util.List<Long> ids) {
         java.util.List<Post> posts = postRepository.findAllById(ids);
@@ -81,12 +85,14 @@ public class PostService {
         postRepository.saveAll(posts);
     }
 
+    @Override
     @Transactional(readOnly = true)
     public Page<PostResponse> listAdmin(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "updatedAt"));
         return postRepository.findAllNotDeleted(pageable).map(this::toResponse);
     }
 
+    @Override
     @Transactional(readOnly = true)
     public PostResponse getAdminById(Long id) {
         Post post = postRepository.findById(id)

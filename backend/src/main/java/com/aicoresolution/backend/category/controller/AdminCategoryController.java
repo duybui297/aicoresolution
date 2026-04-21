@@ -2,7 +2,7 @@ package com.aicoresolution.backend.category.controller;
 
 import com.aicoresolution.backend.category.dto.CategoryRequest;
 import com.aicoresolution.backend.category.dto.CategoryResponse;
-import com.aicoresolution.backend.category.service.CategoryService;
+import com.aicoresolution.backend.category.service.ICategoryService;
 import com.aicoresolution.backend.common.ApiResponse;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/admin/categories")
 public class AdminCategoryController {
 
-    private final CategoryService categoryService;
+    private final ICategoryService categoryService;
 
-    public AdminCategoryController(CategoryService categoryService) {
+    public AdminCategoryController(ICategoryService categoryService) {
         this.categoryService = categoryService;
     }
 

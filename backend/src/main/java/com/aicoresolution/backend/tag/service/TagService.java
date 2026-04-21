@@ -15,7 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 
 @Service
-public class TagService {
+@Transactional
+public class TagService implements ITagService {
 
     private final TagRepository tagRepository;
 

@@ -5,7 +5,7 @@ import com.aicoresolution.backend.auth.dto.LoginResponse;
 import com.aicoresolution.backend.auth.dto.RegisterRequest;
 import com.aicoresolution.backend.auth.dto.TokenRequest;
 import com.aicoresolution.backend.auth.dto.UserResponse;
-import com.aicoresolution.backend.auth.service.AuthService;
+import com.aicoresolution.backend.auth.service.IAuthService;
 import com.aicoresolution.backend.common.ApiResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -19,9 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/auth")
 public class AuthController {
 
-    private final AuthService authService;
+    private final IAuthService authService;
 
-    public AuthController(AuthService authService) {
+    public AuthController(IAuthService authService) {
         this.authService = authService;
     }
 

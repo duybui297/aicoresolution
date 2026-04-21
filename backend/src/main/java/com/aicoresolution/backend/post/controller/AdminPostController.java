@@ -4,7 +4,7 @@ import com.aicoresolution.backend.common.ApiResponse;
 import com.aicoresolution.backend.post.dto.BatchDeleteRequest;
 import com.aicoresolution.backend.post.dto.PostResponse;
 import com.aicoresolution.backend.post.dto.PostUpsertRequest;
-import com.aicoresolution.backend.post.service.PostService;
+import com.aicoresolution.backend.post.service.IPostService;
 import com.aicoresolution.backend.security.AuthenticatedUser;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -28,9 +28,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 @PreAuthorize("hasAnyRole('ADMIN', 'EDITOR', 'AUTHOR', 'CONTRIBUTOR')")
 public class AdminPostController {
 
-    private final PostService postService;
+    private final IPostService postService;
 
-    public AdminPostController(PostService postService) {
+    public AdminPostController(IPostService postService) {
         this.postService = postService;
     }
 

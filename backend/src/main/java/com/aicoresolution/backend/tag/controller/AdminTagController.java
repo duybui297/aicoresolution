@@ -2,7 +2,7 @@ package com.aicoresolution.backend.tag.controller;
 
 import com.aicoresolution.backend.tag.dto.TagRequest;
 import com.aicoresolution.backend.tag.dto.TagResponse;
-import com.aicoresolution.backend.tag.service.TagService;
+import com.aicoresolution.backend.tag.service.ITagService;
 import com.aicoresolution.backend.common.ApiResponse;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/admin/tags")
 public class AdminTagController {
 
-    private final TagService tagService;
+    private final ITagService tagService;
 
-    public AdminTagController(TagService tagService) {
+    public AdminTagController(ITagService tagService) {
         this.tagService = tagService;
     }
 
