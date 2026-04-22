@@ -14,6 +14,14 @@ import java.util.stream.Collectors;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    /**
+     * Add request tracking headers to response
+     */
+    protected ResponseEntity<ApiResponse> addTrackingHeaders(ResponseEntity<ApiResponse> response) {
+        // Headers are already added by CommonRequestHeadersInterceptor
+        return response;
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiResponse> handleValidationError(MethodArgumentNotValidException exception) {
         String message = exception.getBindingResult().getFieldErrors().isEmpty()
