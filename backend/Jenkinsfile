@@ -1,0 +1,178 @@
+pipeline {
+    agent any
+
+    environment {
+        // Docker registry
+        DOCKER_REGISTRY = credentials('docker-registry-url')
+        DOCKER_CREDENTIALS = credentials('docker-registry-credentials')
+        IMAGE_NAME = "${DOCKER_REGISTRY}/aicoresolution-backend"
+        IMAGE_TAG = "${BUILD_NUMBER}"
+
+        // Database
+        DB_URL = credentials('db-url')
+        DB_USERNAME = credentials('db-username')
+        DB_PASSWORD = credentials('db-password')
+
+        // JWT
+        APP_JWT_SECRET = credentials('app-jwt-secret')
+        APP_ACCESS_TOKEN_MINUTES = "15"
+        APP_REFRESH_TOKEN_MINUTES = "10080"
+
+        // CORS
+        APP_CORS_ALLOWED_ORIGINS = "http://localhost:5173,http://127.0.0.1:5173"
+
+        // Media
+        APP_UPLOAD_DIR = "/app/uploads"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'Checking out code...'
+                checkout scm
+                dir('backend') {
+                    sh 'git log --oneline -1'
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                echo 'Building application with Maven...'
+                dir('backend') {
+                    sh 'mvn clean package -DskipTests'
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Running tests...'
+                dir('backend') {
+                    sh 'mvn test'
+                }
+            }
+        }
+
+        stage('SonarQube Analysis') {
+            when {
+                branch 'main'
+            }
+            steps {
+                echo 'Running SonarQube analysis...'
+                dir('backend') {
+                    withSonarQubeEnv('SonarQube') {
+                        sh 'mvn clean verify sonar:sonar'
+                    }
+                }
+            }
+        }
+
+        stage('Build Docker Image') {
+            steps {
+                echo 'Building Docker image...'
+                dir('backend') {
+                    script {
+                        docker.build("${IMAGE_NAME}:${IMAGE_TAG}")
+                        docker.build("${IMAGE_NAME}:latest")
+                    }
+                }
+            }
+        }
+
+        stage('Push Docker Image') {
+            when {
+                branch 'main'
+            }
+            steps {
+                echo 'Pushing Docker image to registry...'
+                script {
+                    docker.withRegistry("${DOCKER_REGISTRY}", "${DOCKER_CREDENTIALS}") {
+                        docker.image("${IMAGE_NAME}:${IMAGE_TAG}").push()
+                        docker.image("${IMAGE_NAME}:latest").push()
+                    }
+                }
+            }
+        }
+
+        stage('Deploy to Dev') {
+            when {
+                branch 'develop'
+            }
+            steps {
+                echo 'Deploying to Dev environment...'
+                sh '''
+                    echo "Deploying to Dev..."
+                    # Add your deployment script here
+                    # docker-compose -f docker-compose.dev.yml pull
+                    # docker-compose -f docker-compose.dev.yml up -d
+                '''
+            }
+        }
+
+        stage('Deploy to Staging') {
+            when {
+                branch 'release/*'
+            }
+            input {
+                message "Deploy to Staging?"
+                ok "Deploy"
+            }
+            steps {
+                echo 'Deploying to Staging environment...'
+                sh '''
+                    echo "Deploying to Staging..."
+                    # Add your staging deployment script here
+                    # docker-compose -f docker-compose.staging.yml pull
+                    # docker-compose -f docker-compose.staging.yml up -d
+                '''
+            }
+        }
+
+        stage('Deploy to Prod') {
+            when {
+                branch 'main'
+            }
+            input {
+                message "Deploy to Production?"
+                ok "Deploy"
+            }
+            steps {
+                echo 'Deploying to Production environment...'
+                sh '''
+                    echo "Deploying to Production..."
+                    # Add your production deployment script here
+                    # docker-compose -f docker-compose.prod.yml pull
+                    # docker-compose -f docker-compose.prod.yml up -d
+                '''
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'Cleaning up...'
+            cleanWs()
+        }
+
+        success {
+            echo 'Pipeline succeeded!'
+            // Send success notification
+            // mail to: 'team@example.com',
+            //      subject: "Build Success: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+            //      body: "Build completed successfully!"
+        }
+
+        failure {
+            echo 'Pipeline failed!'
+            // Send failure notification
+            // mail to: 'team@example.com',
+            //      subject: "Build Failed: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+            //      body: "Build failed. Check logs at ${env.BUILD_URL}"
+        }
+
+        unstable {
+            echo 'Pipeline unstable (tests failed)'
+        }
+    }
+}
