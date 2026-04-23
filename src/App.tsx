@@ -1,15 +1,17 @@
 import { useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
-import Navigation from './components/Navigation';
-import Footer from './components/Footer';
-import Home from './pages/Home';
-import ServicesPage from './pages/ServicesPage';
-import CaseStudiesPage from './pages/CaseStudiesPage';
-import InsightsPage from './pages/InsightsPage';
-import NewsDetailPage from './pages/NewsDetailPage';
-import ContactPage from './pages/Contact';
-import CommunityPage from './pages/CommunityPage';
-import Products from './pages/Products';
+import LandingLayout from './layouts/LandingLayout';
+import AdminLayout from './layouts/AdminLayout';
+import Home from './pages/landing/Home';
+import ServicesPage from './pages/landing/ServicesPage';
+import CaseStudiesPage from './pages/landing/CaseStudiesPage';
+import InsightsPage from './pages/landing/InsightsPage';
+import NewsDetailPage from './pages/landing/NewsDetailPage';
+import ContactPage from './pages/landing/Contact';
+import CommunityPage from './pages/landing/CommunityPage';
+import Products from './pages/landing/Products';
+import Dashboard from './pages/admin/Dashboard';
+import LoginAdmin from './pages/admin/LoginAdmin';
 import { useDocumentMeta } from './hooks/useDocumentMeta';
 import { ROUTE_PATHS } from './utils/routeConstants';
 
@@ -24,43 +26,46 @@ function App() {
   }, [location.pathname]);
 
   return (
-    <div className="min-h-screen bg-white">
-      <Navigation />
-      <main>
-        <Routes>
-          {/* Home Route */}
-          <Route path={ROUTE_PATHS.home.vi} element={<Home />} />
-          <Route path={ROUTE_PATHS.home.en} element={<Home />} />
+    <Routes>
+      {/* Admin Portal Routes */}
+      <Route path={ROUTE_PATHS.adminLogin} element={<LoginAdmin />} />
+      <Route path={ROUTE_PATHS.admin} element={<AdminLayout />}>
+        <Route index element={<Dashboard />} />
+      </Route>
 
-          {/* Services Routes */}
-          <Route path={ROUTE_PATHS.services.vi} element={<ServicesPage />} />
-          <Route path={ROUTE_PATHS.services.en} element={<ServicesPage />} />
+      {/* Landing Pages Routes */}
+      <Route element={<LandingLayout />}>
+        {/* Home Route */}
+        <Route path={ROUTE_PATHS.home.vi} element={<Home />} />
+        <Route path={ROUTE_PATHS.home.en} element={<Home />} />
 
-          {/* Case Studies Routes */}
-          <Route path={ROUTE_PATHS.caseStudies.vi} element={<CaseStudiesPage />} />
-          <Route path={ROUTE_PATHS.caseStudies.en} element={<CaseStudiesPage />} />
+        {/* Services Routes */}
+        <Route path={ROUTE_PATHS.services.vi} element={<ServicesPage />} />
+        <Route path={ROUTE_PATHS.services.en} element={<ServicesPage />} />
 
-          {/* Insights/News Routes */}
-          <Route path={ROUTE_PATHS.news.vi} element={<InsightsPage />} />
-          <Route path={ROUTE_PATHS.news.en} element={<InsightsPage />} />
-          <Route path={ROUTE_PATHS.newsDetail.vi} element={<NewsDetailPage />} />
-          <Route path={ROUTE_PATHS.newsDetail.en} element={<NewsDetailPage />} />
+        {/* Case Studies Routes */}
+        <Route path={ROUTE_PATHS.caseStudies.vi} element={<CaseStudiesPage />} />
+        <Route path={ROUTE_PATHS.caseStudies.en} element={<CaseStudiesPage />} />
 
-          {/* Contact Routes */}
-          <Route path={ROUTE_PATHS.contact.vi} element={<ContactPage />} />
-          <Route path={ROUTE_PATHS.contact.en} element={<ContactPage />} />
+        {/* Insights/News Routes */}
+        <Route path={ROUTE_PATHS.news.vi} element={<InsightsPage />} />
+        <Route path={ROUTE_PATHS.news.en} element={<InsightsPage />} />
+        <Route path={ROUTE_PATHS.newsDetail.vi} element={<NewsDetailPage />} />
+        <Route path={ROUTE_PATHS.newsDetail.en} element={<NewsDetailPage />} />
 
-          {/* Community Routes */}
-          <Route path={ROUTE_PATHS.community.vi} element={<CommunityPage />} />
-          <Route path={ROUTE_PATHS.community.en} element={<CommunityPage />} />
+        {/* Contact Routes */}
+        <Route path={ROUTE_PATHS.contact.vi} element={<ContactPage />} />
+        <Route path={ROUTE_PATHS.contact.en} element={<ContactPage />} />
 
-          {/* Products Routes */}
-          <Route path={ROUTE_PATHS.products.vi} element={<Products />} />
-          <Route path={ROUTE_PATHS.products.en} element={<Products />} />
-        </Routes>
-      </main>
-      <Footer />
-    </div>
+        {/* Community Routes */}
+        <Route path={ROUTE_PATHS.community.vi} element={<CommunityPage />} />
+        <Route path={ROUTE_PATHS.community.en} element={<CommunityPage />} />
+
+        {/* Products Routes */}
+        <Route path={ROUTE_PATHS.products.vi} element={<Products />} />
+        <Route path={ROUTE_PATHS.products.en} element={<Products />} />
+      </Route>
+    </Routes>
   );
 }
 
