@@ -1,10 +1,10 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useEffect } from 'react';
-import { BLOG_POSTS } from '../data/newsData';
-import { useDocumentMeta } from '../hooks/useDocumentMeta';
+import { BLOG_POSTS } from '../../data/newsData';
+import { useDocumentMeta } from '../../hooks/useDocumentMeta';
 import { ArrowLeft } from 'lucide-react';
-import { getRoutePath } from '../utils/routeConstants';
+import { getRoutePath } from '../../utils/routeConstants';
 
 export default function NewsDetailPage() {
     const { id } = useParams();

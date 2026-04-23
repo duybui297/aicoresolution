@@ -30,18 +30,27 @@ export const ROUTE_PATHS = {
     products: {
         vi: '/san-pham',
         en: '/products'
-    }
+    },
+    admin: '/admin',
+    adminLogin: '/admin/login'
 };
 
 export const getRoutePath = (key: keyof typeof ROUTE_PATHS, language: string) => {
+    const route = ROUTE_PATHS[key];
+    if (typeof route === 'string') {
+        return route;
+    }
     const lang = language === 'vi' ? 'vi' : 'en';
-    return ROUTE_PATHS[key][lang];
+    return route[lang];
 };
 
 export const getRouteKeyByPath = (path: string): keyof typeof ROUTE_PATHS | undefined => {
     for (const key in ROUTE_PATHS) {
         const k = key as keyof typeof ROUTE_PATHS;
-        if (Object.values(ROUTE_PATHS[k]).includes(path)) {
+        const route = ROUTE_PATHS[k];
+        if (typeof route === 'string') {
+            if (route === path) return k;
+        } else if (Object.values(route).includes(path)) {
             return k;
         }
     }

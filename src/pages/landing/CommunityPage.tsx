@@ -15,9 +15,9 @@ import {
     ArrowRight
 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { Event, Registration } from '../types';
-import { EVENTS } from '../constants';
-import { sendNotificationEmail } from '../services/emailService';
+import { Event, Registration } from '../../types';
+import { EVENTS } from '../../constants';
+import { sendNotificationEmail } from '../../services/emailService';
 
 // Helper: resolve bilingual field
 function getLang(field: string | { vi: string; en: string }, lang: string): string;

@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { MapPin, Mail, Phone, CheckCircle, Loader2 } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
-import { ZaloIcon } from '../components/icons/ZaloIcon';
-import { sendNotificationEmail } from '../services/emailService';
+import { ZaloIcon } from '../../components/icons/ZaloIcon';
+import { sendNotificationEmail } from '../../services/emailService';
 
 export default function Contact() {
   const { t } = useTranslation();

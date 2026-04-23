@@ -13,9 +13,9 @@ import {
     Loader2,
     Hourglass
 } from 'lucide-react';
-import { sendNotificationEmail } from '../services/emailService';
-import chatbotProductImg from '../assets/ChatGPTproduct.png';
-import translatorProductImg from '../assets/ChatGPTPM.png';
+import { sendNotificationEmail } from '../../services/emailService';
+import chatbotProductImg from '../../assets/ChatGPTproduct.png';
+import translatorProductImg from '../../assets/ChatGPTPM.png';
 
 interface ProductFeature {
     title: string;
