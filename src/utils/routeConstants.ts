@@ -32,7 +32,9 @@ export const ROUTE_PATHS = {
         en: '/products'
     },
     admin: '/admin',
-    adminLogin: '/admin/login'
+    adminLogin: '/admin/login',
+    adminCreateArticle: '/admin/articles/create',
+    adminEditArticle: '/admin/articles/edit/:id'
 };
 
 export const getRoutePath = (key: keyof typeof ROUTE_PATHS, language: string) => {

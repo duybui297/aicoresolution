@@ -14,11 +14,11 @@ const AdminSidebar = () => {
   const location = useLocation();
 
   return (
-    <div className="w-[301px] h-[calc(100vh-32px)] my-4 ml-4 bg-admin-primary-100 rounded-2xl p-8 flex flex-col gap-10 relative shadow-xl overflow-hidden shrink-0">
+    <div className="w-[240px] 2xl:w-[301px] h-[calc(100vh-2rem)] my-4 ml-4 bg-admin-primary-100 rounded-2xl p-6 2xl:p-8 flex flex-col gap-8 2xl:gap-10 relative shadow-xl overflow-hidden shrink-0 transition-all duration-300">
       {/* Logo Section */}
-      <div className="flex items-center gap-3 relative z-10">
-        <img src={logo} alt="AICoreSolutions Logo" className="h-8 w-auto shrink-0" />
-        <span className="text-admin-xl font-admin-semibold text-admin-secondary-100">AICoreSolutions</span>
+      <div className="flex items-center gap-2 2xl:gap-3 relative z-10">
+        <img src={logo} alt="AICoreSolutions Logo" className="h-6 2xl:h-8 w-auto shrink-0 transition-all" />
+        <span className="text-admin-base 2xl:text-admin-xl font-admin-semibold text-admin-secondary-100 truncate transition-all">AICoreSolutions</span>
       </div>
 
       {/* Menu Section */}
@@ -27,29 +27,29 @@ const AdminSidebar = () => {
 
         <div className="flex flex-col gap-2">
           {/* Active Item Example */}
-          <Link to="/admin" className="relative flex items-center px-4 py-3 text-admin-base font-admin-regular text-admin-netral-10 cursor-pointer rounded-lg hover:bg-white/5 transition-colors">
+          <Link to="/admin" className="relative flex items-center px-4 py-3 text-admin-sm 2xl:text-admin-base font-admin-regular text-admin-netral-10 cursor-pointer rounded-lg hover:bg-white/5 transition-colors">
             <div className="absolute -left-8 w-[6px] h-8 bg-admin-secondary-100 rounded-r-lg" />
             <FileText className="w-5 h-5 mr-3 shrink-0" />
             Articles
           </Link>
 
           {/* Inactive Items */}
-          <Link to="/admin/scheduled" className="flex items-center px-4 py-3 text-admin-base font-admin-regular text-admin-netral-60 hover:text-admin-secondary-100 hover:bg-white/5 rounded-lg cursor-pointer transition-colors">
+          <Link to="/admin/scheduled" className="flex items-center px-4 py-3 text-admin-sm 2xl:text-admin-base font-admin-regular text-admin-netral-60 hover:text-admin-secondary-100 hover:bg-white/5 rounded-lg cursor-pointer transition-colors">
             <Clock className="w-5 h-5 mr-3 shrink-0" />
             Scheduled
           </Link>
-
-          <Link to="/admin/contributors" className="flex items-center px-4 py-3 text-admin-base font-admin-regular text-admin-netral-60 hover:text-admin-secondary-100 hover:bg-white/5 rounded-lg cursor-pointer transition-colors">
+          
+          <Link to="/admin/contributors" className="flex items-center px-4 py-3 text-admin-sm 2xl:text-admin-base font-admin-regular text-admin-netral-60 hover:text-admin-secondary-100 hover:bg-white/5 rounded-lg cursor-pointer transition-colors">
             <Users className="w-5 h-5 mr-3 shrink-0" />
             Contributors
           </Link>
-
-          <Link to="/admin/trash" className="flex items-center px-4 py-3 text-admin-base font-admin-regular text-admin-netral-60 hover:text-admin-secondary-100 hover:bg-white/5 rounded-lg cursor-pointer transition-colors">
+          
+          <Link to="/admin/trash" className="flex items-center px-4 py-3 text-admin-sm 2xl:text-admin-base font-admin-regular text-admin-netral-60 hover:text-admin-secondary-100 hover:bg-white/5 rounded-lg cursor-pointer transition-colors">
             <Trash2 className="w-5 h-5 mr-3 shrink-0" />
             Trash
           </Link>
 
-          <Link to="/admin/settings" className="flex items-center px-4 py-3 text-admin-base font-admin-regular text-admin-netral-60 hover:text-admin-secondary-100 hover:bg-white/5 rounded-lg cursor-pointer transition-colors">
+          <Link to="/admin/settings" className="flex items-center px-4 py-3 text-admin-sm 2xl:text-admin-base font-admin-regular text-admin-netral-60 hover:text-admin-secondary-100 hover:bg-white/5 rounded-lg cursor-pointer transition-colors">
             <Settings className="w-5 h-5 mr-3 shrink-0" />
             Settings
           </Link>
@@ -77,7 +77,7 @@ const AdminSidebar = () => {
 
         <Link to="/" className="flex items-center px-2 py-2 text-admin-netral-60 hover:text-admin-netral-10 hover:bg-white/5 rounded-lg cursor-pointer transition-colors -mx-2">
           <LogOut className="w-5 h-5 mr-3 shrink-0" />
-          <span className="text-admin-base font-admin-regular">Log out</span>
+          <span className="text-admin-sm 2xl:text-admin-base font-admin-regular">Log out</span>
         </Link>
       </div>
     </div>
