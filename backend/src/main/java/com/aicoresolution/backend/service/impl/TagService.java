@@ -52,7 +52,7 @@ public class TagService implements ITagService {
         Tag tag = tagRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Tag not found"));
 
-        if (!tag.getSlug().equalsIgnoreCase(request.getSlug())
+        if (request.getSlug() != null && !tag.getSlug().equalsIgnoreCase(request.getSlug())
                 && tagRepository.existsBySlugIgnoreCase(request.getSlug())) {
             throw new IllegalArgumentException("Slug already exists");
         }
@@ -93,11 +93,21 @@ public class TagService implements ITagService {
     }
 
     private void applyData(Tag tag, TagRequest request) {
-        tag.setName(request.getName().trim());
-        tag.setSlug(request.getSlug().trim());
-        tag.setDescription(request.getDescription());
-        tag.setMetaTitle(request.getMetaTitle());
-        tag.setMetaDescription(request.getMetaDescription());
+        if (request.getName() != null) {
+            tag.setName(request.getName().trim());
+        }
+        if (request.getSlug() != null) {
+            tag.setSlug(request.getSlug().trim());
+        }
+        if (request.getDescription() != null) {
+            tag.setDescription(request.getDescription());
+        }
+        if (request.getMetaTitle() != null) {
+            tag.setMetaTitle(request.getMetaTitle());
+        }
+        if (request.getMetaDescription() != null) {
+            tag.setMetaDescription(request.getMetaDescription());
+        }
     }
 
     private TagResponse toResponse(Tag tag) {

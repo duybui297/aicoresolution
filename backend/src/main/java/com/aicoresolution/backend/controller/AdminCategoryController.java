@@ -11,10 +11,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/admin/categories")
+@PreAuthorize("hasAnyRole('ADMIN', 'EDITOR')")
 public class AdminCategoryController {
 
     private static final Logger logger = LoggerFactory.getLogger(AdminCategoryController.class);
@@ -24,6 +26,7 @@ public class AdminCategoryController {
         this.categoryService = categoryService;
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'EDITOR', 'CONTRIBUTOR')")
     @GetMapping
     public ResponseEntity<Page<CategoryResponse>> list(@RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
@@ -31,6 +34,7 @@ public class AdminCategoryController {
         return ResponseEntity.ok(categoryService.list(page, size));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'EDITOR', 'CONTRIBUTOR')")
     @GetMapping("/{id}")
     public ResponseEntity<CategoryResponse> getById(@PathVariable Long id) {
         logger.debug("Getting category {}", id);
@@ -48,6 +52,13 @@ public class AdminCategoryController {
     public ResponseEntity<CategoryResponse> update(@PathVariable Long id, @Valid @RequestBody CategoryRequest request) {
         String requestId = HeaderUtils.getRequestId();
         logger.info("Updating category {} - RequestID: {}", id, requestId);
+        return ResponseEntity.ok(categoryService.update(id, request));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<CategoryResponse> patch(@PathVariable Long id, @RequestBody CategoryRequest request) {
+        String requestId = HeaderUtils.getRequestId();
+        logger.info("Patching category {} - RequestID: {}", id, requestId);
         return ResponseEntity.ok(categoryService.update(id, request));
     }
 

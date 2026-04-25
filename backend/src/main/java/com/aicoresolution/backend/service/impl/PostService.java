@@ -6,6 +6,7 @@ import com.aicoresolution.backend.entity.Post;
 import com.aicoresolution.backend.entity.PostStatus;
 import com.aicoresolution.backend.repository.PostRepository;
 import com.aicoresolution.backend.service.IPostService;
+import com.aicoresolution.backend.service.IPostRevisionService;
 import com.aicoresolution.backend.common.headers.HeaderUtils;
 import com.aicoresolution.backend.entity.CmsUser;
 import com.aicoresolution.backend.repository.CmsUserRepository;
@@ -27,10 +28,14 @@ public class PostService implements IPostService {
     private static final Logger logger = LoggerFactory.getLogger(PostService.class);
     private final PostRepository postRepository;
     private final CmsUserRepository cmsUserRepository;
+    private final IPostRevisionService revisionService;
 
-    public PostService(PostRepository postRepository, CmsUserRepository cmsUserRepository) {
+    public PostService(PostRepository postRepository,
+                       CmsUserRepository cmsUserRepository,
+                       IPostRevisionService revisionService) {
         this.postRepository = postRepository;
         this.cmsUserRepository = cmsUserRepository;
+        this.revisionService = revisionService;
     }
 
     @Override
@@ -73,7 +78,12 @@ public class PostService implements IPostService {
         applyPostData(post, request);
         post.setUpdatedBy(updater);
         post.setUpdatedAt(LocalDateTime.now());
-        return toResponse(postRepository.save(post));
+        Post updatedPost = postRepository.save(post);
+
+        // Create revision
+        revisionService.createRevision(id, request.getChangeNote(), updaterId);
+
+        return toResponse(updatedPost);
     }
 
     @Override

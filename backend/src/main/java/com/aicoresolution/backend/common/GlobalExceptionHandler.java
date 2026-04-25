@@ -22,6 +22,13 @@ public class GlobalExceptionHandler {
         return response;
     }
 
+    @ExceptionHandler(org.springframework.http.converter.HttpMessageNotReadableException.class)
+    public ResponseEntity<ApiResponse> handleHttpMessageNotReadable(org.springframework.http.converter.HttpMessageNotReadableException exception) {
+        String message = "Invalid JSON format: " + exception.getMostSpecificCause().getMessage();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(new ApiResponse(false, message));
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiResponse> handleValidationError(MethodArgumentNotValidException exception) {
         String message = exception.getBindingResult().getFieldErrors().isEmpty()

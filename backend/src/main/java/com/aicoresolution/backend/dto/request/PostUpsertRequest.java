@@ -60,4 +60,7 @@ public class PostUpsertRequest {
     private Integer commentCount;
     private Boolean featured;
     private Boolean allowComments;
+
+    @Size(max = 500)
+    private String changeNote;
 }
