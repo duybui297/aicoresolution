@@ -54,6 +54,7 @@ public class AdminPostController {
         return ResponseEntity.ok(postService.getAdminById(id));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'EDITOR', 'AUTHOR')")
     @PostMapping
     public ResponseEntity<PostResponse> create(@Valid @RequestBody PostUpsertRequest request,
             Authentication authentication) {
@@ -73,6 +74,7 @@ public class AdminPostController {
                 .body(postService.create(request, authenticatedUser.id()));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'EDITOR', 'AUTHOR')")
     @PutMapping("/{id}")
     public ResponseEntity<PostResponse> update(@PathVariable Long id,
             @Valid @RequestBody PostUpsertRequest request,
@@ -92,6 +94,7 @@ public class AdminPostController {
         return ResponseEntity.ok(postService.update(id, request, authenticatedUser.id()));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'EDITOR', 'AUTHOR')")
     @PatchMapping("/{id}")
     public ResponseEntity<PostResponse> patch(@PathVariable Long id,
             @RequestBody PostUpsertRequest request,
@@ -100,6 +103,7 @@ public class AdminPostController {
         return ResponseEntity.ok(postService.update(id, request, authenticatedUser.id()));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'EDITOR', 'AUTHOR')")
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse> delete(@PathVariable Long id) {
         String requestId = HeaderUtils.getRequestId();
@@ -108,6 +112,7 @@ public class AdminPostController {
         return ResponseEntity.ok(new ApiResponse(true, "Post deleted"));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN', 'EDITOR', 'AUTHOR')")
     @DeleteMapping("/batch-delete")
     public ResponseEntity<ApiResponse> batchDelete(@Valid @RequestBody BatchDeleteRequest request) {
         String traceId = HeaderUtils.getTraceId();

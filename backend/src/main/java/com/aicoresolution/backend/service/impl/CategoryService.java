@@ -52,7 +52,7 @@ public class CategoryService implements ICategoryService {
         Category category = categoryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Category not found"));
 
-        if (!category.getSlug().equalsIgnoreCase(request.getSlug())
+        if (request.getSlug() != null && !category.getSlug().equalsIgnoreCase(request.getSlug())
                 && categoryRepository.existsBySlugIgnoreCase(request.getSlug())) {
             throw new IllegalArgumentException("Slug already exists");
         }
@@ -101,17 +101,39 @@ public class CategoryService implements ICategoryService {
     }
 
     private void applyData(Category category, CategoryRequest request) {
-        category.setName(request.getName().trim());
-        category.setSlug(request.getSlug().trim());
-        category.setDescription(request.getDescription());
-        category.setThumbnailUrl(request.getThumbnailUrl());
-        category.setMetaTitle(request.getMetaTitle());
-        category.setMetaDescription(request.getMetaDescription());
-        category.setCanonicalUrl(request.getCanonicalUrl());
-        category.setOgImage(request.getOgImage());
-        category.setRobotsMeta(request.getRobotsMeta());
-        category.setSortOrder(request.getSortOrder());
-        category.setIsActive(request.getIsActive());
+        if (request.getName() != null) {
+            category.setName(request.getName().trim());
+        }
+        if (request.getSlug() != null) {
+            category.setSlug(request.getSlug().trim());
+        }
+        if (request.getDescription() != null) {
+            category.setDescription(request.getDescription());
+        }
+        if (request.getThumbnailUrl() != null) {
+            category.setThumbnailUrl(request.getThumbnailUrl());
+        }
+        if (request.getMetaTitle() != null) {
+            category.setMetaTitle(request.getMetaTitle());
+        }
+        if (request.getMetaDescription() != null) {
+            category.setMetaDescription(request.getMetaDescription());
+        }
+        if (request.getCanonicalUrl() != null) {
+            category.setCanonicalUrl(request.getCanonicalUrl());
+        }
+        if (request.getOgImage() != null) {
+            category.setOgImage(request.getOgImage());
+        }
+        if (request.getRobotsMeta() != null) {
+            category.setRobotsMeta(request.getRobotsMeta());
+        }
+        if (request.getSortOrder() != null) {
+            category.setSortOrder(request.getSortOrder());
+        }
+        if (request.getIsActive() != null) {
+            category.setIsActive(request.getIsActive());
+        }
 
         if (request.getParentId() != null) {
             Category parent = categoryRepository.findById(request.getParentId())
