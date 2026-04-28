@@ -3,10 +3,7 @@ package com.aicoresolution.backend.controller;
 import com.aicoresolution.backend.security.AuthenticatedUser;
 import com.aicoresolution.backend.service.IMediaService;
 import com.aicoresolution.backend.common.headers.HeaderUtils;
-import com.aicoresolution.backend.entity.CmsUser;
-import com.aicoresolution.backend.repository.CmsUserRepository;
 import com.aicoresolution.backend.common.ApiResponse;
-import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -24,11 +21,9 @@ public class AdminMediaController {
 
     private static final Logger logger = LoggerFactory.getLogger(AdminMediaController.class);
     private final IMediaService mediaService;
-    private final CmsUserRepository cmsUserRepository;
 
-    public AdminMediaController(IMediaService mediaService, CmsUserRepository cmsUserRepository) {
+    public AdminMediaController(IMediaService mediaService) {
         this.mediaService = mediaService;
-        this.cmsUserRepository = cmsUserRepository;
     }
 
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -41,13 +36,11 @@ public class AdminMediaController {
         String requestId = HeaderUtils.getRequestId();
         logger.info("Uploading media file: {} - RequestID: {}", file.getOriginalFilename(), requestId);
 
-        // Get current user
+        // Get current user ID
         AuthenticatedUser authenticatedUser = (AuthenticatedUser) authentication.getPrincipal();
-        CmsUser uploader = cmsUserRepository.findById(authenticatedUser.id())
-                .orElseThrow(() -> new EntityNotFoundException("User not found"));
 
         // Upload via service
-        Object response = mediaService.upload(file, altText, caption, uploader);
+        Object response = mediaService.upload(file, altText, caption, authenticatedUser.id());
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new ApiResponse(true, "Upload successful", response));

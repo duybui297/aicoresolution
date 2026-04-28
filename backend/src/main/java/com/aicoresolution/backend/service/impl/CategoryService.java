@@ -136,9 +136,12 @@ public class CategoryService implements ICategoryService {
         }
 
         if (request.getParentId() != null) {
-            Category parent = categoryRepository.findById(request.getParentId())
-                    .orElseThrow(() -> new EntityNotFoundException("Parent category not found"));
-            category.setParent(parent);
+            if (!categoryRepository.existsById(request.getParentId())) {
+                throw new EntityNotFoundException("Parent category not found");
+            }
+            category.setParentId(request.getParentId());
+        } else {
+            category.setParentId(null);
         }
     }
 
@@ -149,7 +152,7 @@ public class CategoryService implements ICategoryService {
         response.setSlug(category.getSlug());
         response.setDescription(category.getDescription());
         response.setThumbnailUrl(category.getThumbnailUrl());
-        response.setParentId(category.getParent() != null ? category.getParent().getId() : null);
+        response.setParentId(category.getParentId());
         response.setMetaTitle(category.getMetaTitle());
         response.setMetaDescription(category.getMetaDescription());
         response.setCanonicalUrl(category.getCanonicalUrl());

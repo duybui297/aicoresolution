@@ -38,9 +38,6 @@ public class PostRevisionService implements IPostRevisionService {
     public PostRevisionResponse createRevision(Long postId, String changeNote, Long editorId) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new EntityNotFoundException("Post not found"));
-        CmsUser editor = cmsUserRepository.findById(editorId)
-                .orElseThrow(() -> new EntityNotFoundException("Editor not found"));
-
         PostRevision revision = PostRevision.builder()
                 .postId(postId)
                 .title(post.getTitle())
@@ -49,7 +46,7 @@ public class PostRevisionService implements IPostRevisionService {
                 .metaTitle(post.getMetaTitle())
                 .metaDescription(post.getMetaDescription())
                 .changeNote(changeNote)
-                .editedBy(editor)
+                .editedById(editorId)
                 .createdAt(LocalDateTime.now())
                 .build();
 
@@ -81,8 +78,8 @@ public class PostRevisionService implements IPostRevisionService {
                 .metaTitle(revision.getMetaTitle())
                 .metaDescription(revision.getMetaDescription())
                 .changeNote(revision.getChangeNote())
-                .editedById(revision.getEditedBy() != null ? revision.getEditedBy().getId() : null)
-                .editedByFullName(revision.getEditedBy() != null ? revision.getEditedBy().getFullName() : null)
+                .editedById(revision.getEditedById())
+                .editedByFullName(null) // Manual join would be needed for full name
                 .createdAt(revision.getCreatedAt())
                 .build();
     }

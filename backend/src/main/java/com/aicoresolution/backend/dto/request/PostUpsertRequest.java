@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import java.util.Map;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -60,6 +61,11 @@ public class PostUpsertRequest {
     private Integer commentCount;
     private Boolean featured;
     private Boolean allowComments;
+
+    private List<Long> authorIds;
+    private List<Long> categoryIds;
+    private List<Long> tagIds;
+    private List<PostMediaRequest> media;
 
     @Size(max = 500)
     private String changeNote;

@@ -39,9 +39,8 @@ public class PostRevision {
     @Column(name = "change_note", length = 500)
     private String changeNote;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "edited_by")
-    private CmsUser editedBy;
+    @Column(name = "edited_by")
+    private Long editedById;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;

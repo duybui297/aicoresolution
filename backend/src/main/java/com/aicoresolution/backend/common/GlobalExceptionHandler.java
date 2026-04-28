@@ -71,7 +71,7 @@ public class GlobalExceptionHandler {
         if (message != null && message.contains("unique")) {
             message = "This record already exists (duplicate entry)";
         } else if (message != null && message.contains("foreign key")) {
-            message = "Cannot delete: linked records exist";
+            message = "Referenced record does not exist or is still in use (Foreign Key Violation)";
         } else {
             message = "Data integrity error";
         }

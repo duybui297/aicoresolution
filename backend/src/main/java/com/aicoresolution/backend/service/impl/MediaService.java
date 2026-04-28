@@ -30,7 +30,7 @@ public class MediaService implements IMediaService {
 
     @Override
     @Transactional
-    public MediaResponse upload(MultipartFile file, String altText, String caption, CmsUser uploadedBy) {
+    public MediaResponse upload(MultipartFile file, String altText, String caption, Long uploadedById) {
         String requestId = HeaderUtils.getRequestId();
         logger.info("Uploading media file: {} - RequestID: {}", file.getOriginalFilename(), requestId);
         // Validate file
@@ -47,7 +47,7 @@ public class MediaService implements IMediaService {
                 .fileSize(file.getSize())
                 .altText(altText)
                 .caption(caption)
-                .uploadedBy(uploadedBy)
+                .uploadedById(uploadedById)
                 .createdAt(LocalDateTime.now())
                 .build();
 

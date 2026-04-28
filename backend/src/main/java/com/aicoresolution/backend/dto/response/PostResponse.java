@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.Map;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -50,6 +51,12 @@ public class PostResponse {
     private Long authorId;
     private Long createdById;
     private Long updatedById;
+
+    private List<Long> authorIds;
+    private List<Long> categoryIds;
+    private List<Long> tagIds;
+    private List<PostMediaResponse> media;
+
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private LocalDateTime deletedAt;

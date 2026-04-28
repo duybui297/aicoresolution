@@ -47,9 +47,8 @@ public class Media {
     @Column(name = "title_attr", length = 300)
     private String titleAttr;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "uploaded_by")
-    private CmsUser uploadedBy;
+    @Column(name = "uploaded_by")
+    private Long uploadedById;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;

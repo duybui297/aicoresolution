@@ -138,32 +138,15 @@ public class Post {
     @Builder.Default
     private Boolean allowComments = true;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_id", nullable = false)
-    private CmsUser author;
+    @Column(name = "author_id", nullable = false)
+    private Long authorId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "created_by")
-    private CmsUser createdBy;
+    @Column(name = "created_by")
+    private Long createdById;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "updated_by")
-    private CmsUser updatedBy;
+    @Column(name = "updated_by")
+    private Long updatedById;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "post_categories", joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "category_id"))
-    @Builder.Default
-    private Set<Category> categories = new HashSet<>();
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "post_tags", joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    @Builder.Default
-    private Set<Tag> tags = new HashSet<>();
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "post_media", joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "media_id"))
-    @Builder.Default
-    private Set<Media> media = new HashSet<>();
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;

@@ -2,9 +2,7 @@ package com.aicoresolution.backend.service;
 
 import com.aicoresolution.backend.dto.request.PostUpsertRequest;
 import com.aicoresolution.backend.dto.response.PostResponse;
-
 import org.springframework.data.domain.Page;
-
 import java.util.List;
 
 public interface IPostService {
@@ -38,4 +36,14 @@ public interface IPostService {
      * Get single post by id (admin view)
      */
     PostResponse getAdminById(Long id);
+
+    /**
+     * Get single post by slug (public view)
+     */
+    PostResponse getPublicBySlug(String slug);
+
+    /**
+     * Get paginated list of published posts (public view)
+     */
+    Page<PostResponse> listPublic(int page, int size);
 }
