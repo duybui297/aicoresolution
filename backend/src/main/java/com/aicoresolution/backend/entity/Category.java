@@ -20,9 +20,8 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "parent_id")
-    private Category parent;
+    @Column(name = "parent_id")
+    private Long parentId;
 
     @Column(nullable = false, length = 150)
     private String name;
