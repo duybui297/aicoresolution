@@ -12,6 +12,8 @@ import CommunityPage from './pages/landing/CommunityPage';
 import Products from './pages/landing/Products';
 import Dashboard from './pages/admin/Dashboard';
 import LoginAdmin from './pages/admin/LoginAdmin';
+import CreateArticle from './pages/admin/CreateArticle';
+import EditArticle from './pages/admin/EditArticle';
 import { useDocumentMeta } from './hooks/useDocumentMeta';
 import { ROUTE_PATHS } from './utils/routeConstants';
 
@@ -31,6 +33,8 @@ function App() {
       <Route path={ROUTE_PATHS.adminLogin} element={<LoginAdmin />} />
       <Route path={ROUTE_PATHS.admin} element={<AdminLayout />}>
         <Route index element={<Dashboard />} />
+        <Route path={ROUTE_PATHS.adminCreateArticle} element={<CreateArticle />} />
+        <Route path={ROUTE_PATHS.adminEditArticle} element={<EditArticle />} />
       </Route>
 
       {/* Landing Pages Routes */}

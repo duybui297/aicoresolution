@@ -3,14 +3,14 @@ export const adminFontFamily = {
 };
 
 export const adminFontSize = {
-  'admin-2xs': ['10px', { lineHeight: 'normal' }],
-  'admin-xs': ['12px', { lineHeight: 'normal' }],
-  'admin-sm': ['14px', { lineHeight: '1.4' }],
-  'admin-base': ['16px', { lineHeight: '1.4' }],
-  'admin-lg': ['20px', { lineHeight: '1.2' }],
-  'admin-xl': ['24px', { lineHeight: '1.2' }],
-  'admin-2xl': ['32px', { lineHeight: '1.2' }],
-  'admin-3xl': ['40px', { lineHeight: '1.1' }],
+  'admin-2xs': ['0.625rem', { lineHeight: 'normal' }],
+  'admin-xs': ['0.75rem', { lineHeight: 'normal' }],
+  'admin-sm': ['0.875rem', { lineHeight: '1.4' }],
+  'admin-base': ['1rem', { lineHeight: '1.4' }],
+  'admin-lg': ['1.25rem', { lineHeight: '1.2' }],
+  'admin-xl': ['1.5rem', { lineHeight: '1.2' }],
+  'admin-2xl': ['2rem', { lineHeight: '1.2' }],
+  'admin-3xl': ['2.5rem', { lineHeight: '1.1' }],
 };
 
 export const adminFontWeight = {
