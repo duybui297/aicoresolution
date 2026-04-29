@@ -363,6 +363,10 @@ public class PostService implements IPostService {
         response.setFeatured(post.getFeatured());
         response.setAllowComments(post.getAllowComments());
         response.setAuthorId(post.getAuthorId());
+        if (post.getAuthorId() != null) {
+            cmsUserRepository.findById(post.getAuthorId())
+                .ifPresent(user -> response.setAuthorName(user.getFullName()));
+        }
         response.setCreatedById(post.getCreatedById());
         response.setUpdatedById(post.getUpdatedById());
 
