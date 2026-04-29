@@ -1,0 +1,28 @@
+import axiosClient from './axiosClient';
+import { PostResponse } from '../types/api';
+
+interface PageResponse<T> {
+  content: T[];
+  totalPages: number;
+  totalElements: number;
+  size: number;
+  number: number;
+}
+
+const postService = {
+  getPosts: async (page = 0, size = 10): Promise<PageResponse<PostResponse>> => {
+    return axiosClient.get('/admin/posts', {
+      params: { page, size }
+    });
+  },
+
+  getPostById: async (id: number): Promise<PostResponse> => {
+    return axiosClient.get(`/admin/posts/${id}`);
+  },
+
+  deletePost: async (id: number): Promise<void> => {
+    return axiosClient.delete(`/admin/posts/${id}`);
+  }
+};
+
+export default postService;
