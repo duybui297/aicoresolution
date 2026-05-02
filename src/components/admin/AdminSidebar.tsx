@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   FileText,
   Clock,
@@ -9,9 +9,16 @@ import {
   ChevronRight
 } from 'lucide-react';
 import logo from '../../assets/logo.png';
+import authService from '../../services/authService';
 
 const AdminSidebar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    authService.logout();
+    navigate('/admin/login');
+  };
 
   return (
     <div className="w-[240px] 2xl:w-[301px] h-[calc(100vh-2rem)] my-4 ml-4 bg-admin-primary-100 rounded-2xl p-6 2xl:p-8 flex flex-col gap-8 2xl:gap-10 relative shadow-xl overflow-hidden shrink-0 transition-all duration-300">
@@ -75,10 +82,13 @@ const AdminSidebar = () => {
           </div>
         </div>
 
-        <Link to="/" className="flex items-center px-2 py-2 text-admin-netral-60 hover:text-admin-netral-10 hover:bg-white/5 rounded-lg cursor-pointer transition-colors -mx-2">
+        <button 
+          onClick={handleLogout}
+          className="w-full flex items-center px-2 py-2 text-admin-netral-60 hover:text-admin-netral-10 hover:bg-white/5 rounded-lg cursor-pointer transition-colors -mx-2"
+        >
           <LogOut className="w-5 h-5 mr-3 shrink-0" />
           <span className="text-admin-sm 2xl:text-admin-base font-admin-regular">Log out</span>
-        </Link>
+        </button>
       </div>
     </div>
   );

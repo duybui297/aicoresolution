@@ -147,8 +147,18 @@ public class PostService implements IPostService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<PostResponse> listAdmin(int page, int size) {
+    public Page<PostResponse> listAdmin(int page, int size, String status) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "updatedAt"));
+        
+        if (status != null && !status.equalsIgnoreCase("All")) {
+            try {
+                PostStatus postStatus = PostStatus.valueOf(status.toUpperCase());
+                return postRepository.findByStatusAndDeletedAtIsNull(postStatus, pageable).map(this::toResponse);
+            } catch (IllegalArgumentException e) {
+                logger.warn("Invalid status filter: {}", status);
+            }
+        }
+        
         return postRepository.findAllNotDeleted(pageable).map(this::toResponse);
     }
 

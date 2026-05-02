@@ -8,7 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/admin/posts/{postId}/revisions")
+@RequestMapping("/api/v1/admin/posts/{postId}/revisions")
 @PreAuthorize("hasAnyRole('ADMIN', 'EDITOR', 'AUTHOR')")
 public class AdminPostRevisionController {
 

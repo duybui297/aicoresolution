@@ -30,7 +30,7 @@ public interface IPostService {
     /**
      * Get paginated list of posts (admin view)
      */
-    Page<PostResponse> listAdmin(int page, int size);
+    Page<PostResponse> listAdmin(int page, int size, String status);
 
     /**
      * Get single post by id (admin view)

@@ -3,23 +3,28 @@ import { LoginRequest, LoginResponse } from '../types/api';
 
 const authService = {
   login: async (credentials: LoginRequest): Promise<LoginResponse> => {
-    const response = await axiosClient.post<any, LoginResponse>('/v1/auth/login', credentials);
-    
-    // Save tokens to localStorage
-    if (response.accessToken) {
-      localStorage.setItem('accessToken', response.accessToken);
+    try {
+      const response = await axiosClient.post<any, LoginResponse>('auth/login', credentials);
+      
+      // Save tokens to localStorage
+      if (response.accessToken) {
+        localStorage.setItem('accessToken', response.accessToken);
+      }
+      if (response.refreshToken) {
+        localStorage.setItem('refreshToken', response.refreshToken);
+      }
+      if (response.role) {
+        localStorage.setItem('userRole', response.role);
+      }
+      if (response.userId) {
+        localStorage.setItem('userId', response.userId.toString());
+      }
+      
+      return response;
+    } catch (error) {
+      console.error('Login failed:', error);
+      throw error;
     }
-    if (response.refreshToken) {
-      localStorage.setItem('refreshToken', response.refreshToken);
-    }
-    if (response.role) {
-      localStorage.setItem('userRole', response.role);
-    }
-    if (response.userId) {
-      localStorage.setItem('userId', response.userId.toString());
-    }
-    
-    return response;
   },
 
   logout: () => {

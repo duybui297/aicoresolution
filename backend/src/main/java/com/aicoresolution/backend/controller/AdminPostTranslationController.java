@@ -12,7 +12,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/admin/posts/{postId}/translations")
+@RequestMapping("/api/v1/admin/posts/{postId}/translations")
 @PreAuthorize("hasAnyRole('ADMIN', 'EDITOR', 'AUTHOR')")
 public class AdminPostTranslationController {
 

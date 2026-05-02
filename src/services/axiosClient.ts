@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8080/api/v1';
+const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8080/api/v1').replace(/\/$/, '') + '/';
 
 const axiosClient = axios.create({
   baseURL: API_URL,
@@ -34,7 +34,9 @@ axiosClient.interceptors.response.use(
       if (error.response.status === 401) {
         localStorage.removeItem('accessToken');
         localStorage.removeItem('refreshToken');
-        // window.location.href = '/login'; // Optional: redirect to login
+        localStorage.removeItem('userRole');
+        localStorage.removeItem('userId');
+        window.location.href = '/admin/login';
       }
     }
     return Promise.reject(error);

@@ -14,6 +14,7 @@ import Dashboard from './pages/admin/Dashboard';
 import LoginAdmin from './pages/admin/LoginAdmin';
 import CreateArticle from './pages/admin/CreateArticle';
 import EditArticle from './pages/admin/EditArticle';
+import ProtectedRoute from './components/ProtectedRoute';
 import { useDocumentMeta } from './hooks/useDocumentMeta';
 import { ROUTE_PATHS } from './utils/routeConstants';
 
@@ -31,10 +32,12 @@ function App() {
     <Routes>
       {/* Admin Portal Routes */}
       <Route path={ROUTE_PATHS.adminLogin} element={<LoginAdmin />} />
-      <Route path={ROUTE_PATHS.admin} element={<AdminLayout />}>
-        <Route index element={<Dashboard />} />
-        <Route path={ROUTE_PATHS.adminCreateArticle} element={<CreateArticle />} />
-        <Route path={ROUTE_PATHS.adminEditArticle} element={<EditArticle />} />
+      <Route path={ROUTE_PATHS.admin} element={<ProtectedRoute />}>
+        <Route element={<AdminLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path={ROUTE_PATHS.adminCreateArticle} element={<CreateArticle />} />
+          <Route path={ROUTE_PATHS.adminEditArticle} element={<EditArticle />} />
+        </Route>
       </Route>
 
       {/* Landing Pages Routes */}

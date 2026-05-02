@@ -10,18 +10,18 @@ interface PageResponse<T> {
 }
 
 const postService = {
-  getPosts: async (page = 0, size = 10): Promise<PageResponse<PostResponse>> => {
-    return axiosClient.get('/admin/posts', {
-      params: { page, size }
+  getPosts: async (page = 0, size = 10, status?: string): Promise<PageResponse<PostResponse>> => {
+    return axiosClient.get('admin/posts', {
+      params: { page, size, status }
     });
   },
 
   getPostById: async (id: number): Promise<PostResponse> => {
-    return axiosClient.get(`/admin/posts/${id}`);
+    return axiosClient.get(`admin/posts/${id}`);
   },
 
   deletePost: async (id: number): Promise<void> => {
-    return axiosClient.delete(`/admin/posts/${id}`);
+    return axiosClient.delete(`admin/posts/${id}`);
   }
 };
 

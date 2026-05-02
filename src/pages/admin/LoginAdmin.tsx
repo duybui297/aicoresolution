@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LogIn, AlertCircle, Loader2 } from 'lucide-react';
+import authService from '../../services/authService';
 
 const LoginAdmin = () => {
   const [username, setUsername] = useState('');
@@ -9,20 +10,20 @@ const LoginAdmin = () => {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError('');
 
-    // Mock authentication delay
-    setTimeout(() => {
-      if (username === 'admin' && password === 'admin') {
-        navigate('/admin');
-      } else {
-        setError('Invalid username or password. Please try again.');
-        setIsLoading(false);
-      }
-    }, 1500);
+    try {
+      await authService.login({ username, password });
+      navigate('/admin');
+    } catch (err: any) {
+      console.error('Login failed:', err);
+      setError(err.response?.data?.message || 'Invalid username or password. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

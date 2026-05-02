@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
-@RequestMapping("/api/admin/posts")
+@RequestMapping("/api/v1/admin/posts")
 @PreAuthorize("hasAnyRole('ADMIN', 'EDITOR', 'AUTHOR', 'CONTRIBUTOR')")
 public class AdminPostController {
 
@@ -41,10 +41,11 @@ public class AdminPostController {
 
     @GetMapping
     public ResponseEntity<Page<PostResponse>> list(@RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String status) {
         String requestId = HeaderUtils.getRequestId();
-        logger.info("Listing posts - Page: {}, Size: {}, RequestID: {}", page, size, requestId);
-        return ResponseEntity.ok(postService.listAdmin(page, size));
+        logger.info("Listing posts - Page: {}, Size: {}, Status: {}, RequestID: {}", page, size, status, requestId);
+        return ResponseEntity.ok(postService.listAdmin(page, size, status));
     }
 
     @GetMapping("/{id}")

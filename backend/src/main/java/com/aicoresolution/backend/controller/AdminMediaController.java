@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/api/admin/media")
+@RequestMapping("/api/v1/admin/media")
 @PreAuthorize("hasAnyRole('ADMIN', 'EDITOR', 'AUTHOR')")
 public class AdminMediaController {
 

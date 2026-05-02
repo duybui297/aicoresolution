@@ -41,4 +41,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     @Query("SELECT p FROM Post p WHERE p.deletedAt IS NULL ORDER BY p.updatedAt DESC")
     Page<Post> findAllNotDeleted(Pageable pageable);
+
+    @Query("SELECT p FROM Post p WHERE p.status = :status AND p.deletedAt IS NULL ORDER BY p.updatedAt DESC")
+    Page<Post> findByStatusAndDeletedAtIsNull(@Param("status") PostStatus status, Pageable pageable);
 }
