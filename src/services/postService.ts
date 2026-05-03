@@ -1,5 +1,5 @@
 import axiosClient from './axiosClient';
-import { PostResponse } from '../types/api';
+import { PostResponse, ApiResponse } from '../types/api';
 
 interface PageResponse<T> {
   content: T[];
@@ -20,8 +20,12 @@ const postService = {
     return axiosClient.get(`admin/posts/${id}`);
   },
 
-  deletePost: async (id: number): Promise<void> => {
+  deletePost: async (id: number): Promise<ApiResponse<any>> => {
     return axiosClient.delete(`admin/posts/${id}`);
+  },
+
+  batchDeletePosts: async (ids: number[]): Promise<ApiResponse<any>> => {
+    return axiosClient.delete('admin/posts/batch-delete', { data: { ids } });
   }
 };
 

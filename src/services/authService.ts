@@ -1,5 +1,5 @@
 import axiosClient from './axiosClient';
-import { LoginRequest, LoginResponse } from '../types/api';
+import { LoginRequest, LoginResponse, ApiResponse } from '../types/api';
 
 const authService = {
   login: async (credentials: LoginRequest): Promise<LoginResponse> => {
@@ -21,17 +21,31 @@ const authService = {
       }
       
       return response;
-    } catch (error) {
-      console.error('Login failed:', error);
-      throw error;
+    } catch (error: any) {
+      const errorMessage = error.response?.data?.message || 'Login failed. Please try again.';
+      console.error('Login failed:', errorMessage);
+      throw new Error(errorMessage);
     }
   },
 
-  logout: () => {
+  logout: async (): Promise<ApiResponse<any>> => {
+    const refreshToken = localStorage.getItem('refreshToken');
+    let response: any = null;
+    
+    if (refreshToken) {
+      try {
+        response = await axiosClient.post('auth/logout', { refreshToken });
+      } catch (error) {
+        console.error('Logout API failed:', error);
+      }
+    }
+    
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     localStorage.removeItem('userRole');
     localStorage.removeItem('userId');
+
+    return response || { success: true, message: 'Logged out' };
   },
 
   getCurrentToken: () => {

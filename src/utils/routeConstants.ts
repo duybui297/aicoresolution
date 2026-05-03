@@ -34,7 +34,11 @@ export const ROUTE_PATHS = {
     admin: '/admin',
     adminLogin: '/admin/login',
     adminCreateArticle: '/admin/articles/create',
-    adminEditArticle: '/admin/articles/edit/:id'
+    adminEditArticle: '/admin/articles/edit/:id',
+    adminScheduled: '/admin/scheduled',
+    adminContributors: '/admin/contributors',
+    adminTrash: '/admin/trash',
+    adminSettings: '/admin/settings'
 };
 
 export const getRoutePath = (key: keyof typeof ROUTE_PATHS, language: string) => {

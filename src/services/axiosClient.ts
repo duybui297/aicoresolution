@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { ROUTE_PATHS } from '../utils/routeConstants';
 
 const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8080/api/v1').replace(/\/$/, '') + '/';
 
@@ -23,22 +24,91 @@ axiosClient.interceptors.request.use(
   }
 );
 
-// Response interceptor: handle global errors
+// Flag and queue to handle multiple 401s at once
+let isRefreshing = false;
+let failedQueue: any[] = [];
+
+const processQueue = (error: any, token: string | null = null) => {
+  failedQueue.forEach((prom) => {
+    if (error) {
+      prom.reject(error);
+    } else {
+      prom.resolve(token);
+    }
+  });
+  failedQueue = [];
+};
+
+const handleLogout = () => {
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('refreshToken');
+  localStorage.removeItem('userRole');
+  localStorage.removeItem('userId');
+  window.location.href = ROUTE_PATHS.adminLogin;
+};
+
+// Response interceptor: handle global errors and token refresh
 axiosClient.interceptors.response.use(
   (response) => {
     return response.data;
   },
-  (error) => {
-    if (error.response) {
-      // Handle 401 Unauthorized - maybe token expired
-      if (error.response.status === 401) {
-        localStorage.removeItem('accessToken');
-        localStorage.removeItem('refreshToken');
-        localStorage.removeItem('userRole');
-        localStorage.removeItem('userId');
-        window.location.href = '/admin/login';
+  async (error) => {
+    const originalRequest = error.config;
+
+    // Check if error is 401 and not a login request
+    if (error.response?.status === 401 && !originalRequest.url?.includes('auth/login')) {
+      
+      // If we already tried to refresh and failed, logout
+      if (originalRequest._retry) {
+        handleLogout();
+        return Promise.reject(error);
+      }
+
+      if (isRefreshing) {
+        return new Promise(function(resolve, reject) {
+          failedQueue.push({ resolve, reject });
+        })
+          .then(token => {
+            originalRequest.headers['Authorization'] = 'Bearer ' + token;
+            return axiosClient(originalRequest);
+          })
+          .catch(err => {
+            return Promise.reject(err);
+          });
+      }
+
+      originalRequest._retry = true;
+      isRefreshing = true;
+
+      const refreshToken = localStorage.getItem('refreshToken');
+      
+      if (!refreshToken) {
+        handleLogout();
+        return Promise.reject(error);
+      }
+
+      try {
+        // Use standard axios to avoid infinite loops with interceptor
+        const response = await axios.post(`${API_URL}auth/refresh`, { refreshToken });
+        const { accessToken, refreshToken: newRefreshToken } = response.data;
+
+        localStorage.setItem('accessToken', accessToken);
+        localStorage.setItem('refreshToken', newRefreshToken);
+
+        axiosClient.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
+        processQueue(null, accessToken);
+        
+        originalRequest.headers['Authorization'] = 'Bearer ' + accessToken;
+        return axiosClient(originalRequest);
+      } catch (refreshError) {
+        processQueue(refreshError, null);
+        handleLogout();
+        return Promise.reject(refreshError);
+      } finally {
+        isRefreshing = false;
       }
     }
+    
     return Promise.reject(error);
   }
 );
