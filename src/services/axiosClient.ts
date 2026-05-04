@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { ROUTE_PATHS } from '../utils/routeConstants';
+import { STORAGE_KEYS } from './authService';
 
 const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8080/api/v1').replace(/\/$/, '') + '/';
 
@@ -13,7 +14,7 @@ const axiosClient = axios.create({
 // Request interceptor: attach token to every request
 axiosClient.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('accessToken');
+    const token = localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -40,10 +41,10 @@ const processQueue = (error: any, token: string | null = null) => {
 };
 
 const handleLogout = () => {
-  localStorage.removeItem('accessToken');
-  localStorage.removeItem('refreshToken');
-  localStorage.removeItem('userRole');
-  localStorage.removeItem('userId');
+  localStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
+  localStorage.removeItem(STORAGE_KEYS.REFRESH_TOKEN);
+  localStorage.removeItem(STORAGE_KEYS.USER_ROLE);
+  localStorage.removeItem(STORAGE_KEYS.USER_ID);
   window.location.href = ROUTE_PATHS.adminLogin;
 };
 
@@ -80,7 +81,7 @@ axiosClient.interceptors.response.use(
       originalRequest._retry = true;
       isRefreshing = true;
 
-      const refreshToken = localStorage.getItem('refreshToken');
+      const refreshToken = localStorage.getItem(STORAGE_KEYS.REFRESH_TOKEN);
       
       if (!refreshToken) {
         handleLogout();
@@ -92,8 +93,8 @@ axiosClient.interceptors.response.use(
         const response = await axios.post(`${API_URL}auth/refresh`, { refreshToken });
         const { accessToken, refreshToken: newRefreshToken } = response.data;
 
-        localStorage.setItem('accessToken', accessToken);
-        localStorage.setItem('refreshToken', newRefreshToken);
+        localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, accessToken);
+        localStorage.setItem(STORAGE_KEYS.REFRESH_TOKEN, newRefreshToken);
 
         axiosClient.defaults.headers.common['Authorization'] = 'Bearer ' + accessToken;
         processQueue(null, accessToken);

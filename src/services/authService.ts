@@ -1,7 +1,7 @@
 import axiosClient from './axiosClient';
 import { LoginRequest, LoginResponse, ApiResponse } from '../types/api';
 
-const STORAGE_KEYS = {
+export const STORAGE_KEYS = {
   ACCESS_TOKEN: 'accessToken',
   REFRESH_TOKEN: 'refreshToken',
   USER_ROLE: 'userRole',
