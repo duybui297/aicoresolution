@@ -51,7 +51,17 @@ const handleLogout = () => {
 // Response interceptor: handle global errors and token refresh
 axiosClient.interceptors.response.use(
   (response) => {
-    return response.data;
+    // Nếu backend trả về cấu trúc ApiResponse chuẩn { success, data, message }
+    // thì ta unwrap lớp .data ra để các service dùng trực tiếp payload
+    const res = response.data;
+    if (res && typeof res === 'object' && 'success' in res && 'data' in res) {
+      if (res.success) {
+        return res.data;
+      }
+      // Nếu success: false thì coi như lỗi (tùy thiết kế backend, có thể reject ở đây)
+      return Promise.reject(res);
+    }
+    return res;
   },
   async (error) => {
     const originalRequest = error.config;
