@@ -5,7 +5,7 @@ import { ArticleTable } from '../../components/admin/ArticleTable';
 import Pagination from '../../components/admin/Pagination';
 import FilterModal from '../../components/admin/FilterModal';
 import postService from '../../services/postService';
-import { Article } from '../../data/mockArticles';
+import { Article } from '../../types/article';
 import { ROUTE_PATHS } from '../../utils/routeConstants';
 
 const Dashboard = () => {
@@ -36,7 +36,8 @@ const Dashboard = () => {
             day: 'numeric',
             month: 'short',
             year: 'numeric'
-          })
+          }),
+          rawDate: p.createdAt
         }));
 
         setArticles(mappedArticles);

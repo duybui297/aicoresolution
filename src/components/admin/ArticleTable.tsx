@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MoreHorizontal, ArrowDown, Check, Minus, FileQuestion } from 'lucide-react';
-import { Article, ArticleStatus } from '../../data/mockArticles';
+import { Article, ArticleStatus } from '../../types/article';
 import { ROUTE_PATHS } from '../../utils/routeConstants';
 
 const CustomCheckbox = ({ 
@@ -70,10 +70,52 @@ export const ArticleTable = ({ articles = [] }: { articles?: Article[] }) => {
   const navigate = useNavigate();
   const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
+  const [sortConfig, setSortConfig] = useState<{ key: keyof Article; direction: 'asc' | 'desc' } | null>(null);
 
   const toggleDropdown = (id: number) => {
     setOpenDropdownId(openDropdownId === id ? null : id);
   };
+
+  const requestSort = (key: keyof Article) => {
+    let direction: 'asc' | 'desc' = 'asc';
+    if (sortConfig && sortConfig.key === key && sortConfig.direction === 'asc') {
+      direction = 'desc';
+    }
+    setSortConfig({ key, direction });
+  };
+
+  const sortedArticles = React.useMemo(() => {
+    let sortableItems = [...articles];
+    if (sortConfig !== null) {
+      const statusPriority: Record<string, number> = {
+        'Draft': 1,
+        'Scheduled': 2,
+        'Published': 3
+      };
+
+      sortableItems.sort((a, b) => {
+        let aValue: any = a[sortConfig.key];
+        let bValue: any = b[sortConfig.key];
+
+        if (sortConfig.key === 'dateCreated' && a.rawDate && b.rawDate) {
+          aValue = new Date(a.rawDate).getTime();
+          bValue = new Date(b.rawDate).getTime();
+        } else if (sortConfig.key === 'status') {
+          aValue = statusPriority[a.status] || 0;
+          bValue = statusPriority[b.status] || 0;
+        }
+
+        if (aValue < bValue) {
+          return sortConfig.direction === 'asc' ? -1 : 1;
+        }
+        if (aValue > bValue) {
+          return sortConfig.direction === 'asc' ? 1 : -1;
+        }
+        return 0;
+      });
+    }
+    return sortableItems;
+  }, [articles, sortConfig]);
 
   if (articles.length === 0) {
     return (
@@ -122,25 +164,37 @@ export const ArticleTable = ({ articles = [] }: { articles?: Article[] }) => {
                 onClick={handleSelectAll}
               />
             </th>
-            <th className="h-[2.5rem] px-4 text-admin-base font-admin-semibold text-admin-primary-100 whitespace-nowrap align-middle">
+            <th 
+              className="h-[2.5rem] px-4 text-admin-base font-admin-semibold text-admin-primary-100 whitespace-nowrap align-middle cursor-pointer select-none group"
+              onClick={() => requestSort('publisher')}
+            >
               <div className="flex items-center gap-2">
-                Publisher <ArrowDown className="w-4 h-4 text-admin-netral-60" />
+                Publisher 
+                <ArrowDown className={`w-4 h-4 text-admin-netral-60 transition-transform ${sortConfig?.key === 'publisher' ? (sortConfig.direction === 'desc' ? 'rotate-180 text-admin-primary-100' : 'text-admin-primary-100') : 'group-hover:text-admin-netral-80'}`} />
               </div>
             </th>
             <th className="h-[2.5rem] px-4 text-admin-base font-admin-semibold text-admin-primary-100 align-middle">
               Article headline
             </th>
-            <th className="h-[2.5rem] px-4 text-admin-base font-admin-semibold text-admin-primary-100 whitespace-nowrap align-middle">
+            <th 
+              className="h-[2.5rem] px-4 text-admin-base font-admin-semibold text-admin-primary-100 whitespace-nowrap align-middle cursor-pointer select-none group"
+              onClick={() => requestSort('status')}
+            >
               <div className="flex items-center gap-2">
-                Status <ArrowDown className="w-4 h-4 text-admin-netral-60" />
+                Status 
+                <ArrowDown className={`w-4 h-4 text-admin-netral-60 transition-transform ${sortConfig?.key === 'status' ? (sortConfig.direction === 'desc' ? 'rotate-180 text-admin-primary-100' : 'text-admin-primary-100') : 'group-hover:text-admin-netral-80'}`} />
               </div>
             </th>
             <th className="h-[2.5rem] px-4 text-admin-base font-admin-semibold text-admin-primary-100 whitespace-nowrap align-middle">
               Role
             </th>
-            <th className="h-[2.5rem] px-4 text-admin-base font-admin-semibold text-admin-primary-100 whitespace-nowrap align-middle">
+            <th 
+              className="h-[2.5rem] px-4 text-admin-base font-admin-semibold text-admin-primary-100 whitespace-nowrap align-middle cursor-pointer select-none group"
+              onClick={() => requestSort('dateCreated')}
+            >
               <div className="flex items-center gap-2">
-                Date created <ArrowDown className="w-4 h-4 text-admin-netral-60" />
+                Date created 
+                <ArrowDown className={`w-4 h-4 text-admin-netral-60 transition-transform ${sortConfig?.key === 'dateCreated' ? (sortConfig.direction === 'desc' ? 'rotate-180 text-admin-primary-100' : 'text-admin-primary-100') : 'group-hover:text-admin-netral-80'}`} />
               </div>
             </th>
             <th className="h-[2.5rem] pl-4 text-admin-base font-admin-semibold text-admin-primary-100 whitespace-nowrap text-right align-middle">
@@ -149,7 +203,7 @@ export const ArticleTable = ({ articles = [] }: { articles?: Article[] }) => {
           </tr>
         </thead>
         <tbody className="text-admin-xs font-admin-regular text-admin-netral-100">
-          {articles.map((article) => (
+          {sortedArticles.map((article) => (
             <tr key={article.id} className="border-b border-admin-netral-20 last:border-none hover:bg-admin-netral-20/50 transition-colors h-[3.625rem]">
               <td className="h-[3.625rem] pr-4 align-middle">
                 <CustomCheckbox 
