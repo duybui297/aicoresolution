@@ -1,6 +1,13 @@
 import axiosClient from './axiosClient';
 import { LoginRequest, LoginResponse, ApiResponse } from '../types/api';
 
+const STORAGE_KEYS = {
+  ACCESS_TOKEN: 'accessToken',
+  REFRESH_TOKEN: 'refreshToken',
+  USER_ROLE: 'userRole',
+  USER_ID: 'userId',
+} as const;
+
 const authService = {
   login: async (credentials: LoginRequest): Promise<LoginResponse> => {
     try {
@@ -8,16 +15,16 @@ const authService = {
       
       // Save tokens to localStorage
       if (response.accessToken) {
-        localStorage.setItem('accessToken', response.accessToken);
+        localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, response.accessToken);
       }
       if (response.refreshToken) {
-        localStorage.setItem('refreshToken', response.refreshToken);
+        localStorage.setItem(STORAGE_KEYS.REFRESH_TOKEN, response.refreshToken);
       }
       if (response.role) {
-        localStorage.setItem('userRole', response.role);
+        localStorage.setItem(STORAGE_KEYS.USER_ROLE, response.role);
       }
       if (response.userId) {
-        localStorage.setItem('userId', response.userId.toString());
+        localStorage.setItem(STORAGE_KEYS.USER_ID, response.userId.toString());
       }
       
       return response;
@@ -29,7 +36,7 @@ const authService = {
   },
 
   logout: async (): Promise<ApiResponse<any>> => {
-    const refreshToken = localStorage.getItem('refreshToken');
+    const refreshToken = localStorage.getItem(STORAGE_KEYS.REFRESH_TOKEN);
     let response: any = null;
     
     if (refreshToken) {
@@ -40,24 +47,24 @@ const authService = {
       }
     }
     
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
-    localStorage.removeItem('userRole');
-    localStorage.removeItem('userId');
+    localStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
+    localStorage.removeItem(STORAGE_KEYS.REFRESH_TOKEN);
+    localStorage.removeItem(STORAGE_KEYS.USER_ROLE);
+    localStorage.removeItem(STORAGE_KEYS.USER_ID);
 
     return response || { success: true, message: 'Logged out' };
   },
 
   getCurrentToken: () => {
-    return localStorage.getItem('accessToken');
+    return localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
   },
 
   isAuthenticated: () => {
-    return !!localStorage.getItem('accessToken');
+    return !!localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
   },
 
   getUserRole: () => {
-    return localStorage.getItem('userRole');
+    return localStorage.getItem(STORAGE_KEYS.USER_ROLE);
   }
 };
 
