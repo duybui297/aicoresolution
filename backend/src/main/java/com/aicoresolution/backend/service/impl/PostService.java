@@ -313,12 +313,22 @@ public class PostService implements IPostService {
             post.setAllowComments(request.getAllowComments());
         }
 
+        // Cập nhật ngày đăng và ngày hẹn giờ từ request
+        if (request.getPublishedAt() != null) {
+            post.setPublishedAt(request.getPublishedAt());
+        }
+        if (request.getScheduledAt() != null) {
+            post.setScheduledAt(request.getScheduledAt());
+        }
+
+        // Logic tự động nếu không gửi ngày cụ thể
         if (request.getStatus() == PostStatus.PUBLISHED && post.getPublishedAt() == null) {
             post.setPublishedAt(LocalDateTime.now());
         }
 
         if (request.getStatus() == PostStatus.DRAFT) {
             post.setPublishedAt(null);
+            post.setScheduledAt(null);
         }
     }
 
