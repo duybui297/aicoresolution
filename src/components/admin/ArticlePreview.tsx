@@ -1,10 +1,13 @@
 import React from 'react';
 import { ArrowLeft, Image as ImageIcon, ExternalLink } from 'lucide-react';
+import { getFullImageUrl } from '../../utils/imageUtils';
 
 interface ArticlePreviewProps {
   headline: string;
+  excerpt: string; // Thêm prop excerpt
   pubDate: string;
   uploadStatus: 'idle' | 'uploaded';
+  imageUrl?: string;
   imageCaption: string;
   content: string;
   mode: 'side' | 'expanded';
@@ -16,8 +19,10 @@ interface ArticlePreviewProps {
 
 const ArticlePreview: React.FC<ArticlePreviewProps> = ({
   headline,
+  excerpt, // Lấy excerpt từ props
   pubDate,
   uploadStatus,
+  imageUrl,
   imageCaption,
   content,
   mode,
@@ -64,19 +69,19 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({
 
           <div className="flex flex-col gap-4">
             <div className="w-full aspect-[1000/458] bg-admin-netral-10 rounded-2xl overflow-hidden border border-admin-netral-20">
-              {uploadStatus === 'uploaded' ? (
-                <div className="w-full h-full bg-admin-netral-20 flex items-center justify-center">
-                  <ImageIcon className="w-16 h-16 text-admin-netral-30" />
-                </div>
+              {uploadStatus === 'uploaded' && imageUrl ? (
+                <img src={getFullImageUrl(imageUrl)} alt="Preview" className="w-full h-full object-cover" />
               ) : (
-                <div className="w-full h-full bg-admin-netral-10"></div>
+                <div className="w-full h-full bg-admin-netral-10 flex items-center justify-center">
+                   <ImageIcon className="w-16 h-16 text-admin-netral-20" />
+                </div>
               )}
             </div>
             <p className="text-admin-sm font-admin-regular text-admin-netral-80 text-center italic">{imageCaption}</p>
           </div>
 
           <div className="flex flex-col gap-6 max-w-[800px] mx-auto text-admin-base font-admin-regular text-admin-netral-90 leading-relaxed">
-            {headline && <h2 className="text-admin-lg font-admin-semibold text-admin-netral-100 mt-4">{headline}</h2>}
+            {excerpt && <p className="text-admin-lg font-admin-medium text-admin-netral-80 mt-4 italic">{excerpt}</p>}
             <div className="space-y-4">{content.split('\n').map((p, i) => <p key={i}>{p}</p>)}</div>
           </div>
         </div>
@@ -102,18 +107,18 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({
         
         <div className="flex flex-col gap-2">
           <div className="w-full h-[261px] bg-admin-netral-20 rounded-lg flex items-center justify-center overflow-hidden">
-            {uploadStatus === 'uploaded' ? (
-              <div className="w-full h-full bg-admin-netral-30 flex items-center justify-center">
-                <ImageIcon className="w-12 h-12 text-admin-netral-40" />
-              </div>
+            {uploadStatus === 'uploaded' && imageUrl ? (
+              <img src={getFullImageUrl(imageUrl)} alt="Preview" className="w-full h-full object-cover" />
             ) : (
-              <div className="w-full h-full bg-admin-netral-20"></div>
+              <div className="w-full h-full bg-admin-netral-20 flex items-center justify-center">
+                <ImageIcon className="w-12 h-12 text-admin-netral-30" />
+              </div>
             )}
           </div>
           <p className="text-admin-xs font-admin-regular text-admin-netral-80 italic">{imageCaption}</p>
         </div>
         
-        {headline && <h4 className="text-admin-lg font-admin-semibold text-admin-netral-100 mt-2">{headline}</h4>}
+        {excerpt && <p className="text-admin-base font-admin-medium text-admin-netral-80 mt-2 italic">{excerpt}</p>}
         
         <div className="text-admin-base font-admin-regular text-admin-netral-100 leading-relaxed space-y-4">
           {content.split('\n').map((p, i) => <p key={i}>{p}</p>)}
