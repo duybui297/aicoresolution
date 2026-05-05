@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import LandingLayout from './layouts/LandingLayout';
 import AdminLayout from './layouts/AdminLayout';
 import Home from './pages/landing/Home';
@@ -34,7 +34,8 @@ function App() {
       <Route path={ROUTE_PATHS.adminLogin} element={<LoginAdmin />} />
       <Route path={ROUTE_PATHS.admin} element={<ProtectedRoute />}>
         <Route element={<AdminLayout />}>
-          <Route index element={<Dashboard />} />
+          <Route index element={<Navigate to={ROUTE_PATHS.adminArticles} replace />} />
+          <Route path={ROUTE_PATHS.adminArticles} element={<Dashboard />} />
           <Route path={ROUTE_PATHS.adminCreateArticle} element={<CreateArticle />} />
           <Route path={ROUTE_PATHS.adminEditArticle} element={<EditArticle />} />
         </Route>

@@ -32,6 +32,7 @@ export const ROUTE_PATHS = {
         en: '/products'
     },
     admin: '/admin',
+    adminArticles: '/admin/articles',
     adminLogin: '/admin/login',
     adminCreateArticle: '/admin/articles/create',
     adminEditArticle: '/admin/articles/edit/:id',
