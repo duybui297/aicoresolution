@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, Bell, SlidersHorizontal, Loader2 } from 'lucide-react';
+import { createPortal } from 'react-dom';
 import { ArticleTable } from '../../components/admin/ArticleTable';
 import Pagination from '../../components/admin/Pagination';
 import FilterModal from '../../components/admin/FilterModal';
+import ArticlePreview from '../../components/admin/ArticlePreview';
+import Toast from '../../components/admin/Toast';
 import postService from '../../services/postService';
 import { Article } from '../../types/article';
+import { PostResponse } from '../../types/api';
 import { ROUTE_PATHS } from '../../utils/routeConstants';
 
 const Dashboard = () => {
@@ -17,7 +21,31 @@ const Dashboard = () => {
   const [filterStatus, setFilterStatus] = useState('All');
   const [sortConfig, setSortConfig] = useState<{ key: keyof Article; direction: 'asc' | 'desc' } | null>({ key: 'dateCreated', direction: 'desc' });
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
+  const [previewArticle, setPreviewArticle] = useState<PostResponse | null>(null);
+  const [isPreviewLoading, setIsPreviewLoading] = useState(false);
+  const [toast, setToast] = useState<{ show: boolean; message: string; type: 'success' | 'error' }>({
+    show: false,
+    message: '',
+    type: 'success'
+  });
   const itemsPerPage = 10;
+
+  const showToast = (message: string, type: 'success' | 'error') => {
+    setToast({ show: true, message, type });
+  };
+
+  const handleViewArticle = async (id: number) => {
+    setIsPreviewLoading(true);
+    try {
+      const fullArticle = await postService.getPostById(id);
+      setPreviewArticle(fullArticle);
+    } catch (error: any) {
+      console.error('Failed to fetch article details for preview:', error);
+      showToast(error.message || 'Failed to fetch article details', 'error');
+    } finally {
+      setIsPreviewLoading(false);
+    }
+  };
 
   useEffect(() => {
     const fetchArticles = async () => {
@@ -63,8 +91,9 @@ const Dashboard = () => {
 
         setArticles(mappedArticles);
         setTotalPages(response.totalPages);
-      } catch (error) {
+      } catch (error: any) {
         console.error('Failed to fetch articles:', error);
+        showToast(error.message || 'Failed to fetch articles', 'error');
       } finally {
         setLoading(false);
       }
@@ -145,6 +174,7 @@ const Dashboard = () => {
           articles={articles} 
           sortConfig={sortConfig}
           onSort={handleSortChange}
+          onView={handleViewArticle}
         />
       )}
 
@@ -155,10 +185,45 @@ const Dashboard = () => {
         onPageChange={setCurrentPage}
       />
 
+      {/* Quick Preview Modal */}
+      {previewArticle && createPortal(
+        <ArticlePreview
+          headline={previewArticle.title}
+          excerpt={previewArticle.excerpt}
+          pubDate={new Date(previewArticle.createdAt).toLocaleDateString('en-GB')}
+          uploadStatus="uploaded"
+          imageUrl={previewArticle.thumbnailUrl}
+          imageCaption={previewArticle.thumbnailAlt || ''}
+          content={previewArticle.content}
+          mode="expanded"
+          type="edit"
+          onClose={() => setPreviewArticle(null)}
+          onNavigateBack={() => setPreviewArticle(null)}
+        />,
+        document.body
+      )}
+
+      {/* Global Loading for Preview Fetch */}
+      {isPreviewLoading && (
+        <div className="fixed inset-0 bg-black/20 z-[300] flex items-center justify-center backdrop-blur-[2px]">
+          <div className="bg-white p-6 rounded-2xl shadow-xl flex flex-col items-center gap-3">
+            <Loader2 className="w-8 h-8 text-admin-primary-100 animate-spin" />
+            <p className="text-admin-sm font-admin-medium text-admin-netral-100">Fetching details...</p>
+          </div>
+        </div>
+      )}
+
       {/* Filter Modal */}
       <FilterModal
         isOpen={isFilterModalOpen}
         onClose={() => setIsFilterModalOpen(false)}
+      />
+      {/* Toast Notification */}
+      <Toast 
+        show={toast.show}
+        message={toast.message}
+        type={toast.type}
+        onClose={() => setToast(prev => ({ ...prev, show: false }))}
       />
     </div>
   );
