@@ -136,8 +136,7 @@ const SharedCalendar: React.FC<SharedCalendarProps> = ({ selectedDate, onSelectD
               disabled={disabled}
               onClick={() => onSelectDate(new Date(currentYear, currentMonth, day))}
               className={`text-admin-base font-admin-semibold py-2 transition-all flex items-center justify-center rounded-lg relative
-                ${active ? 'bg-admin-primary-100 text-admin-secondary-100' : ''}
-                ${highlight && !active ? 'bg-admin-secondary-100 text-admin-primary-100' : ''}
+                ${active ? 'bg-admin-secondary-100 text-admin-primary-100' : (highlight ? 'bg-admin-primary-100 text-admin-secondary-100' : '')}
                 ${!active && !highlight && !disabled ? 'text-admin-netral-100 hover:bg-admin-netral-20' : ''}
                 ${disabled ? 'text-admin-netral-30 cursor-not-allowed opacity-50' : ''}
               `}
