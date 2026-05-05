@@ -66,56 +66,25 @@ const StatusBadge = ({ status }: { status: ArticleStatus }) => {
   );
 };
 
-export const ArticleTable = ({ articles = [] }: { articles?: Article[] }) => {
+export const ArticleTable = ({ 
+  articles = [], 
+  sortConfig, 
+  onSort 
+}: { 
+  articles?: Article[];
+  sortConfig: { key: keyof Article; direction: 'asc' | 'desc' } | null;
+  onSort: (config: { key: keyof Article; direction: 'asc' | 'desc' } | null) => void;
+}) => {
   const navigate = useNavigate();
-  const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
-  const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
-  const [sortConfig, setSortConfig] = useState<{ key: keyof Article; direction: 'asc' | 'desc' } | null>(null);
-
-  const toggleDropdown = (id: number) => {
-    setOpenDropdownId(openDropdownId === id ? null : id);
-  };
-
   const requestSort = (key: keyof Article) => {
     let direction: 'asc' | 'desc' = 'asc';
     if (sortConfig && sortConfig.key === key && sortConfig.direction === 'asc') {
       direction = 'desc';
     }
-    setSortConfig({ key, direction });
+    onSort({ key, direction });
   };
 
-  const sortedArticles = React.useMemo(() => {
-    let sortableItems = [...articles];
-    if (sortConfig !== null) {
-      const statusPriority: Record<string, number> = {
-        'Draft': 1,
-        'Scheduled': 2,
-        'Published': 3
-      };
-
-      sortableItems.sort((a, b) => {
-        let aValue: any = a[sortConfig.key];
-        let bValue: any = b[sortConfig.key];
-
-        if (sortConfig.key === 'dateCreated' && a.rawDate && b.rawDate) {
-          aValue = new Date(a.rawDate).getTime();
-          bValue = new Date(b.rawDate).getTime();
-        } else if (sortConfig.key === 'status') {
-          aValue = statusPriority[a.status] || 0;
-          bValue = statusPriority[b.status] || 0;
-        }
-
-        if (aValue < bValue) {
-          return sortConfig.direction === 'asc' ? -1 : 1;
-        }
-        if (aValue > bValue) {
-          return sortConfig.direction === 'asc' ? 1 : -1;
-        }
-        return 0;
-      });
-    }
-    return sortableItems;
-  }, [articles, sortConfig]);
+  const sortedArticles = articles; // Now sorted on server-side
 
   if (articles.length === 0) {
     return (
@@ -130,6 +99,13 @@ export const ArticleTable = ({ articles = [] }: { articles?: Article[] }) => {
       </div>
     );
   }
+
+  const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
+  const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
+
+  const toggleDropdown = (id: number) => {
+    setOpenDropdownId(openDropdownId === id ? null : id);
+  };
 
   const isAllSelected = articles.length > 0 && selectedIds.size === articles.length;
   const isPartialSelected = selectedIds.size > 0 && selectedIds.size < articles.length;

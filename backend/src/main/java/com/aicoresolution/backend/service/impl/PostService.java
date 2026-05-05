@@ -133,6 +133,7 @@ public class PostService implements IPostService {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Post not found"));
         post.setDeletedAt(LocalDateTime.now());
+        post.setStatus(PostStatus.DELETED);
         postRepository.save(post);
     }
 
@@ -143,14 +144,22 @@ public class PostService implements IPostService {
         logger.info("Deleting multiple posts: {} items - TraceID: {}", ids.size(), traceId);
         java.util.List<Post> posts = postRepository.findAllById(ids);
         LocalDateTime now = LocalDateTime.now();
-        posts.forEach(post -> post.setDeletedAt(now));
+        posts.forEach(post -> {
+            post.setDeletedAt(now);
+            post.setStatus(PostStatus.DELETED);
+        });
         postRepository.saveAll(posts);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<PostResponse> listAdmin(int page, int size, String status) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "updatedAt"));
+    public Page<PostResponse> listAdmin(Pageable pageable, String status) {
+        // Use default sort if none provided
+        if (pageable.getSort().isUnsorted()) {
+            pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), 
+                    Sort.by(Sort.Direction.DESC, "updatedAt"));
+        }
+        
         Page<Post> postPage;
         
         if (status != null && !status.equalsIgnoreCase("All")) {

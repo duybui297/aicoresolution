@@ -15,6 +15,7 @@ const Dashboard = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [filterStatus, setFilterStatus] = useState('All');
+  const [sortConfig, setSortConfig] = useState<{ key: keyof Article; direction: 'asc' | 'desc' } | null>({ key: 'dateCreated', direction: 'desc' });
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const itemsPerPage = 10;
 
@@ -22,14 +23,34 @@ const Dashboard = () => {
     const fetchArticles = async () => {
       setLoading(true);
       try {
-        const response = await postService.getPosts(currentPage - 1, itemsPerPage, filterStatus);
+        let sortParam = '';
+        if (sortConfig) {
+          const mapping: Record<string, string> = {
+            publisher: 'authorId',
+            headline: 'title',
+            status: 'status',
+            dateCreated: 'createdAt'
+          };
+          const backendKey = mapping[sortConfig.key as string] || sortConfig.key;
+          sortParam = `${backendKey},${sortConfig.direction}`;
+        }
+
+        const response = await postService.getPosts(
+          currentPage - 1, 
+          itemsPerPage, 
+          filterStatus === 'All' ? undefined : filterStatus.toUpperCase(),
+          sortParam
+        );
         
         // Map API response to UI Article type
         const mappedArticles: Article[] = response.content.map(p => ({
           id: p.id,
           publisher: p.authorName || 'Super Admin',
           headline: p.title,
-          status: p.status === 'PUBLISHED' ? 'Published' : p.status === 'DRAFT' ? 'Draft' : 'Scheduled',
+          status: p.status === 'PUBLISHED' ? 'Published' : 
+                  p.status === 'DRAFT' ? 'Draft' : 
+                  p.status === 'DELETED' ? 'Deleted' : 
+                  p.status === 'SCHEDULED' ? 'Scheduled' : 'Unknown',
           role: 'Admin',
           dateCreated: new Date(p.createdAt).toLocaleDateString('en-GB', {
             weekday: 'long',
@@ -50,10 +71,15 @@ const Dashboard = () => {
     };
 
     fetchArticles();
-  }, [currentPage, filterStatus]);
+  }, [currentPage, filterStatus, sortConfig]);
 
   const handleFilterChange = (status: string) => {
     setFilterStatus(status);
+    setCurrentPage(1);
+  };
+
+  const handleSortChange = (config: { key: keyof Article; direction: 'asc' | 'desc' } | null) => {
+    setSortConfig(config);
     setCurrentPage(1);
   };
 
@@ -115,7 +141,11 @@ const Dashboard = () => {
           </div>
         </div>
       ) : (
-        <ArticleTable articles={articles} />
+        <ArticleTable 
+          articles={articles} 
+          sortConfig={sortConfig}
+          onSort={handleSortChange}
+        />
       )}
 
       {/* Pagination */}

@@ -10,9 +10,9 @@ interface PageResponse<T> {
 }
 
 const postService = {
-  getPosts: async (page = 0, size = 10, status?: string): Promise<PageResponse<PostResponse>> => {
+  getPosts: async (page = 0, size = 10, status?: string, sort?: string): Promise<PageResponse<PostResponse>> => {
     return axiosClient.get('admin/posts', {
-      params: { page, size, status }
+      params: { page, size, status, sort }
     });
   },
 

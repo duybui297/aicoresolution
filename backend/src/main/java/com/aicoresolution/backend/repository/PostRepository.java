@@ -36,12 +36,12 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             @Param("toDate") LocalDateTime toDate,
             Pageable pageable);
 
-    @Query("SELECT p FROM Post p WHERE p.status = :status AND p.deletedAt IS NULL ORDER BY p.publishedAt DESC")
+    @Query("SELECT p FROM Post p WHERE p.status = :status AND p.deletedAt IS NULL")
     Page<Post> findPublishedNotDeleted(@Param("status") PostStatus status, Pageable pageable);
 
-    @Query("SELECT p FROM Post p WHERE p.deletedAt IS NULL ORDER BY p.updatedAt DESC")
+    @Query("SELECT p FROM Post p WHERE p.deletedAt IS NULL")
     Page<Post> findAllNotDeleted(Pageable pageable);
 
-    @Query("SELECT p FROM Post p WHERE p.status = :status AND p.deletedAt IS NULL ORDER BY p.updatedAt DESC")
+    @Query("SELECT p FROM Post p WHERE p.status = :status AND p.deletedAt IS NULL")
     Page<Post> findByStatusAndDeletedAtIsNull(@Param("status") PostStatus status, Pageable pageable);
 }
