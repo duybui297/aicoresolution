@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { ROUTE_PATHS } from '../utils/routeConstants';
 import { STORAGE_KEYS } from './authService';
+import { clearAuthStorage } from '../utils/authUtils';
 
 const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8080/api/v1').replace(/\/$/, '') + '/';
 
@@ -41,10 +42,7 @@ const processQueue = (error: any, token: string | null = null) => {
 };
 
 const handleLogout = () => {
-  localStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
-  localStorage.removeItem(STORAGE_KEYS.REFRESH_TOKEN);
-  localStorage.removeItem(STORAGE_KEYS.USER_ROLE);
-  localStorage.removeItem(STORAGE_KEYS.USER_ID);
+  clearAuthStorage();
   window.location.href = ROUTE_PATHS.adminLogin;
 };
 
