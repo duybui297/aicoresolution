@@ -35,13 +35,13 @@ const AdminSidebar = () => {
 
         <div className="flex flex-col gap-2">
           {[
-            { to: ROUTE_PATHS.admin, icon: FileText, label: 'Articles' },
+            { to: ROUTE_PATHS.adminArticles, icon: FileText, label: 'Articles' },
             { to: ROUTE_PATHS.adminScheduled, icon: Clock, label: 'Scheduled' },
             { to: ROUTE_PATHS.adminContributors, icon: Users, label: 'Contributors' },
             { to: ROUTE_PATHS.adminTrash, icon: Trash2, label: 'Trash' },
             { to: ROUTE_PATHS.adminSettings, icon: Settings, label: 'Settings' },
           ].map((item) => {
-            const active = location.pathname === item.to;
+            const active = location.pathname.startsWith(item.to);
             const Icon = item.icon;
             return (
               <Link 

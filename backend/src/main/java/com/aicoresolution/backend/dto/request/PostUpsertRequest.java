@@ -10,6 +10,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import java.util.Map;
 import java.util.List;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -61,6 +62,8 @@ public class PostUpsertRequest {
     private Integer commentCount;
     private Boolean featured;
     private Boolean allowComments;
+    private LocalDateTime publishedAt;
+    private LocalDateTime scheduledAt;
 
     private List<Long> authorIds;
     private List<Long> categoryIds;

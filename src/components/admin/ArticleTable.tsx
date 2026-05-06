@@ -57,6 +57,18 @@ const StatusBadge = ({ status }: { status: ArticleStatus }) => {
       bg = 'bg-admin-info-10';
       text = 'text-admin-info-100';
       break;
+    case 'Deleted':
+      bg = 'bg-admin-error-10';
+      text = 'text-admin-error-100';
+      break;
+    case 'Archived':
+      bg = 'bg-admin-netral-20';
+      text = 'text-admin-netral-60';
+      break;
+    default:
+      bg = 'bg-admin-netral-10';
+      text = 'text-admin-netral-50';
+      break;
   }
 
   return (
@@ -69,11 +81,13 @@ const StatusBadge = ({ status }: { status: ArticleStatus }) => {
 export const ArticleTable = ({ 
   articles = [], 
   sortConfig, 
-  onSort 
+  onSort,
+  onView // Thêm onView prop
 }: { 
   articles?: Article[];
   sortConfig: { key: keyof Article; direction: 'asc' | 'desc' } | null;
   onSort: (config: { key: keyof Article; direction: 'asc' | 'desc' } | null) => void;
+  onView?: (id: number) => void; // Callback nhận ID bài viết
 }) => {
   const navigate = useNavigate();
   const requestSort = (key: keyof Article) => {
@@ -205,14 +219,35 @@ export const ArticleTable = ({
                 {openDropdownId === article.id && (
                   <div className="absolute right-0 top-12 w-[11.25rem] p-2 bg-admin-netral-10 rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] z-10 border border-admin-netral-20 flex flex-col">
                     <button 
-                      onClick={() => navigate(ROUTE_PATHS.adminEditArticle.replace(':id', article.id.toString()))}
+                      onClick={() => {
+                        navigate(ROUTE_PATHS.adminEditArticle.replace(':id', article.id.toString()));
+                        setOpenDropdownId(null);
+                      }}
                       className="w-full text-left px-3 py-2 rounded-lg hover:bg-admin-netral-20 transition-colors text-admin-sm font-admin-regular text-admin-netral-100"
                     >
                       Edit
                     </button>
-                    <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-admin-netral-20 transition-colors text-admin-sm font-admin-regular text-admin-netral-100">Delete</button>
-                    <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-admin-netral-20 transition-colors text-admin-sm font-admin-regular text-admin-netral-100">View article</button>
-                    <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-admin-netral-20 transition-colors text-admin-sm font-admin-regular text-admin-netral-100">Takedown</button>
+                    <button 
+                      onClick={() => setOpenDropdownId(null)}
+                      className="w-full text-left px-3 py-2 rounded-lg hover:bg-admin-netral-20 transition-colors text-admin-sm font-admin-regular text-admin-netral-100"
+                    >
+                      Delete
+                    </button>
+                    <button 
+                      onClick={() => {
+                        onView?.(article.id);
+                        setOpenDropdownId(null);
+                      }}
+                      className="w-full text-left px-3 py-2 rounded-lg hover:bg-admin-netral-20 transition-colors text-admin-sm font-admin-regular text-admin-netral-100"
+                    >
+                      View article
+                    </button>
+                    <button 
+                      onClick={() => setOpenDropdownId(null)}
+                      className="w-full text-left px-3 py-2 rounded-lg hover:bg-admin-netral-20 transition-colors text-admin-sm font-admin-regular text-admin-netral-100"
+                    >
+                      Takedown
+                    </button>
                   </div>
                 )}
               </td>

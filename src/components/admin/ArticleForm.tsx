@@ -16,9 +16,10 @@ interface ArticleFormProps {
   setContent: (val: string) => void;
   scheduleDateValue: string;
   setScheduleDateValue: (val: string) => void;
-  uploadStatus: 'idle' | 'uploaded';
-  handleUploadMock: () => void;
-  handleRemoveImageMock: () => void;
+  uploadStatus: 'idle' | 'uploading' | 'uploaded' | 'error';
+  imageFile: File | null;
+  onImageSelect: (file: File) => void;
+  onImageRemove: () => void;
   
   // Portal Props
   showPubDate: boolean;
@@ -37,6 +38,8 @@ interface ArticleFormProps {
 }
 
 const ArticleForm: ForwardRefRenderFunction<HTMLDivElement, ArticleFormProps> = (props, ref) => {
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
+
   const {
     headline, setHeadline,
     excerpt, setExcerpt,
@@ -44,12 +47,19 @@ const ArticleForm: ForwardRefRenderFunction<HTMLDivElement, ArticleFormProps> = 
     imageCaption, setImageCaption,
     content, setContent,
     scheduleDateValue, setScheduleDateValue,
-    uploadStatus, handleUploadMock, handleRemoveImageMock,
+    uploadStatus, imageFile, onImageSelect, onImageRemove,
     showPubDate, setShowPubDate, pubDatePos,
     showScheduleDate, setShowScheduleDate, scheduleDatePos,
     pubDateRef, scheduleDateRef,
     errors, validateField
   } = props;
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) onImageSelect(file);
+    // Reset input so the same file can be re-selected after removal
+    e.target.value = '';
+  };
 
   return (
     <div 
@@ -83,7 +93,7 @@ const ArticleForm: ForwardRefRenderFunction<HTMLDivElement, ArticleFormProps> = 
         <label className={`text-admin-base font-admin-regular mb-1 ${errors.excerpt ? 'text-admin-error-100' : 'text-admin-netral-100'}`}>
           Excerpt <span className="text-admin-error-100">*</span>
         </label>
-        <p className="text-admin-xs font-admin-regular text-admin-netral-90 mb-2">Describe your content in less than 150 characters.</p>
+        <p className="text-admin-xs font-admin-regular text-admin-netral-90 mb-2">Describe your content in less than 500 characters.</p>
         <input 
           type="text" 
           placeholder="Description" 
@@ -95,8 +105,8 @@ const ArticleForm: ForwardRefRenderFunction<HTMLDivElement, ArticleFormProps> = 
           }`} 
         />
         {errors.excerpt && <p className="text-admin-xs text-admin-error-100 mt-1 font-admin-medium">{errors.excerpt}</p>}
-        <div className={`text-admin-xs text-right mt-1 ${excerpt.length > 150 ? 'text-admin-error-100 font-admin-semibold' : 'text-admin-netral-50'}`}>
-          {excerpt.length}/150
+        <div className={`text-admin-xs text-right mt-1 ${excerpt.length > 500 ? 'text-admin-error-100 font-admin-semibold' : 'text-admin-netral-50'}`}>
+          {excerpt.length}/500
         </div>
       </div>
 
@@ -128,9 +138,17 @@ const ArticleForm: ForwardRefRenderFunction<HTMLDivElement, ArticleFormProps> = 
         <label className={`text-admin-base font-admin-regular mb-2 ${errors.image ? 'text-admin-error-100' : 'text-admin-netral-100'}`}>
           Image cover <span className="text-admin-error-100">*</span>
         </label>
-        {uploadStatus === 'idle' ? (
-          <div 
-            onClick={handleUploadMock} 
+        {/* Hidden file input */}
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={handleFileChange}
+        />
+        {uploadStatus === 'idle' || uploadStatus === 'error' ? (
+          <div
+            onClick={() => fileInputRef.current?.click()}
             className={`border border-dashed rounded-2xl flex flex-col items-center justify-center py-10 transition-colors cursor-pointer ${
               errors.image ? 'border-admin-error-100 bg-admin-error-10/5 hover:bg-admin-error-10/10' : 'border-admin-netral-30 bg-[#FAFAFA] hover:bg-admin-netral-20'
             }`}
@@ -139,24 +157,57 @@ const ArticleForm: ForwardRefRenderFunction<HTMLDivElement, ArticleFormProps> = 
               <ImageIcon className="w-5 h-5" />
             </div>
             <p className={`text-admin-sm font-admin-semibold mb-1 ${errors.image ? 'text-admin-error-100' : 'text-admin-netral-100'}`}>Upload images</p>
-            <p className="text-admin-xs font-admin-regular text-admin-netral-50">Click to browse (4 MB max).</p>
+            <p className="text-admin-xs font-admin-regular text-admin-netral-50">Click to browse (10 MB max).</p>
+            {uploadStatus === 'error' && (
+              <p className="text-admin-xs text-admin-error-100 mt-2 font-admin-medium">Upload failed. Click to retry.</p>
+            )}
+          </div>
+        ) : uploadStatus === 'uploading' ? (
+          <div className="border border-dashed border-admin-netral-30 rounded-2xl p-6 bg-[#FAFAFA]">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 bg-[#E2E8F0] rounded-lg flex items-center justify-center shrink-0">
+                <ImageIcon className="w-6 h-6 text-admin-netral-50" />
+              </div>
+              <div className="flex-1">
+                <p className="text-admin-xs font-admin-regular text-admin-netral-100 mb-2">{imageFile?.name ?? 'Uploading...'}</p>
+                <div className="flex items-center gap-3">
+                  <div className="flex-1 h-1.5 bg-admin-netral-20 rounded-full overflow-hidden">
+                    <div className="h-full bg-admin-info-100 rounded-full animate-pulse w-3/4" />
+                  </div>
+                  <span className="text-admin-xs text-admin-netral-50">Uploading...</span>
+                </div>
+              </div>
+            </div>
           </div>
         ) : (
           <div className="border border-dashed border-admin-netral-30 rounded-2xl p-6 bg-[#FAFAFA]">
             <div className="flex items-start gap-3 mb-6">
-              <div className="w-12 h-12 bg-[#E2E8F0] rounded-lg flex items-center justify-center overflow-hidden shrink-0 relative"><ImageIcon className="w-6 h-6 text-white absolute" /></div>
+              <div className="w-12 h-12 bg-[#E2E8F0] rounded-lg flex items-center justify-center overflow-hidden shrink-0 relative">
+                {imageFile ? (
+                  <img src={URL.createObjectURL(imageFile)} alt="preview" className="w-full h-full object-cover" />
+                ) : (
+                  <ImageIcon className="w-6 h-6 text-white absolute" />
+                )}
+              </div>
               <div className="flex flex-col flex-1 h-12 py-0.5 justify-between">
                 <div className="flex items-start justify-between">
                   <div>
-                    <p className="text-admin-xs font-admin-regular text-admin-netral-100">images-article.jpg</p>
-                    <p className="text-admin-2xs font-admin-regular text-admin-netral-50">1,2MB</p>
+                    <p className="text-admin-xs font-admin-regular text-admin-netral-100 truncate max-w-[180px]">{imageFile?.name ?? 'image-article.jpg'}</p>
+                    <p className="text-admin-2xs font-admin-regular text-admin-netral-50">
+                      {imageFile ? `${(imageFile.size / 1024 / 1024).toFixed(2)} MB` : ''}
+                    </p>
                   </div>
-                  <button onClick={handleRemoveImageMock} className="text-admin-netral-60 hover:text-admin-netral-100"><X className="w-4 h-4" /></button>
+                  <button onClick={onImageRemove} className="text-admin-netral-60 hover:text-admin-netral-100"><X className="w-4 h-4" /></button>
                 </div>
-                <div className="flex items-center gap-3"><div className="flex-1 h-1.5 bg-admin-netral-20 rounded-full overflow-hidden"><div className="h-full bg-admin-info-100 w-full rounded-full"></div></div><span className="text-admin-xs text-admin-netral-100">100%</span></div>
+                <div className="flex items-center gap-3">
+                  <div className="flex-1 h-1.5 bg-admin-netral-20 rounded-full overflow-hidden">
+                    <div className="h-full bg-admin-info-100 w-full rounded-full" />
+                  </div>
+                  <span className="text-admin-xs text-admin-netral-100">100%</span>
+                </div>
               </div>
             </div>
-            <button onClick={handleRemoveImageMock} className="px-6 py-2 border border-admin-netral-30 rounded-lg text-admin-xs text-admin-netral-100 bg-white hover:bg-admin-netral-10 transition-colors">Change image</button>
+            <button onClick={() => fileInputRef.current?.click()} className="px-6 py-2 border border-admin-netral-30 rounded-lg text-admin-xs text-admin-netral-100 bg-white hover:bg-admin-netral-10 transition-colors">Change image</button>
           </div>
         )}
         {errors.image && <p className="text-admin-xs text-admin-error-100 mt-1 font-admin-medium">{errors.image}</p>}
@@ -211,7 +262,7 @@ const ArticleForm: ForwardRefRenderFunction<HTMLDivElement, ArticleFormProps> = 
       {/* Publishing Schedule */}
       <div className="flex flex-col relative" ref={scheduleDateRef}>
         <label className={`text-admin-base font-admin-regular mb-1 ${errors.scheduleDate ? 'text-admin-error-100' : 'text-admin-netral-100'}`}>
-          Publishing Schedule <span className="text-admin-error-100">*</span>
+          Publishing Schedule
         </label>
         <input 
           type="text" 
