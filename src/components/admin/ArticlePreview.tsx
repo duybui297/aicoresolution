@@ -17,6 +17,8 @@ interface ArticlePreviewProps {
   onExpand?: () => void;
   onClose?: () => void;
   onNavigateBack?: () => void;
+  onPublish?: () => void;
+  onSaveDraft?: () => void;
 }
 
 const ArticlePreview: React.FC<ArticlePreviewProps> = ({
@@ -31,7 +33,9 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({
   type = 'create',
   onExpand,
   onClose,
-  onNavigateBack
+  onNavigateBack,
+  onPublish,
+  onSaveDraft
 }) => {
   if (mode === 'expanded') {
     return (
@@ -53,10 +57,16 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({
             <span className="text-admin-netral-100 font-admin-semibold">Live preview</span>
           </div>
           <div className="flex items-center gap-4">
-            <button className="px-6 py-2.5 rounded-full text-admin-xs font-admin-medium border border-admin-netral-30 text-admin-netral-100 bg-admin-netral-10 hover:bg-admin-netral-20 transition-colors shrink-0">
+            <button 
+              onClick={onSaveDraft}
+              className="px-6 py-2.5 rounded-full text-admin-xs font-admin-medium border border-admin-netral-30 text-admin-netral-100 bg-admin-netral-10 hover:bg-admin-netral-20 transition-colors shrink-0"
+            >
               {type === 'create' ? 'Save to draft' : 'Save changes'}
             </button>
-            <button className="bg-admin-primary-100 text-admin-netral-10 px-6 py-2.5 rounded-full text-admin-xs font-admin-medium hover:bg-admin-primary-90 transition-colors shrink-0">
+            <button 
+              onClick={onPublish}
+              className="bg-admin-primary-100 text-admin-netral-10 px-6 py-2.5 rounded-full text-admin-xs font-admin-medium hover:bg-admin-primary-90 transition-colors shrink-0"
+            >
               {type === 'create' ? 'Publish' : 'Update'}
             </button>
           </div>

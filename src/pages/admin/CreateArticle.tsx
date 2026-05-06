@@ -440,7 +440,9 @@ const CreateArticle = () => {
           {...commonPreviewProps}
           mode="expanded"
           onClose={() => setIsExpanded(false)}
-          onNavigateBack={() => navigate(ROUTE_PATHS.admin)}
+          onNavigateBack={() => navigate(ROUTE_PATHS.adminArticles)}
+          onPublish={handlePublish}
+          onSaveDraft={handleSaveDraft}
         />,
         document.body
       )}
