@@ -1,4 +1,4 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import {
   FileText,
   Clock,
@@ -9,9 +9,17 @@ import {
   ChevronRight
 } from 'lucide-react';
 import logo from '../../assets/logo.png';
+import authService from '../../services/authService';
+import { ROUTE_PATHS } from '../../utils/routeConstants';
 
 const AdminSidebar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await authService.logout();
+    navigate(ROUTE_PATHS.adminLogin);
+  };
 
   return (
     <div className="w-[240px] 2xl:w-[301px] h-[calc(100vh-2rem)] my-4 ml-4 bg-admin-primary-100 rounded-2xl p-6 2xl:p-8 flex flex-col gap-8 2xl:gap-10 relative shadow-xl overflow-hidden shrink-0 transition-all duration-300">
@@ -26,33 +34,31 @@ const AdminSidebar = () => {
         <span className="text-admin-sm font-admin-regular text-admin-netral-60 mb-4">Menu</span>
 
         <div className="flex flex-col gap-2">
-          {/* Active Item Example */}
-          <Link to="/admin" className="relative flex items-center px-4 py-3 text-admin-sm 2xl:text-admin-base font-admin-regular text-admin-netral-10 cursor-pointer rounded-lg hover:bg-white/5 transition-colors">
-            <div className="absolute -left-8 w-[6px] h-8 bg-admin-secondary-100 rounded-r-lg" />
-            <FileText className="w-5 h-5 mr-3 shrink-0" />
-            Articles
-          </Link>
-
-          {/* Inactive Items */}
-          <Link to="/admin/scheduled" className="flex items-center px-4 py-3 text-admin-sm 2xl:text-admin-base font-admin-regular text-admin-netral-60 hover:text-admin-secondary-100 hover:bg-white/5 rounded-lg cursor-pointer transition-colors">
-            <Clock className="w-5 h-5 mr-3 shrink-0" />
-            Scheduled
-          </Link>
-          
-          <Link to="/admin/contributors" className="flex items-center px-4 py-3 text-admin-sm 2xl:text-admin-base font-admin-regular text-admin-netral-60 hover:text-admin-secondary-100 hover:bg-white/5 rounded-lg cursor-pointer transition-colors">
-            <Users className="w-5 h-5 mr-3 shrink-0" />
-            Contributors
-          </Link>
-          
-          <Link to="/admin/trash" className="flex items-center px-4 py-3 text-admin-sm 2xl:text-admin-base font-admin-regular text-admin-netral-60 hover:text-admin-secondary-100 hover:bg-white/5 rounded-lg cursor-pointer transition-colors">
-            <Trash2 className="w-5 h-5 mr-3 shrink-0" />
-            Trash
-          </Link>
-
-          <Link to="/admin/settings" className="flex items-center px-4 py-3 text-admin-sm 2xl:text-admin-base font-admin-regular text-admin-netral-60 hover:text-admin-secondary-100 hover:bg-white/5 rounded-lg cursor-pointer transition-colors">
-            <Settings className="w-5 h-5 mr-3 shrink-0" />
-            Settings
-          </Link>
+          {[
+            { to: ROUTE_PATHS.admin, icon: FileText, label: 'Articles' },
+            { to: ROUTE_PATHS.adminScheduled, icon: Clock, label: 'Scheduled' },
+            { to: ROUTE_PATHS.adminContributors, icon: Users, label: 'Contributors' },
+            { to: ROUTE_PATHS.adminTrash, icon: Trash2, label: 'Trash' },
+            { to: ROUTE_PATHS.adminSettings, icon: Settings, label: 'Settings' },
+          ].map((item) => {
+            const active = location.pathname === item.to;
+            const Icon = item.icon;
+            return (
+              <Link 
+                key={item.to}
+                to={item.to} 
+                className={`relative flex items-center px-4 py-3 text-admin-sm 2xl:text-admin-base font-admin-regular transition-colors rounded-lg hover:bg-white/5 ${
+                  active ? 'text-admin-netral-10' : 'text-admin-netral-60 hover:text-admin-secondary-100'
+                }`}
+              >
+                {active && (
+                  <div className="absolute -left-8 w-[6px] h-8 bg-admin-secondary-100 rounded-r-lg" />
+                )}
+                <Icon className="w-5 h-5 mr-3 shrink-0" />
+                {item.label}
+              </Link>
+            );
+          })}
         </div>
       </div>
 
@@ -75,10 +81,13 @@ const AdminSidebar = () => {
           </div>
         </div>
 
-        <Link to="/" className="flex items-center px-2 py-2 text-admin-netral-60 hover:text-admin-netral-10 hover:bg-white/5 rounded-lg cursor-pointer transition-colors -mx-2">
+        <button 
+          onClick={handleLogout}
+          className="w-full flex items-center px-2 py-2 text-admin-netral-60 hover:text-admin-netral-10 hover:bg-white/5 rounded-lg cursor-pointer transition-colors -mx-2"
+        >
           <LogOut className="w-5 h-5 mr-3 shrink-0" />
           <span className="text-admin-sm 2xl:text-admin-base font-admin-regular">Log out</span>
-        </Link>
+        </button>
       </div>
     </div>
   );

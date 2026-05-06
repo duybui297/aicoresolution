@@ -1,0 +1,46 @@
+export interface LoginRequest {
+  username: string;
+  password: string;
+}
+
+export interface LoginResponse {
+  accessToken: string;
+  refreshToken: string;
+  tokenType: string;
+  expiresInSeconds: number;
+  userId: number;
+  role: string;
+}
+
+export interface ApiResponse<T> {
+  success: boolean;
+  message: string;
+  data: T;
+}
+
+export interface User {
+  id: number;
+  username: string;
+  email: string;
+  role: string;
+}
+
+export type PostStatus = 'DRAFT' | 'PUBLISHED' | 'SCHEDULED' | 'DELETED' | 'ARCHIVED';
+export type ContentFormat = 'MARKDOWN' | 'HTML';
+
+export interface PostResponse {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content: string;
+  contentFormat: ContentFormat;
+  thumbnailUrl: string;
+  status: PostStatus;
+  publishedAt: string;
+  createdAt: string;
+  updatedAt: string;
+  authorId: number;
+  authorName?: string;
+  viewCount: number;
+}

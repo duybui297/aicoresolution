@@ -30,7 +30,7 @@ public interface IPostService {
     /**
      * Get paginated list of posts (admin view)
      */
-    Page<PostResponse> listAdmin(int page, int size);
+    Page<PostResponse> listAdmin(org.springframework.data.domain.Pageable pageable, String status);
 
     /**
      * Get single post by id (admin view)

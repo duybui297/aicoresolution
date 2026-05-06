@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface PostCategoryRepository extends JpaRepository<PostCategory, PostCategoryId> {
     List<PostCategory> findByPostId(Long postId);
+    List<PostCategory> findByPostIdIn(java.util.List<Long> postIds);
     void deleteByPostId(Long postId);
 }

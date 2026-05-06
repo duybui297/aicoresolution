@@ -15,7 +15,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/admin/tags")
+@RequestMapping("/api/v1/admin/tags")
 @PreAuthorize("hasAnyRole('ADMIN', 'EDITOR', 'AUTHOR')")
 public class AdminTagController {
 

@@ -19,6 +19,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class PostService implements IPostService {
@@ -131,6 +133,7 @@ public class PostService implements IPostService {
         Post post = postRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Post not found"));
         post.setDeletedAt(LocalDateTime.now());
+        post.setStatus(PostStatus.DELETED);
         postRepository.save(post);
     }
 
@@ -141,15 +144,39 @@ public class PostService implements IPostService {
         logger.info("Deleting multiple posts: {} items - TraceID: {}", ids.size(), traceId);
         java.util.List<Post> posts = postRepository.findAllById(ids);
         LocalDateTime now = LocalDateTime.now();
-        posts.forEach(post -> post.setDeletedAt(now));
+        posts.forEach(post -> {
+            post.setDeletedAt(now);
+            post.setStatus(PostStatus.DELETED);
+        });
         postRepository.saveAll(posts);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<PostResponse> listAdmin(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "updatedAt"));
-        return postRepository.findAllNotDeleted(pageable).map(this::toResponse);
+    public Page<PostResponse> listAdmin(Pageable pageable, String status) {
+        // Use default sort if none provided
+        if (pageable.getSort().isUnsorted()) {
+            pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), 
+                    Sort.by(Sort.Direction.DESC, "updatedAt"));
+        }
+        
+        Page<Post> postPage;
+        
+        if (status != null && !status.equalsIgnoreCase("All")) {
+            try {
+                PostStatus postStatus = PostStatus.valueOf(status.toUpperCase());
+                postPage = postRepository.findByStatusAndDeletedAtIsNull(postStatus, pageable);
+            } catch (IllegalArgumentException e) {
+                logger.warn("Invalid status filter: {}", status);
+                postPage = postRepository.findAllNotDeleted(pageable);
+            }
+        } else {
+            postPage = postRepository.findAllNotDeleted(pageable);
+        }
+
+        Page<PostResponse> responsePage = postPage.map(post -> toResponseInternal(post, true));
+        enrichPostResponses(responsePage.getContent());
+        return responsePage;
     }
 
     @Override
@@ -177,7 +204,10 @@ public class PostService implements IPostService {
     @Transactional(readOnly = true)
     public Page<PostResponse> listPublic(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "publishedAt"));
-        return postRepository.findPublishedNotDeleted(PostStatus.PUBLISHED, pageable).map(this::toResponse);
+        Page<PostResponse> responsePage = postRepository.findPublishedNotDeleted(PostStatus.PUBLISHED, pageable)
+                .map(post -> toResponseInternal(post, true));
+        enrichPostResponses(responsePage.getContent());
+        return responsePage;
     }
 
     private void applyPostData(Post post, PostUpsertRequest request) {
@@ -328,6 +358,10 @@ public class PostService implements IPostService {
     }
 
     private PostResponse toResponse(Post post) {
+        return toResponseInternal(post, false);
+    }
+
+    private PostResponse toResponseInternal(Post post, boolean shallow) {
         PostResponse response = new PostResponse();
         response.setId(post.getId());
         response.setTitle(post.getTitle());
@@ -363,25 +397,85 @@ public class PostService implements IPostService {
         response.setFeatured(post.getFeatured());
         response.setAllowComments(post.getAllowComments());
         response.setAuthorId(post.getAuthorId());
+        
         response.setCreatedById(post.getCreatedById());
         response.setUpdatedById(post.getUpdatedById());
-
-        response.setCategoryIds(postCategoryRepository.findByPostId(post.getId()).stream()
-                .map(PostCategory::getCategoryId).toList());
-        response.setTagIds(postTagRepository.findByPostId(post.getId()).stream()
-                .map(PostTag::getTagId).toList());
-        response.setAuthorIds(postAuthorRepository.findByPostId(post.getId()).stream()
-                .map(PostAuthor::getUserId).toList());
-        response.setMedia(postMediaRepository.findByPostId(post.getId()).stream()
-                .map(m -> PostMediaResponse.builder()
-                        .mediaId(m.getMediaId())
-                        .sortOrder(m.getSortOrder())
-                        .role(m.getRole())
-                        .build())
-                .toList());
         response.setCreatedAt(post.getCreatedAt());
         response.setUpdatedAt(post.getUpdatedAt());
         response.setDeletedAt(post.getDeletedAt());
+
+        if (!shallow) {
+            if (post.getAuthorId() != null) {
+                cmsUserRepository.findById(post.getAuthorId())
+                    .ifPresent(user -> response.setAuthorName(user.getFullName()));
+            }
+
+            response.setCategoryIds(postCategoryRepository.findByPostId(post.getId()).stream()
+                    .map(PostCategory::getCategoryId).toList());
+            response.setTagIds(postTagRepository.findByPostId(post.getId()).stream()
+                    .map(PostTag::getTagId).toList());
+            response.setAuthorIds(postAuthorRepository.findByPostId(post.getId()).stream()
+                    .map(PostAuthor::getUserId).toList());
+            response.setMedia(postMediaRepository.findByPostId(post.getId()).stream()
+                    .map(m -> PostMediaResponse.builder()
+                            .mediaId(m.getMediaId())
+                            .sortOrder(m.getSortOrder())
+                            .role(m.getRole())
+                            .build())
+                    .toList());
+        }
+
         return response;
+    }
+
+    private void enrichPostResponses(java.util.List<PostResponse> responses) {
+        if (responses == null || responses.isEmpty()) return;
+        
+        List<Long> postIds = responses.stream().map(PostResponse::getId).toList();
+        
+        // Batch fetch all relations
+        Map<Long, List<Long>> categoryMap = postCategoryRepository.findByPostIdIn(postIds).stream()
+                .collect(Collectors.groupingBy(PostCategory::getPostId, 
+                        Collectors.mapping(PostCategory::getCategoryId, Collectors.toList())));
+        
+        Map<Long, List<Long>> tagMap = postTagRepository.findByPostIdIn(postIds).stream()
+                .collect(Collectors.groupingBy(PostTag::getPostId, 
+                        Collectors.mapping(PostTag::getTagId, Collectors.toList())));
+        
+        Map<Long, List<Long>> authorIdsMap = postAuthorRepository.findByPostIdIn(postIds).stream()
+                .collect(Collectors.groupingBy(PostAuthor::getPostId, 
+                        Collectors.mapping(PostAuthor::getUserId, Collectors.toList())));
+                        
+        Map<Long, List<PostMediaResponse>> mediaMap = postMediaRepository.findByPostIdIn(postIds).stream()
+                .collect(Collectors.groupingBy(PostMedia::getPostId,
+                        Collectors.mapping(m -> PostMediaResponse.builder()
+                                .mediaId(m.getMediaId())
+                                .sortOrder(m.getSortOrder())
+                                .role(m.getRole())
+                                .build(), Collectors.toList())));
+                                
+        // Batch fetch all author names
+        Set<Long> authorUserIds = responses.stream()
+                .map(PostResponse::getAuthorId)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toSet());
+                
+        Map<Long, String> authorNameMap = new HashMap<>();
+        if (!authorUserIds.isEmpty()) {
+            cmsUserRepository.findAllById(authorUserIds).forEach(user -> 
+                authorNameMap.put(user.getId(), user.getFullName())
+            );
+        }
+                
+        // Fill data into responses
+        responses.forEach(r -> {
+            r.setCategoryIds(categoryMap.getOrDefault(r.getId(), Collections.emptyList()));
+            r.setTagIds(tagMap.getOrDefault(r.getId(), Collections.emptyList()));
+            r.setAuthorIds(authorIdsMap.getOrDefault(r.getId(), Collections.emptyList()));
+            r.setMedia(mediaMap.getOrDefault(r.getId(), Collections.emptyList()));
+            if (r.getAuthorId() != null) {
+                r.setAuthorName(authorNameMap.get(r.getAuthorId()));
+            }
+        });
     }
 }

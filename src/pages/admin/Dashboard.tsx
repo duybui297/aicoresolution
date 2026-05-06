@@ -1,33 +1,86 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Search, Bell, SlidersHorizontal } from 'lucide-react';
+import { Search, Bell, SlidersHorizontal, Loader2 } from 'lucide-react';
 import { ArticleTable } from '../../components/admin/ArticleTable';
 import Pagination from '../../components/admin/Pagination';
 import FilterModal from '../../components/admin/FilterModal';
-import { mockArticles } from '../../data/mockArticles';
+import postService from '../../services/postService';
+import { Article } from '../../types/article';
 import { ROUTE_PATHS } from '../../utils/routeConstants';
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
   const [filterStatus, setFilterStatus] = useState('All');
+  const [sortConfig, setSortConfig] = useState<{ key: keyof Article; direction: 'asc' | 'desc' } | null>({ key: 'dateCreated', direction: 'desc' });
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const itemsPerPage = 10;
 
-  const filteredArticles = filterStatus === 'All'
-    ? mockArticles
-    : mockArticles.filter(article => article.status === filterStatus);
+  useEffect(() => {
+    const fetchArticles = async () => {
+      setLoading(true);
+      try {
+        let sortParam = '';
+        if (sortConfig) {
+          const mapping: Record<string, string> = {
+            publisher: 'authorId',
+            headline: 'title',
+            status: 'status',
+            dateCreated: 'createdAt'
+          };
+          const backendKey = mapping[sortConfig.key as string] || sortConfig.key;
+          sortParam = `${backendKey},${sortConfig.direction}`;
+        }
 
-  const totalPages = Math.ceil(filteredArticles.length / itemsPerPage);
+        const response = await postService.getPosts(
+          currentPage - 1, 
+          itemsPerPage, 
+          filterStatus === 'All' ? undefined : filterStatus.toUpperCase(),
+          sortParam
+        );
+        
+        // Map API response to UI Article type
+        const mappedArticles: Article[] = response.content.map(p => ({
+          id: p.id,
+          publisher: p.authorName || 'Super Admin',
+          headline: p.title,
+          status: p.status === 'PUBLISHED' ? 'Published' : 
+                  p.status === 'DRAFT' ? 'Draft' : 
+                  p.status === 'DELETED' ? 'Deleted' : 
+                  p.status === 'SCHEDULED' ? 'Scheduled' : 'Unknown',
+          role: 'Admin',
+          dateCreated: new Date(p.createdAt).toLocaleDateString('en-GB', {
+            weekday: 'long',
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric'
+          }),
+          rawDate: p.createdAt
+        }));
 
-  const currentArticles = filteredArticles.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+        setArticles(mappedArticles);
+        setTotalPages(response.totalPages);
+      } catch (error) {
+        console.error('Failed to fetch articles:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchArticles();
+  }, [currentPage, filterStatus, sortConfig]);
 
   const handleFilterChange = (status: string) => {
     setFilterStatus(status);
-    setCurrentPage(1); // Reset to first page when filter changes
+    setCurrentPage(1);
+  };
+
+  const handleSortChange = (config: { key: keyof Article; direction: 'asc' | 'desc' } | null) => {
+    setSortConfig(config);
+    setCurrentPage(1);
   };
 
   return (
@@ -80,7 +133,20 @@ const Dashboard = () => {
       </div>
 
       {/* Main Table */}
-      <ArticleTable articles={currentArticles} />
+      {loading ? (
+        <div className="flex-1 flex items-center justify-center bg-admin-netral-10 rounded-2xl shadow-[0_2px_10px_rgba(0,0,0,0.02)]">
+          <div className="flex flex-col items-center gap-2">
+            <Loader2 className="w-8 h-8 text-admin-primary-100 animate-spin" />
+            <span className="text-admin-xs text-admin-netral-60 font-admin-medium">Loading articles...</span>
+          </div>
+        </div>
+      ) : (
+        <ArticleTable 
+          articles={articles} 
+          sortConfig={sortConfig}
+          onSort={handleSortChange}
+        />
+      )}
 
       {/* Pagination */}
       <Pagination

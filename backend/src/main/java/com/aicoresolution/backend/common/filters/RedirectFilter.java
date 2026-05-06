@@ -27,8 +27,8 @@ public class RedirectFilter extends OncePerRequestFilter {
 
         String uri = request.getRequestURI();
 
-        // Chỉ xử lý các request không phải API admin và không phải static resources (tùy chọn)
-        if (!uri.startsWith("/api/admin") && !uri.startsWith("/assets")) {
+        // Chỉ xử lý các request không phải API và không phải static resources (tùy chọn)
+        if (!uri.startsWith("/api") && !uri.startsWith("/assets")) {
             
             Optional<Redirect> redirectOpt = redirectRepository.findByFromPath(uri);
             

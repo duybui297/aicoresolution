@@ -16,7 +16,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/admin/redirects")
+@RequestMapping("/api/v1/admin/redirects")
 @RequiredArgsConstructor
 @PreAuthorize("hasAnyRole('ADMIN', 'EDITOR')")
 public class AdminRedirectController {

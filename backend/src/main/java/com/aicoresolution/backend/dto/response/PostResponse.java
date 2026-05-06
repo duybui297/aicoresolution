@@ -49,6 +49,7 @@ public class PostResponse {
     private Boolean featured;
     private Boolean allowComments;
     private Long authorId;
+    private String authorName;
     private Long createdById;
     private Long updatedById;
 

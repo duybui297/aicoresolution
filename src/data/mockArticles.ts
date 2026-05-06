@@ -1,13 +1,4 @@
-export type ArticleStatus = 'Published' | 'Draft' | 'Scheduled';
-
-export interface Article {
-  id: number;
-  publisher: string;
-  headline: string;
-  status: ArticleStatus;
-  role: string;
-  dateCreated: string;
-}
+import { Article, ArticleStatus } from '../types/article';
 
 const publishers = ['Sasha Sasmitha', 'Super Admin', 'John Doe', 'Jane Smith'];
 const roles = ['Contributor', 'Admin', 'Editor'];

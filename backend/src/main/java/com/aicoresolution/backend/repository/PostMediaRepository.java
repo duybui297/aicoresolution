@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface PostMediaRepository extends JpaRepository<PostMedia, PostMediaId> {
     List<PostMedia> findByPostId(Long postId);
+    List<PostMedia> findByPostIdIn(java.util.List<Long> postIds);
     void deleteByPostId(Long postId);
 }

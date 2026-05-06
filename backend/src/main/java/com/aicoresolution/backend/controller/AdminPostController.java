@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -28,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.access.prepost.PreAuthorize;
 
 @RestController
-@RequestMapping("/api/admin/posts")
+@RequestMapping("/api/v1/admin/posts")
 @PreAuthorize("hasAnyRole('ADMIN', 'EDITOR', 'AUTHOR', 'CONTRIBUTOR')")
 public class AdminPostController {
 
@@ -40,11 +41,11 @@ public class AdminPostController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<PostResponse>> list(@RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+    public ResponseEntity<Page<PostResponse>> list(Pageable pageable,
+            @RequestParam(required = false) String status) {
         String requestId = HeaderUtils.getRequestId();
-        logger.info("Listing posts - Page: {}, Size: {}, RequestID: {}", page, size, requestId);
-        return ResponseEntity.ok(postService.listAdmin(page, size));
+        logger.info("Listing posts - Pageable: {}, Status: {}, RequestID: {}", pageable, status, requestId);
+        return ResponseEntity.ok(postService.listAdmin(pageable, status));
     }
 
     @GetMapping("/{id}")
