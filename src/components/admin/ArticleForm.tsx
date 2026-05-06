@@ -93,7 +93,7 @@ const ArticleForm: ForwardRefRenderFunction<HTMLDivElement, ArticleFormProps> = 
         <label className={`text-admin-base font-admin-regular mb-1 ${errors.excerpt ? 'text-admin-error-100' : 'text-admin-netral-100'}`}>
           Excerpt <span className="text-admin-error-100">*</span>
         </label>
-        <p className="text-admin-xs font-admin-regular text-admin-netral-90 mb-2">Describe your content in less than 150 characters.</p>
+        <p className="text-admin-xs font-admin-regular text-admin-netral-90 mb-2">Describe your content in less than 500 characters.</p>
         <input 
           type="text" 
           placeholder="Description" 
@@ -105,8 +105,8 @@ const ArticleForm: ForwardRefRenderFunction<HTMLDivElement, ArticleFormProps> = 
           }`} 
         />
         {errors.excerpt && <p className="text-admin-xs text-admin-error-100 mt-1 font-admin-medium">{errors.excerpt}</p>}
-        <div className={`text-admin-xs text-right mt-1 ${excerpt.length > 150 ? 'text-admin-error-100 font-admin-semibold' : 'text-admin-netral-50'}`}>
-          {excerpt.length}/150
+        <div className={`text-admin-xs text-right mt-1 ${excerpt.length > 500 ? 'text-admin-error-100 font-admin-semibold' : 'text-admin-netral-50'}`}>
+          {excerpt.length}/500
         </div>
       </div>
 
@@ -262,7 +262,7 @@ const ArticleForm: ForwardRefRenderFunction<HTMLDivElement, ArticleFormProps> = 
       {/* Publishing Schedule */}
       <div className="flex flex-col relative" ref={scheduleDateRef}>
         <label className={`text-admin-base font-admin-regular mb-1 ${errors.scheduleDate ? 'text-admin-error-100' : 'text-admin-netral-100'}`}>
-          Publishing Schedule <span className="text-admin-error-100">*</span>
+          Publishing Schedule
         </label>
         <input 
           type="text" 
