@@ -162,7 +162,7 @@ const CreateArticle = () => {
 
     if (!headline.trim()) newErrors.headline = 'Headline is required';
     if (!excerpt.trim()) newErrors.excerpt = 'Excerpt is required';
-    else if (excerpt.length > 150) newErrors.excerpt = 'Excerpt must be less than 150 characters';
+    else if (excerpt.length > 500) newErrors.excerpt = 'Excerpt must be less than 500 characters';
     if (!pubDateValue) newErrors.pubDate = 'Publication date is required';
     if (uploadStatus !== 'uploaded') newErrors.image = 'Image cover is required';
     if (!imageCaption.trim() && uploadStatus === 'uploaded') newErrors.caption = 'Image caption is required';
@@ -181,7 +181,7 @@ const CreateArticle = () => {
         break;
       case 'excerpt':
         if (!value.trim()) error = 'Excerpt is required';
-        else if (value.length > 150) error = 'Excerpt must be less than 150 characters';
+        else if (value.length > 500) error = 'Excerpt must be less than 500 characters';
         break;
       case 'pubDate':
         if (!value) error = 'Publication date is required';
@@ -239,15 +239,42 @@ const CreateArticle = () => {
     setIsPublishModalOpen(false);
     if (isSubmitting) return;
 
-    // Logic: Nếu có ngày hẹn giờ và ngày đó ở tương lai -> SCHEDULED
+    const now = new Date();
+    const pubISO = parseDateStringToISO(pubDateValue);
     const schedISO = parseDateStringToISO(scheduleDateValue);
-    const isScheduled = schedISO ? new Date(schedISO) > new Date() : false;
-    const status = isScheduled ? 'SCHEDULED' : 'PUBLISHED';
+    
+    let status: 'PUBLISHED' | 'SCHEDULED' = 'PUBLISHED';
+    let finalScheduledAt: string | undefined = undefined;
+
+    // Logic: 
+    // 1. Nếu có ngày hẹn giờ (Schedule Date) -> Bắt buộc phải là tương lai
+    if (schedISO) {
+      const sDate = new Date(schedISO);
+      if (sDate <= now) {
+        showToast('Schedule date must be in the future.', 'error', 4000);
+        setIsSubmitting(false); // Đảm bảo reset trạng thái nếu lỗi
+        return;
+      }
+      status = 'SCHEDULED';
+      finalScheduledAt = schedISO;
+    } 
+    // 2. Nếu không có Schedule Date -> Check Publication Date
+    else if (pubISO) {
+      const pDate = new Date(pubISO);
+      if (pDate > now) {
+        status = 'SCHEDULED';
+        finalScheduledAt = pubISO;
+      } else {
+        status = 'PUBLISHED';
+      }
+    }
     
     const payload = buildPayload(status) as any;
     
-    // Nếu đăng ngay, đảm bảo xóa scheduledAt để không bị conflict logic ở BE
-    if (status === 'PUBLISHED') {
+    // Đảm bảo payload đồng nhất với status
+    if (status === 'SCHEDULED') {
+      payload.scheduledAt = finalScheduledAt;
+    } else {
       delete payload.scheduledAt;
     }
 
@@ -262,7 +289,7 @@ const CreateArticle = () => {
       );
       setTimeout(() => {
         setShowPublishedToast(false);
-        navigate(ROUTE_PATHS.admin);
+        navigate(ROUTE_PATHS.adminArticles);
       }, 2500);
     } catch (err) {
       showToast(extractErrorMessage(err), 'error', 5000);
@@ -301,7 +328,7 @@ const CreateArticle = () => {
 
       await postService.createPost(draftPayload as any);
       showToast('Draft saved successfully!', 'success', 3000);
-      setTimeout(() => navigate(ROUTE_PATHS.admin), 3000);
+      setTimeout(() => navigate(ROUTE_PATHS.adminArticles), 3000);
     } catch (err) {
       showToast(extractErrorMessage(err), 'error', 5000);
     } finally {

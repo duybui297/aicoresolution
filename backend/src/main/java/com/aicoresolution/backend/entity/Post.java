@@ -19,7 +19,8 @@ import java.util.Set;
 @Entity
 @Table(name = "posts", indexes = {
         @Index(name = "idx_posts_slug", columnList = "slug", unique = true),
-        @Index(name = "idx_posts_status_published_at", columnList = "status,published_at")
+        @Index(name = "idx_posts_status_published_at", columnList = "status,published_at"),
+        @Index(name = "idx_posts_status_scheduled_at", columnList = "status,scheduled_at")
 })
 public class Post {
     @Id
