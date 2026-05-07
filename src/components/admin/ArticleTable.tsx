@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MoreHorizontal, ArrowDown, Check, Minus, FileQuestion } from 'lucide-react';
 import { Article, ArticleStatus } from '../../types/article';
@@ -183,7 +183,7 @@ export const ArticleTable = ({
               onClick={() => requestSort('dateCreated')}
             >
               <div className="flex items-center gap-2">
-                Date created 
+                Published At 
                 <ArrowDown className={`w-4 h-4 text-admin-netral-60 transition-transform ${sortConfig?.key === 'dateCreated' ? (sortConfig.direction === 'desc' ? 'rotate-180 text-admin-primary-100' : 'text-admin-primary-100') : 'group-hover:text-admin-netral-80'}`} />
               </div>
             </th>

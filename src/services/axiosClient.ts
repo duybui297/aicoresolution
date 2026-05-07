@@ -39,16 +39,9 @@ axiosClient.interceptors.response.use(
     const originalRequest = error.config;
     const response = error.response;
     
-    // 1. Trích xuất message lỗi từ Backend (nếu có)
-    let errorMessage = 'An unexpected error occurred';
-    if (response?.data) {
-      // Nếu BE trả về ApiResponse { success, message, data }
-      if (typeof response.data === 'object' && response.data.message) {
-        errorMessage = response.data.message;
-      } else if (typeof response.data === 'string') {
-        errorMessage = response.data;
-      }
-    }
+    // 1. Trích xuất message lỗi tập trung
+    const { extractErrorMessage } = await import('../utils/errorHandler');
+    const errorMessage = extractErrorMessage(error);
 
     // 2. Handle 401 Unauthorized (Logout)
     if (response?.status === 401) {
