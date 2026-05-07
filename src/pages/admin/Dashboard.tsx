@@ -412,6 +412,11 @@ const Dashboard = () => {
           type="edit"
           onClose={() => setPreviewArticle(null)}
           onNavigateBack={() => setPreviewArticle(null)}
+          onBackToForm={() => {
+            if (previewArticle) {
+              navigate(ROUTE_PATHS.adminEditArticle.replace(':id', previewArticle.id.toString()));
+            }
+          }}
         />,
         document.body
       )}

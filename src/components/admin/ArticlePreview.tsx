@@ -19,6 +19,7 @@ interface ArticlePreviewProps {
   onNavigateBack?: () => void;
   onPublish?: () => void;
   onSaveDraft?: () => void;
+  onBackToForm?: () => void;
   saveLabel?: string;
 }
 
@@ -37,6 +38,7 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({
   onNavigateBack,
   onPublish,
   onSaveDraft,
+  onBackToForm,
   saveLabel
 }) => {
   if (mode === 'expanded') {
@@ -52,7 +54,7 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({
               Articles
             </button>
             <span className="text-admin-netral-20">/</span>
-            <button onClick={onClose} className="text-admin-netral-50 hover:text-admin-primary-100 transition-colors">
+            <button onClick={onBackToForm || onClose} className="text-admin-netral-50 hover:text-admin-primary-100 transition-colors">
               {type === 'create' ? 'Add new article' : 'Edit article'}
             </button>
             <span className="text-admin-netral-20">/</span>

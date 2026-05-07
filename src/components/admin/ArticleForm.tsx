@@ -115,7 +115,7 @@ const ArticleForm: ForwardRefRenderFunction<HTMLDivElement, ArticleFormProps> = 
       {/* Publication Date */}
       <div className="flex flex-col relative" ref={pubDateRef}>
         <label className={`text-admin-base font-admin-regular mb-1 ${errors.pubDate ? 'text-admin-error-100' : 'text-admin-netral-100'}`}>
-          Publication date <span className="text-admin-error-100">*</span>
+          Publication date
         </label>
         <input 
           type="text" 
