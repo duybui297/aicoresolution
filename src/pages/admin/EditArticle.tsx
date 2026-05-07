@@ -15,6 +15,7 @@ import postService, {
 import { extractErrorMessage } from '../../utils/errorHandler';
 import { formatISODateForDisplay } from '../../utils/dateUtils';
 import { getFullImageUrl } from '../../utils/imageUtils';
+import { PostStatus } from '../../types/api';
 
 const EditArticle = () => {
   const navigate = useNavigate();

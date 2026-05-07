@@ -98,7 +98,7 @@ const SharedCalendar: React.FC<SharedCalendarProps> = ({ selectedDate, onSelectD
       )}
 
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-4">
         <button onClick={handlePrevMonth} className="w-8 h-8 flex items-center justify-center border border-admin-netral-20 rounded-lg hover:bg-admin-netral-10 transition-colors">
           <ChevronLeft className="w-4 h-4 text-admin-netral-100" />
         </button>
@@ -120,7 +120,7 @@ const SharedCalendar: React.FC<SharedCalendarProps> = ({ selectedDate, onSelectD
       {/* Grid */}
       <div className="grid grid-cols-7 text-center gap-y-1">
         {['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(day => (
-          <div key={day} className="text-admin-xs font-admin-regular text-admin-netral-50 py-2">{day}</div>
+          <div key={day} className="text-admin-xs font-admin-regular text-admin-netral-50 py-1">{day}</div>
         ))}
         {days.map((item, i) => {
           if (!item.isCurrent || item.day === null) return <div key={i} className="py-2"></div>;
@@ -135,7 +135,7 @@ const SharedCalendar: React.FC<SharedCalendarProps> = ({ selectedDate, onSelectD
               key={i} 
               disabled={disabled}
               onClick={() => onSelectDate(new Date(currentYear, currentMonth, day))}
-              className={`text-admin-base font-admin-semibold py-2 transition-all flex items-center justify-center rounded-lg relative
+              className={`text-admin-base font-admin-semibold py-1.5 transition-all flex items-center justify-center rounded-lg relative
                 ${active ? 'bg-admin-secondary-100 text-admin-primary-100' : (highlight ? 'bg-admin-primary-100 text-admin-secondary-100' : '')}
                 ${!active && !highlight && !disabled ? 'text-admin-netral-100 hover:bg-admin-netral-20' : ''}
                 ${disabled ? 'text-admin-netral-30 cursor-not-allowed opacity-50' : ''}
