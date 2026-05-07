@@ -77,6 +77,10 @@ const postService = {
 
   deletePost: (id: number): Promise<any> => {
     return axiosClient.delete(`admin/posts/${id}`);
+  },
+
+  deletePostsBatch: (ids: number[]): Promise<any> => {
+    return axiosClient.delete('admin/posts/batch-delete', { data: { ids } });
   }
 };
 

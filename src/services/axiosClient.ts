@@ -27,31 +27,56 @@ axiosClient.interceptors.request.use(
 axiosClient.interceptors.response.use(
   (response) => {
     const res = response.data;
-    // Nếu BE bọc trong ApiResponse { success, data, message }
     if (res && typeof res === 'object' && 'success' in res && 'data' in res) {
       if (res.success) return res.data;
       return Promise.reject(res);
     }
-    // Nếu BE trả về trực tiếp (như Page object)
     return res;
   },
   async (error) => {
     const originalRequest = error.config;
     const response = error.response;
     
-    // 1. Trích xuất message lỗi tập trung
+    // Trích xuất message lỗi tập trung
     const { extractErrorMessage } = await import('../utils/errorHandler');
+    const { clearAuthStorage } = await import('../utils/authUtils');
     const errorMessage = extractErrorMessage(error);
 
-    // 2. Handle 401 Unauthorized (Logout)
-    if (response?.status === 401) {
-      localStorage.removeItem('accessToken');
-      if (!originalRequest.url?.includes('auth/login')) {
+    // Handle 401 Unauthorized
+    if (response?.status === 401 && !originalRequest._retry) {
+      // Nếu đang ở trang login thì không refresh
+      if (originalRequest.url?.includes('auth/login')) {
+        return Promise.reject(new Error(errorMessage));
+      }
+
+      originalRequest._retry = true;
+      const refreshToken = localStorage.getItem('refreshToken');
+
+      if (refreshToken) {
+        try {
+          // Thử refresh token
+          const res = await axios.post(`${API_URL}auth/refresh`, { refreshToken });
+          const { accessToken: newAccessToken, refreshToken: newRefreshToken } = res.data;
+
+          localStorage.setItem('accessToken', newAccessToken);
+          if (newRefreshToken) localStorage.setItem('refreshToken', newRefreshToken);
+
+          // Update header and retry
+          originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+          return axiosClient(originalRequest);
+        } catch (refreshError) {
+          // Refresh thất bại -> Logout sạch sẽ
+          clearAuthStorage();
+          window.location.href = ROUTE_PATHS.adminLogin;
+          return Promise.reject(refreshError);
+        }
+      } else {
+        // Không có refresh token -> Logout
+        clearAuthStorage();
         window.location.href = ROUTE_PATHS.adminLogin;
       }
     }
 
-    // 3. Trả về Error object kèm message đã trích xuất
     return Promise.reject(new Error(errorMessage));
   }
 );

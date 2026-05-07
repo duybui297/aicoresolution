@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, Bell, SlidersHorizontal, Loader2 } from 'lucide-react';
 import { createPortal } from 'react-dom';
@@ -12,6 +12,7 @@ import { Article } from '../../types/article';
 import { PostResponse } from '../../types/api';
 import { ROUTE_PATHS } from '../../utils/routeConstants';
 import { formatISODateForDisplay } from '../../utils/dateUtils';
+import DeleteConfirmModal from '../../components/admin/DeleteConfirmModal';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -29,6 +30,23 @@ const Dashboard = () => {
     message: '',
     type: 'info'
   });
+  
+  // Delete Modal state
+  const [deleteModal, setDeleteModal] = useState<{
+    isOpen: boolean;
+    ids: number[];
+    type: 'single' | 'batch';
+    isDeleting: boolean;
+  }>({
+    isOpen: false,
+    ids: [],
+    type: 'single',
+    isDeleting: false
+  });
+
+  // New Selection state
+  const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
+
   const itemsPerPage = 10;
 
   const showToast = (message: string, type: 'success' | 'error' | 'info', autoDismissMs = 3500) => {
@@ -52,56 +70,97 @@ const Dashboard = () => {
     }
   };
 
-  useEffect(() => {
-    const fetchArticles = async () => {
-      setLoading(true);
-      try {
-        let sortParam = '';
-        if (sortConfig) {
-          const mapping: Record<string, string> = {
-            publisher: 'authorId',
-            headline: 'title',
-            status: 'status',
-            dateCreated: 'createdAt'
-          };
-          const backendKey = mapping[sortConfig.key as string] || sortConfig.key;
-          sortParam = `${backendKey},${sortConfig.direction}`;
-        }
-
-        const response = await postService.getPosts(
-          currentPage - 1, 
-          itemsPerPage, 
-          filterStatus === 'All' ? undefined : filterStatus.toUpperCase(),
-          sortParam
-        );
-        
-        // Map API response to UI Article type
-        const mappedArticles: Article[] = response.content.map(p => ({
-          id: p.id,
-          publisher: p.authorName || 'Super Admin',
-          headline: p.title,
-          status: p.status === 'PUBLISHED' ? 'Published' : 
-                  p.status === 'DRAFT' ? 'Draft' : 
-                  p.status === 'DELETED' ? 'Deleted' : 
-                  p.status === 'SCHEDULED' ? 'Scheduled' : 'Unknown',
-          role: 'Admin',
-          dateCreated: formatISODateForDisplay(p.publishedAt || p.scheduledAt || p.createdAt),
-          rawDate: p.createdAt
-        }));
-
-        setArticles(mappedArticles);
-        setTotalPages(response.totalPages);
-      } catch (error: any) {
-        console.error('Failed to fetch articles:', error);
-        const { extractErrorMessage } = await import('../../utils/errorHandler');
-        showToast(extractErrorMessage(error), 'error');
-      } finally {
-        setLoading(false);
+  const fetchArticles = useCallback(async () => {
+    setLoading(true);
+    try {
+      let sortParam = '';
+      if (sortConfig) {
+        const mapping: Record<string, string> = {
+          publisher: 'authorId',
+          headline: 'title',
+          status: 'status',
+          dateCreated: 'createdAt'
+        };
+        const backendKey = mapping[sortConfig.key as string] || sortConfig.key;
+        sortParam = `${backendKey},${sortConfig.direction}`;
       }
-    };
 
-    fetchArticles();
+      const response = await postService.getPosts(
+        currentPage - 1, 
+        itemsPerPage, 
+        filterStatus === 'All' ? undefined : filterStatus.toUpperCase(),
+        sortParam
+      );
+      
+      const mappedArticles: Article[] = response.content.map(p => ({
+        id: p.id,
+        publisher: p.authorName || 'Super Admin',
+        headline: p.title,
+        status: p.status === 'PUBLISHED' ? 'Published' : 
+                p.status === 'DRAFT' ? 'Draft' : 
+                p.status === 'DELETED' ? 'Deleted' : 
+                p.status === 'SCHEDULED' ? 'Scheduled' : 'Unknown',
+        role: 'Admin',
+        dateCreated: formatISODateForDisplay(p.publishedAt || p.scheduledAt || p.createdAt),
+        rawDate: p.createdAt
+      }));
+
+      setArticles(mappedArticles);
+      setTotalPages(response.totalPages);
+    } catch (error: any) {
+      console.error('Failed to fetch articles:', error);
+      const { extractErrorMessage } = await import('../../utils/errorHandler');
+      showToast(extractErrorMessage(error), 'error');
+    } finally {
+      setLoading(false);
+    }
   }, [currentPage, filterStatus, sortConfig]);
+
+  const handleDelete = (id: number) => {
+    setDeleteModal({
+      isOpen: true,
+      ids: [id],
+      type: 'single',
+      isDeleting: false
+    });
+  };
+
+  const handleDeleteBatch = (ids: number[]) => {
+    setDeleteModal({
+      isOpen: true,
+      ids,
+      type: 'batch',
+      isDeleting: false
+    });
+  };
+
+  const confirmDelete = async () => {
+    setDeleteModal(prev => ({ ...prev, isDeleting: true }));
+    try {
+      if (deleteModal.type === 'single') {
+        await postService.deletePost(deleteModal.ids[0]);
+      } else {
+        await postService.deletePostsBatch(deleteModal.ids);
+      }
+      
+      showToast(
+        deleteModal.type === 'single' ? 'Article deleted successfully' : `Successfully deleted ${deleteModal.ids.length} articles`, 
+        'success'
+      );
+      setDeleteModal({ isOpen: false, ids: [], type: 'single', isDeleting: false });
+      setSelectedIds(new Set()); // Clear selection after delete
+      fetchArticles();
+    } catch (error: any) {
+      console.error('Delete failed:', error);
+      const { extractErrorMessage } = await import('../../utils/errorHandler');
+      showToast(extractErrorMessage(error), 'error');
+      setDeleteModal(prev => ({ ...prev, isDeleting: false }));
+    }
+  };
+
+  useEffect(() => {
+    fetchArticles();
+  }, [fetchArticles]);
 
   const handleFilterChange = (status: string) => {
     setFilterStatus(status);
@@ -143,6 +202,15 @@ const Dashboard = () => {
           >
             Add new article
           </button>
+          
+          {selectedIds.size > 0 && (
+            <button
+              onClick={() => handleDeleteBatch(Array.from(selectedIds))}
+              className="bg-admin-warning-10 text-admin-warning-100 border border-admin-warning-100/20 px-6 py-2.5 rounded-full text-admin-xs font-admin-medium hover:bg-admin-warning-20 transition-colors shrink-0 flex items-center gap-2 animate-in fade-in slide-in-from-right-4"
+            >
+              Delete {selectedIds.size} articles
+            </button>
+          )}
         </div>
       </div>
 
@@ -176,8 +244,26 @@ const Dashboard = () => {
           sortConfig={sortConfig}
           onSort={handleSortChange}
           onView={handleViewArticle}
+          onDelete={handleDelete}
+          onDeleteBatch={handleDeleteBatch}
+          selectedIds={selectedIds}
+          onSelectionChange={setSelectedIds}
         />
       )}
+
+      {/* Delete Confirmation Modal */}
+      <DeleteConfirmModal 
+        isOpen={deleteModal.isOpen}
+        isLoading={deleteModal.isDeleting}
+        onClose={() => !deleteModal.isDeleting && setDeleteModal(prev => ({ ...prev, isOpen: false }))}
+        onConfirm={confirmDelete}
+        title={deleteModal.type === 'single' ? 'Delete Article' : `Delete ${deleteModal.ids.length} Articles`}
+        message={
+          deleteModal.type === 'single' 
+            ? 'Are you sure you want to delete this article? This action cannot be undone.'
+            : `Are you sure you want to delete ${deleteModal.ids.length} selected articles? This action cannot be undone.`
+        }
+      />
 
       {/* Pagination */}
       <Pagination

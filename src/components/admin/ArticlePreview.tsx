@@ -18,6 +18,7 @@ interface ArticlePreviewProps {
   onNavigateBack?: () => void;
   onPublish?: () => void;
   onSaveDraft?: () => void;
+  saveLabel?: string;
 }
 
 const ArticlePreview: React.FC<ArticlePreviewProps> = ({
@@ -34,7 +35,8 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({
   onClose,
   onNavigateBack,
   onPublish,
-  onSaveDraft
+  onSaveDraft,
+  saveLabel
 }) => {
   if (mode === 'expanded') {
     return (
@@ -60,7 +62,7 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({
               onClick={onSaveDraft}
               className="px-6 py-2.5 rounded-full text-admin-xs font-admin-medium border border-admin-netral-30 text-admin-netral-100 bg-admin-netral-10 hover:bg-admin-netral-20 transition-colors shrink-0"
             >
-              {type === 'create' ? 'Save to draft' : 'Save changes'}
+              {saveLabel || (type === 'create' ? 'Save to draft' : 'Save changes')}
             </button>
             <button 
               onClick={onPublish}
