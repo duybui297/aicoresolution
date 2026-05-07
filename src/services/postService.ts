@@ -71,6 +71,10 @@ const postService = {
     return axiosClient.post('admin/posts', payload);
   },
 
+  updatePost: (id: number, payload: CreatePostPayload): Promise<PostResponse> => {
+    return axiosClient.put(`admin/posts/${id}`, payload);
+  },
+
   deletePost: (id: number): Promise<any> => {
     return axiosClient.delete(`admin/posts/${id}`);
   }

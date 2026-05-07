@@ -19,8 +19,8 @@ const LoginAdmin = () => {
       await authService.login({ username, password });
       navigate('/admin');
     } catch (err: any) {
-      console.error('Login failed:', err);
-      setError(err.response?.data?.message || 'Invalid username or password. Please try again.');
+      const { extractErrorMessage } = await import('../../utils/errorHandler');
+      setError(extractErrorMessage(err));
     } finally {
       setIsLoading(false);
     }

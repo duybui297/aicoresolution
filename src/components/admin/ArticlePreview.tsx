@@ -1,4 +1,3 @@
-import React from 'react';
 import { ArrowLeft, Image as ImageIcon, ExternalLink } from 'lucide-react';
 import { getFullImageUrl } from '../../utils/imageUtils';
 import ReactMarkdown from 'react-markdown';

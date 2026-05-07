@@ -1,4 +1,4 @@
-import React, { ForwardRefRenderFunction, forwardRef } from 'react';
+import { ForwardRefRenderFunction, forwardRef, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { Image as ImageIcon, X, Bold, Italic, Underline, Quote, ListOrdered, List, Link as LinkIcon } from 'lucide-react';
 import DateTimePicker from './DateTimePicker';
@@ -20,6 +20,7 @@ interface ArticleFormProps {
   imageFile: File | null;
   onImageSelect: (file: File) => void;
   onImageRemove: () => void;
+  previewImageUrl?: string;
   
   // Portal Props
   showPubDate: boolean;
@@ -38,7 +39,7 @@ interface ArticleFormProps {
 }
 
 const ArticleForm: ForwardRefRenderFunction<HTMLDivElement, ArticleFormProps> = (props, ref) => {
-  const fileInputRef = React.useRef<HTMLInputElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const {
     headline, setHeadline,
@@ -48,6 +49,7 @@ const ArticleForm: ForwardRefRenderFunction<HTMLDivElement, ArticleFormProps> = 
     content, setContent,
     scheduleDateValue, setScheduleDateValue,
     uploadStatus, imageFile, onImageSelect, onImageRemove,
+    previewImageUrl,
     showPubDate, setShowPubDate, pubDatePos,
     showScheduleDate, setShowScheduleDate, scheduleDatePos,
     pubDateRef, scheduleDateRef,
@@ -183,8 +185,8 @@ const ArticleForm: ForwardRefRenderFunction<HTMLDivElement, ArticleFormProps> = 
           <div className="border border-dashed border-admin-netral-30 rounded-2xl p-6 bg-[#FAFAFA]">
             <div className="flex items-start gap-3 mb-6">
               <div className="w-12 h-12 bg-[#E2E8F0] rounded-lg flex items-center justify-center overflow-hidden shrink-0 relative">
-                {imageFile ? (
-                  <img src={URL.createObjectURL(imageFile)} alt="preview" className="w-full h-full object-cover" />
+                {previewImageUrl ? (
+                  <img src={previewImageUrl} alt="preview" className="w-full h-full object-cover" />
                 ) : (
                   <ImageIcon className="w-6 h-6 text-white absolute" />
                 )}
@@ -192,19 +194,23 @@ const ArticleForm: ForwardRefRenderFunction<HTMLDivElement, ArticleFormProps> = 
               <div className="flex flex-col flex-1 h-12 py-0.5 justify-between">
                 <div className="flex items-start justify-between">
                   <div>
-                    <p className="text-admin-xs font-admin-regular text-admin-netral-100 truncate max-w-[180px]">{imageFile?.name ?? 'image-article.jpg'}</p>
+                    <p className="text-admin-xs font-admin-regular text-admin-netral-100 truncate max-w-[180px]">
+                      {imageFile?.name || (previewImageUrl ? 'current-image.jpg' : 'image-article.jpg')}
+                    </p>
                     <p className="text-admin-2xs font-admin-regular text-admin-netral-50">
                       {imageFile ? `${(imageFile.size / 1024 / 1024).toFixed(2)} MB` : ''}
                     </p>
                   </div>
                   <button onClick={onImageRemove} className="text-admin-netral-60 hover:text-admin-netral-100"><X className="w-4 h-4" /></button>
                 </div>
-                <div className="flex items-center gap-3">
-                  <div className="flex-1 h-1.5 bg-admin-netral-20 rounded-full overflow-hidden">
-                    <div className="h-full bg-admin-info-100 w-full rounded-full" />
+                {imageFile && (
+                  <div className="flex items-center gap-3">
+                    <div className="flex-1 h-1.5 bg-admin-netral-20 rounded-full overflow-hidden">
+                      <div className="h-full bg-admin-info-100 w-full rounded-full" />
+                    </div>
+                    <span className="text-admin-xs text-admin-netral-100">100%</span>
                   </div>
-                  <span className="text-admin-xs text-admin-netral-100">100%</span>
-                </div>
+                )}
               </div>
             </div>
             <button onClick={() => fileInputRef.current?.click()} className="px-6 py-2 border border-admin-netral-30 rounded-lg text-admin-xs text-admin-netral-100 bg-white hover:bg-admin-netral-10 transition-colors">Change image</button>

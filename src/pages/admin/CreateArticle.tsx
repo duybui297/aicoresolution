@@ -1,8 +1,7 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import ArticlePreview from '../../components/admin/ArticlePreview';
 import ArticleForm from '../../components/admin/ArticleForm';
 import PublishModal from '../../components/admin/PublishModal';
@@ -14,28 +13,9 @@ import postService, {
   generateSlug,
   type MediaUploadResponse,
 } from '../../services/postService';
-
-/** Extract a user-friendly error message from an Axios/network error */
-const extractErrorMessage = (err: unknown): string => {
-  if (axios.isAxiosError(err)) {
-    const data = err.response?.data;
-    if (data?.message) return data.message;
-    if (data?.error) return data.error;
-    if (err.response?.status === 413) return 'Image file is too large (max 4 MB).';
-    if (err.response?.status === 403) return 'You do not have permission to perform this action.';
-    if (err.response?.status === 401) return 'Session expired. Please log in again.';
-    if (err.response?.status === 422 || err.response?.status === 400) {
-      const errors = data?.errors;
-      if (errors && typeof errors === 'object') {
-        return Object.values(errors).flat().join(' ');
-      }
-      return data?.message ?? 'Invalid data. Please review your inputs.';
-    }
-    if (!err.response) return 'Network error. Please check your connection.';
-  }
-  if (err instanceof Error) return err.message;
-  return 'An unexpected error occurred. Please try again.';
-};
+import { extractErrorMessage } from '../../utils/errorHandler';
+import { formatISODateForDisplay } from '../../utils/dateUtils';
+import { getFullImageUrl } from '../../utils/imageUtils';
 
 const CreateArticle = () => {
   const navigate = useNavigate();
@@ -59,7 +39,7 @@ const CreateArticle = () => {
   // Form State
   const [headline, setHeadline] = useState('');
   const [excerpt, setExcerpt] = useState('');
-  const [pubDateValue, setPubDateValue] = useState('');
+  const [pubDateValue, setPubDateValue] = useState(formatISODateForDisplay(new Date()));
   const [imageCaption, setImageCaption] = useState('');
   const [content, setContent] = useState('');
   const [scheduleDateValue, setScheduleDateValue] = useState('');
@@ -127,7 +107,6 @@ const CreateArticle = () => {
 
   // ─── Image handling ──────────────────────────────────────────────────────────
   const handleImageSelect = async (file: File) => {
-    // Client-side size guard (10 MB — matches backend multipart limit)
     if (file.size > 10 * 1024 * 1024) {
       setErrors(prev => ({ ...prev, image: 'Image must be less than 10 MB.' }));
       return;
@@ -167,7 +146,6 @@ const CreateArticle = () => {
     if (uploadStatus !== 'uploaded') newErrors.image = 'Image cover is required';
     if (!imageCaption.trim() && uploadStatus === 'uploaded') newErrors.caption = 'Image caption is required';
     if (!content.trim()) newErrors.content = 'Content is required';
-    // if (!scheduleDateValue) newErrors.scheduleDate = 'Schedule date is required';
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -192,9 +170,6 @@ const CreateArticle = () => {
       case 'content':
         if (!value.trim()) error = 'Content is required';
         break;
-      // case 'scheduleDate':
-      //   if (!value) error = 'Schedule date is required';
-      //   break;
     }
     setErrors(prev => ({ ...prev, [name]: error }));
   };
@@ -246,20 +221,16 @@ const CreateArticle = () => {
     let status: 'PUBLISHED' | 'SCHEDULED' = 'PUBLISHED';
     let finalScheduledAt: string | undefined = undefined;
 
-    // Logic: 
-    // 1. Nếu có ngày hẹn giờ (Schedule Date) -> Bắt buộc phải là tương lai
     if (schedISO) {
       const sDate = new Date(schedISO);
       if (sDate <= now) {
         showToast('Schedule date must be in the future.', 'error', 4000);
-        setIsSubmitting(false); // Đảm bảo reset trạng thái nếu lỗi
+        setIsSubmitting(false);
         return;
       }
       status = 'SCHEDULED';
       finalScheduledAt = schedISO;
-    } 
-    // 2. Nếu không có Schedule Date -> Check Publication Date
-    else if (pubISO) {
+    } else if (pubISO) {
       const pDate = new Date(pubISO);
       if (pDate > now) {
         status = 'SCHEDULED';
@@ -270,8 +241,6 @@ const CreateArticle = () => {
     }
     
     const payload = buildPayload(status) as any;
-    
-    // Đảm bảo payload đồng nhất với status
     if (status === 'SCHEDULED') {
       payload.scheduledAt = finalScheduledAt;
     } else {
@@ -282,9 +251,7 @@ const CreateArticle = () => {
     try {
       await postService.createPost(payload);
       showToast(
-        status === 'SCHEDULED'
-          ? 'Article scheduled successfully!'
-          : 'The article has been published.',
+        status === 'SCHEDULED' ? 'Article scheduled successfully!' : 'The article has been published.',
         'success'
       );
       setTimeout(() => {
@@ -302,7 +269,6 @@ const CreateArticle = () => {
   const handleSaveDraft = async () => {
     if (isSubmitting) return;
 
-    // Draft only requires a headline
     if (!headline.trim()) {
       setErrors(prev => ({ ...prev, headline: 'Headline is required to save a draft' }));
       showToast('Please enter a headline before saving as draft.', 'error', 3500);
@@ -337,15 +303,12 @@ const CreateArticle = () => {
   };
 
   // ─── Preview props ────────────────────────────────────────────────────────────
-  const previewUploadStatus: 'idle' | 'uploaded' =
-    uploadStatus === 'uploaded' ? 'uploaded' : 'idle';
-
-  // Create a local preview URL for the image file
+  const previewUploadStatus: 'idle' | 'uploaded' = uploadStatus === 'uploaded' ? 'uploaded' : 'idle';
   const [previewImageUrl, setPreviewImageUrl] = useState<string | undefined>(undefined);
 
   useEffect(() => {
     if (!imageFile) {
-      setPreviewImageUrl(uploadedMedia?.fileUrl);
+      setPreviewImageUrl(getFullImageUrl(uploadedMedia?.fileUrl));
       return;
     }
     const url = URL.createObjectURL(imageFile);
@@ -355,7 +318,7 @@ const CreateArticle = () => {
 
   const commonPreviewProps = {
     headline,
-    excerpt, // Truyền excerpt qua đây
+    excerpt,
     pubDate: pubDateValue,
     uploadStatus: previewUploadStatus,
     imageUrl: previewImageUrl,
@@ -365,7 +328,6 @@ const CreateArticle = () => {
 
   return (
     <div className="flex flex-col gap-4 h-full relative">
-      {/* Top Header */}
       <div className="flex items-center justify-between bg-admin-netral-10 rounded-2xl px-6 py-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)] shrink-0">
         <div className="flex items-center gap-3">
           <button
@@ -406,7 +368,6 @@ const CreateArticle = () => {
         </div>
       </div>
 
-      {/* Main Content Area */}
       <div className="flex gap-4 items-start pb-10 flex-1 overflow-hidden">
         <ArticleForm
           ref={formContainerRef}
@@ -420,6 +381,7 @@ const CreateArticle = () => {
           imageFile={imageFile}
           onImageSelect={handleImageSelect}
           onImageRemove={handleImageRemove}
+          previewImageUrl={previewImageUrl}
           showPubDate={showPubDate} setShowPubDate={setShowPubDate} pubDatePos={pubDatePos}
           showScheduleDate={showScheduleDate} setShowScheduleDate={setShowScheduleDate} scheduleDatePos={scheduleDatePos}
           pubDateRef={pubDateRef} scheduleDateRef={scheduleDateRef}
@@ -434,7 +396,6 @@ const CreateArticle = () => {
         />
       </div>
 
-      {/* Expanded Live Preview Modal */}
       {isExpanded && createPortal(
         <ArticlePreview
           {...commonPreviewProps}
@@ -447,14 +408,12 @@ const CreateArticle = () => {
         document.body
       )}
 
-      {/* Confirmation Modal */}
       <PublishModal
         isOpen={isPublishModalOpen}
         onClose={() => setIsPublishModalOpen(false)}
         onConfirm={confirmPublish}
       />
 
-      {/* Toast Notification */}
       <Toast
         message={toastConfig.message}
         type={toastConfig.type}

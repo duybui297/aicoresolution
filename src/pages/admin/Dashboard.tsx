@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Search, Bell, SlidersHorizontal, Loader2 } from 'lucide-react';
 import { createPortal } from 'react-dom';
@@ -11,6 +11,7 @@ import postService from '../../services/postService';
 import { Article } from '../../types/article';
 import { PostResponse } from '../../types/api';
 import { ROUTE_PATHS } from '../../utils/routeConstants';
+import { formatISODateForDisplay } from '../../utils/dateUtils';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -23,15 +24,18 @@ const Dashboard = () => {
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [previewArticle, setPreviewArticle] = useState<PostResponse | null>(null);
   const [isPreviewLoading, setIsPreviewLoading] = useState(false);
-  const [toast, setToast] = useState<{ show: boolean; message: string; type: 'success' | 'error' }>({
-    show: false,
+  const [toast, setToast] = useState<{ isVisible: boolean; message: string; type: 'success' | 'error' | 'info' }>({
+    isVisible: false,
     message: '',
-    type: 'success'
+    type: 'info'
   });
   const itemsPerPage = 10;
 
-  const showToast = (message: string, type: 'success' | 'error') => {
-    setToast({ show: true, message, type });
+  const showToast = (message: string, type: 'success' | 'error' | 'info', autoDismissMs = 3500) => {
+    setToast({ isVisible: true, message, type });
+    if (autoDismissMs) {
+      setTimeout(() => setToast(prev => ({ ...prev, isVisible: false })), autoDismissMs);
+    }
   };
 
   const handleViewArticle = async (id: number) => {
@@ -41,7 +45,8 @@ const Dashboard = () => {
       setPreviewArticle(fullArticle);
     } catch (error: any) {
       console.error('Failed to fetch article details for preview:', error);
-      showToast(error.message || 'Failed to fetch article details', 'error');
+      const { extractErrorMessage } = await import('../../utils/errorHandler');
+      showToast(extractErrorMessage(error), 'error');
     } finally {
       setIsPreviewLoading(false);
     }
@@ -80,12 +85,7 @@ const Dashboard = () => {
                   p.status === 'DELETED' ? 'Deleted' : 
                   p.status === 'SCHEDULED' ? 'Scheduled' : 'Unknown',
           role: 'Admin',
-          dateCreated: new Date(p.createdAt).toLocaleDateString('en-GB', {
-            weekday: 'long',
-            day: 'numeric',
-            month: 'short',
-            year: 'numeric'
-          }),
+          dateCreated: formatISODateForDisplay(p.publishedAt || p.scheduledAt || p.createdAt),
           rawDate: p.createdAt
         }));
 
@@ -93,7 +93,8 @@ const Dashboard = () => {
         setTotalPages(response.totalPages);
       } catch (error: any) {
         console.error('Failed to fetch articles:', error);
-        showToast(error.message || 'Failed to fetch articles', 'error');
+        const { extractErrorMessage } = await import('../../utils/errorHandler');
+        showToast(extractErrorMessage(error), 'error');
       } finally {
         setLoading(false);
       }
@@ -190,7 +191,7 @@ const Dashboard = () => {
         <ArticlePreview
           headline={previewArticle.title}
           excerpt={previewArticle.excerpt}
-          pubDate={new Date(previewArticle.createdAt).toLocaleDateString('en-GB')}
+          pubDate={formatISODateForDisplay(previewArticle.publishedAt || previewArticle.scheduledAt || previewArticle.createdAt)}
           uploadStatus="uploaded"
           imageUrl={previewArticle.thumbnailUrl}
           imageCaption={previewArticle.thumbnailAlt || ''}
@@ -220,10 +221,9 @@ const Dashboard = () => {
       />
       {/* Toast Notification */}
       <Toast 
-        show={toast.show}
+        isVisible={toast.isVisible}
         message={toast.message}
         type={toast.type}
-        onClose={() => setToast(prev => ({ ...prev, show: false }))}
       />
     </div>
   );

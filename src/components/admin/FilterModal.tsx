@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { Search, SlidersHorizontal, X, ChevronLeft, ChevronRight, ChevronDown, Users, FileText } from 'lucide-react';
 import { mockArticles } from '../../data/mockArticles';
