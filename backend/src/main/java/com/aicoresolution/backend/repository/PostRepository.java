@@ -13,7 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-public interface PostRepository extends JpaRepository<Post, Long> {
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+
+public interface PostRepository extends JpaRepository<Post, Long>, JpaSpecificationExecutor<Post> {
 
     @Modifying
     @Transactional
