@@ -19,11 +19,18 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({ onClose, onApply }) => 
   }, []);
 
   const handleApply = () => {
-    if (selectedDate && selectedHour && selectedMinute && selectedPeriod && onApply) {
+    if (selectedDate && onApply) {
       const day = selectedDate.getDate().toString().padStart(2, '0');
       const month = (selectedDate.getMonth() + 1).toString().padStart(2, '0');
       const year = selectedDate.getFullYear();
-      const dateStr = `${day}/${month}/${year} - ${selectedHour}:${selectedMinute} ${selectedPeriod}`;
+      
+      let dateStr = `${day}/${month}/${year}`;
+      
+      // Only append time if all time parts are selected
+      if (selectedHour && selectedMinute && selectedPeriod) {
+        dateStr += ` - ${selectedHour}:${selectedMinute} ${selectedPeriod}`;
+      }
+      
       onApply(dateStr);
     }
     if (onClose) onClose();

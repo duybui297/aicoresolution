@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Search, Bell, SlidersHorizontal, Loader2 } from 'lucide-react';
 import { createPortal } from 'react-dom';
 import { ArticleTable } from '../../components/admin/ArticleTable';
@@ -15,10 +15,24 @@ import { formatISODateForDisplay } from '../../utils/dateUtils';
 import DeleteConfirmModal from '../../components/admin/DeleteConfirmModal';
 
 const Dashboard = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
+
+  // Initialize from URL
+  const initialPage = Number(searchParams.get('page')) || 1;
+  const initialSearch = searchParams.get('search') || '';
+  const initialStatuses = useMemo(() => {
+    const s = searchParams.get('status');
+    return s ? s.split(',') : [];
+  }, [searchParams]);
+  const initialRole = searchParams.get('role') || 'All';
+  const initialDateRange = searchParams.get('dateRange') || '';
+  const initialDateStr = searchParams.get('date');
+  const initialDate = initialDateStr ? new Date(initialDateStr) : null;
+
+  const [currentPage, setCurrentPage] = useState(initialPage);
   const [totalPages, setTotalPages] = useState(1);
   const [sortConfig, setSortConfig] = useState<{ key: keyof Article; direction: 'asc' | 'desc' } | null>({ key: 'dateCreated', direction: 'desc' });
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
@@ -53,12 +67,61 @@ const Dashboard = () => {
     specificDate: Date | null;
     role: string;
   }>({
-    statuses: [],
-    searchQuery: '',
-    dateRange: '',
-    specificDate: null,
-    role: 'All'
+    statuses: initialStatuses,
+    searchQuery: initialSearch,
+    dateRange: initialDateRange,
+    specificDate: initialDate,
+    role: initialRole
   });
+
+  // Sync state with URL when filters or page changes
+  useEffect(() => {
+    const params = new URLSearchParams();
+    if (currentPage > 1) params.set('page', currentPage.toString());
+    if (filters.searchQuery) params.set('search', filters.searchQuery);
+    if (filters.statuses.length > 0) params.set('status', filters.statuses.join(','));
+    if (filters.role !== 'All') params.set('role', filters.role);
+    if (filters.dateRange) params.set('dateRange', filters.dateRange);
+    if (filters.specificDate) params.set('date', filters.specificDate.toISOString());
+
+    // Only update if params actually changed to avoid unnecessary re-renders
+    const newParamsStr = params.toString();
+    if (newParamsStr !== searchParams.toString()) {
+      setSearchParams(params, { replace: true });
+    }
+  }, [currentPage, filters, setSearchParams, searchParams]);
+
+  // Handle browser back/forward buttons
+  useEffect(() => {
+    const page = Number(searchParams.get('page')) || 1;
+    const search = searchParams.get('search') || '';
+    const status = searchParams.get('status');
+    const statuses = status ? status.split(',') : [];
+    const role = searchParams.get('role') || 'All';
+    const dateRange = searchParams.get('dateRange') || '';
+    const dateStr = searchParams.get('date');
+    const date = dateStr ? new Date(dateStr) : null;
+
+    if (page !== currentPage) setCurrentPage(page);
+    
+    // Deep comparison for filters to avoid infinite loops
+    const hasFilterChanges = 
+      filters.searchQuery !== search ||
+      filters.role !== role ||
+      filters.dateRange !== dateRange ||
+      JSON.stringify(filters.statuses) !== JSON.stringify(statuses) ||
+      (filters.specificDate?.getTime() !== date?.getTime());
+
+    if (hasFilterChanges) {
+      setFilters({
+        searchQuery: search,
+        statuses,
+        role,
+        dateRange,
+        specificDate: date
+      });
+    }
+  }, [searchParams]);
 
   const [debouncedSearch, setDebouncedSearch] = useState('');
   

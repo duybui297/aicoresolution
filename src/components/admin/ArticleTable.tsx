@@ -209,7 +209,14 @@ export const ArticleTable = ({
                 />
               </td>
               <td className="h-[3.625rem] px-4 whitespace-nowrap align-middle">{article.publisher}</td>
-              <td className="h-[3.625rem] px-4 max-w-md truncate align-middle">{article.headline}</td>
+              <td className="h-[3.625rem] px-4 max-w-md align-middle">
+                <button 
+                  onClick={() => onView?.(article.id)}
+                  className="hover:text-admin-primary-100 transition-colors text-left font-admin-regular line-clamp-2"
+                >
+                  {article.headline}
+                </button>
+              </td>
               <td className="h-[3.625rem] px-4 whitespace-nowrap align-middle">
                 <StatusBadge status={article.status} />
               </td>
