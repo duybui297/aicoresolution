@@ -42,10 +42,15 @@ public class AdminPostController {
 
     @GetMapping
     public ResponseEntity<Page<PostResponse>> list(Pageable pageable,
-            @RequestParam(required = false) String status) {
+            @RequestParam(required = false) String search,
+            @RequestParam(required = false) java.util.List<String> statuses,
+            @RequestParam(required = false) @org.springframework.format.annotation.DateTimeFormat(iso = org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME) java.time.OffsetDateTime startDate,
+            @RequestParam(required = false) @org.springframework.format.annotation.DateTimeFormat(iso = org.springframework.format.annotation.DateTimeFormat.ISO.DATE_TIME) java.time.OffsetDateTime endDate,
+            @RequestParam(required = false) String role) {
         String requestId = HeaderUtils.getRequestId();
-        logger.info("Listing posts - Pageable: {}, Status: {}, RequestID: {}", pageable, status, requestId);
-        return ResponseEntity.ok(postService.listAdmin(pageable, status));
+        logger.info("Listing posts - Pageable: {}, Search: {}, Statuses: {}, Start: {}, End: {}, Role: {}, RequestID: {}", 
+                pageable, search, statuses, startDate, endDate, role, requestId);
+        return ResponseEntity.ok(postService.listAdmin(pageable, search, statuses, startDate, endDate, role));
     }
 
     @GetMapping("/{id}")
