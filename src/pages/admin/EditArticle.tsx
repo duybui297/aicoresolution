@@ -187,7 +187,6 @@ const EditArticle = () => {
     if (!headline.trim()) newErrors.headline = 'Headline is required';
     if (!excerpt.trim()) newErrors.excerpt = 'Excerpt is required';
     else if (excerpt.length > 500) newErrors.excerpt = 'Excerpt must be less than 500 characters';
-    if (!pubDateValue) newErrors.pubDate = 'Publication date is required';
     if (uploadStatus === 'idle') newErrors.image = 'Image cover is required';
     if (!imageCaption.trim() && uploadStatus === 'uploaded') newErrors.caption = 'Image caption is required';
     if (!content.trim()) newErrors.content = 'Content is required';
@@ -205,9 +204,6 @@ const EditArticle = () => {
       case 'excerpt':
         if (!value.trim()) error = 'Excerpt is required';
         else if (value.length > 500) error = 'Excerpt must be less than 500 characters';
-        break;
-      case 'pubDate':
-        if (!value) error = 'Publication date is required';
         break;
       case 'caption':
         if (!value.trim() && uploadStatus === 'uploaded') error = 'Image caption is required';
