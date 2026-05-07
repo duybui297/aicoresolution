@@ -9,7 +9,7 @@ import ArticlePreview from '../../components/admin/ArticlePreview';
 import Toast from '../../components/admin/Toast';
 import postService from '../../services/postService';
 import { Article } from '../../types/article';
-import { PostResponse } from '../../types/api';
+import { PostResponse, PostStatus } from '../../types/api';
 import { ROUTE_PATHS } from '../../utils/routeConstants';
 import { formatISODateForDisplay } from '../../utils/dateUtils';
 import DeleteConfirmModal from '../../components/admin/DeleteConfirmModal';
@@ -20,7 +20,6 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [filterStatus, setFilterStatus] = useState('All');
   const [sortConfig, setSortConfig] = useState<{ key: keyof Article; direction: 'asc' | 'desc' } | null>({ key: 'dateCreated', direction: 'desc' });
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false);
   const [previewArticle, setPreviewArticle] = useState<PostResponse | null>(null);
@@ -47,7 +46,29 @@ const Dashboard = () => {
   // New Selection state
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
 
+  const [filters, setFilters] = useState<{
+    statuses: string[];
+    searchQuery: string;
+    dateRange: string;
+    specificDate: Date | null;
+    role: string;
+  }>({
+    statuses: [],
+    searchQuery: '',
+    dateRange: '',
+    specificDate: null,
+    role: 'All'
+  });
+
+  const [debouncedSearch, setDebouncedSearch] = useState('');
+  
   const itemsPerPage = 10;
+
+  // Debounce search query
+  useEffect(() => {
+    const timer = setTimeout(() => setDebouncedSearch(filters.searchQuery), 500);
+    return () => clearTimeout(timer);
+  }, [filters.searchQuery]);
 
   const showToast = (message: string, type: 'success' | 'error' | 'info', autoDismissMs = 3500) => {
     setToast({ isVisible: true, message, type });
@@ -85,21 +106,53 @@ const Dashboard = () => {
         sortParam = `${backendKey},${sortConfig.direction}`;
       }
 
+      // Prepare statuses mapping
+      const statusMapping: Record<string, string> = {
+        'Published': 'PUBLISHED',
+        'Scheduled': 'SCHEDULED',
+        'Draft': 'DRAFT',
+        'Waiting for approval': 'PENDING',
+        'Approved': 'APPROVED',
+        'Rejected': 'REJECTED'
+      };
+
+      const mappedStatuses = filters.statuses.map(s => statusMapping[s] || s.toUpperCase());
+
+      // Calculate startDate from dateRange or specificDate
+      let startDateStr: string | undefined = undefined;
+      if (filters.specificDate) {
+        startDateStr = filters.specificDate.toISOString();
+      } else if (filters.dateRange) {
+        const now = new Date();
+        const days = parseInt(filters.dateRange.split(' ')[0]);
+        if (!isNaN(days)) {
+          const pastDate = new Date(now.setDate(now.getDate() - days));
+          startDateStr = pastDate.toISOString();
+        }
+      }
+
       const response = await postService.getPosts(
         currentPage - 1, 
         itemsPerPage, 
-        filterStatus === 'All' ? undefined : filterStatus.toUpperCase(),
-        sortParam
+        mappedStatuses.length > 0 ? mappedStatuses : undefined,
+        sortParam,
+        debouncedSearch || undefined,
+        startDateStr,
+        undefined, // endDate
+        filters.role === 'All' ? undefined : filters.role
       );
       
-      const mappedArticles: Article[] = response.content.map(p => ({
+      const mappedArticles: Article[] = response.content.map((p): Article => ({
         id: p.id,
         publisher: p.authorName || 'Super Admin',
         headline: p.title,
-        status: p.status === 'PUBLISHED' ? 'Published' : 
-                p.status === 'DRAFT' ? 'Draft' : 
-                p.status === 'DELETED' ? 'Deleted' : 
-                p.status === 'SCHEDULED' ? 'Scheduled' : 'Unknown',
+        status: (p.status as string) === 'PUBLISHED' ? 'Published' : 
+                (p.status as string) === 'DRAFT' ? 'Draft' : 
+                (p.status as string) === 'DELETED' ? 'Deleted' : 
+                (p.status as string) === 'SCHEDULED' ? 'Scheduled' : 
+                (p.status as string) === 'PENDING' ? 'Waiting for approval' : 
+                (p.status as string) === 'APPROVED' ? 'Approved' :
+                (p.status as string) === 'REJECTED' ? 'Rejected' : 'Unknown',
         role: 'Admin',
         dateCreated: formatISODateForDisplay(p.publishedAt || p.scheduledAt || p.createdAt),
         rawDate: p.createdAt
@@ -114,7 +167,7 @@ const Dashboard = () => {
     } finally {
       setLoading(false);
     }
-  }, [currentPage, filterStatus, sortConfig]);
+  }, [currentPage, filters, sortConfig, debouncedSearch]);
 
   const handleDelete = (id: number) => {
     setDeleteModal({
@@ -162,8 +215,11 @@ const Dashboard = () => {
     fetchArticles();
   }, [fetchArticles]);
 
-  const handleFilterChange = (status: string) => {
-    setFilterStatus(status);
+  const handleTabChange = (tab: string) => {
+    setFilters(prev => ({
+      ...prev,
+      statuses: tab === 'All' ? [] : [tab]
+    }));
     setCurrentPage(1);
   };
 
@@ -184,6 +240,8 @@ const Dashboard = () => {
             <input
               type="text"
               placeholder="Search somethings"
+              value={filters.searchQuery}
+              onChange={(e) => setFilters(prev => ({ ...prev, searchQuery: e.target.value }))}
               className="flex-1 outline-none bg-transparent text-admin-netral-60 placeholder:text-admin-netral-60 text-admin-xs font-admin-regular"
             />
             <SlidersHorizontal
@@ -214,20 +272,25 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Filter Tabs */}
       <div className="flex items-center gap-3 bg-admin-netral-10 rounded-2xl px-6 py-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)] shrink-0 overflow-x-auto">
-        {['All', 'Published', 'Scheduled', 'Draft'].map((tab) => (
-          <button
-            key={tab}
-            onClick={() => handleFilterChange(tab)}
-            className={`px-8 py-2.5 rounded-full text-admin-xs font-admin-medium transition-colors shrink-0 ${filterStatus === tab
-                ? 'bg-admin-primary-100 text-admin-netral-10'
-                : 'bg-admin-netral-10 text-admin-netral-100 border border-admin-netral-30 hover:bg-admin-netral-20'
-              }`}
-          >
-            {tab}
-          </button>
-        ))}
+        {['All', 'Published', 'Scheduled', 'Draft'].map((tab) => {
+          const isActive = tab === 'All' 
+            ? filters.statuses.length === 0 
+            : filters.statuses.length === 1 && filters.statuses[0] === tab;
+            
+          return (
+            <button
+              key={tab}
+              onClick={() => handleTabChange(tab)}
+              className={`px-8 py-2.5 rounded-full text-admin-xs font-admin-medium transition-colors shrink-0 ${isActive
+                  ? 'bg-admin-primary-100 text-admin-netral-10'
+                  : 'bg-admin-netral-10 text-admin-netral-100 border border-admin-netral-30 hover:bg-admin-netral-20'
+                }`}
+            >
+              {tab}
+            </button>
+          );
+        })}
       </div>
 
       {/* Main Table */}
@@ -304,6 +367,11 @@ const Dashboard = () => {
       <FilterModal
         isOpen={isFilterModalOpen}
         onClose={() => setIsFilterModalOpen(false)}
+        initialFilters={filters}
+        onApply={(newFilters) => {
+          setFilters(newFilters);
+          setCurrentPage(1);
+        }}
       />
       {/* Toast Notification */}
       <Toast 

@@ -49,8 +49,31 @@ export const generateSlug = (text: string): string => {
 };
 
 const postService = {
-  getPosts: (page = 0, size = 10, status?: string, sort?: string): Promise<PageResponse<PostResponse>> => {
-    return axiosClient.get('admin/posts', { params: { page, size, status, sort } });
+  getPosts: (
+    page = 0, 
+    size = 10, 
+    statuses?: string | string[], 
+    sort?: string,
+    search?: string,
+    startDate?: string,
+    endDate?: string,
+    role?: string
+  ): Promise<PageResponse<PostResponse>> => {
+    // Convert statuses to array if it's a string, then join with comma for backend List<String>
+    const statusParam = Array.isArray(statuses) ? statuses.join(',') : statuses;
+    
+    return axiosClient.get('admin/posts', { 
+      params: { 
+        page, 
+        size, 
+        statuses: statusParam, 
+        sort,
+        search,
+        startDate,
+        endDate,
+        role
+      } 
+    });
   },
 
   getPostById: (id: number): Promise<PostResponse> => {
