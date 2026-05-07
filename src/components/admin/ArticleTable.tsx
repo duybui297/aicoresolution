@@ -82,12 +82,20 @@ export const ArticleTable = ({
   articles = [], 
   sortConfig, 
   onSort,
-  onView // Thêm onView prop
+  onView,
+  onDelete,
+  onDeleteBatch,
+  selectedIds,
+  onSelectionChange
 }: { 
   articles?: Article[];
   sortConfig: { key: keyof Article; direction: 'asc' | 'desc' } | null;
   onSort: (config: { key: keyof Article; direction: 'asc' | 'desc' } | null) => void;
-  onView?: (id: number) => void; // Callback nhận ID bài viết
+  onView?: (id: number) => void; 
+  onDelete?: (id: number) => void;
+  onDeleteBatch?: (ids: number[]) => void;
+  selectedIds: Set<number>;
+  onSelectionChange: (ids: Set<number>) => void;
 }) => {
   const navigate = useNavigate();
   const requestSort = (key: keyof Article) => {
@@ -115,7 +123,6 @@ export const ArticleTable = ({
   }
 
   const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
-  const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
 
   const toggleDropdown = (id: number) => {
     setOpenDropdownId(openDropdownId === id ? null : id);
@@ -126,25 +133,25 @@ export const ArticleTable = ({
 
   const handleSelectAll = () => {
     if (isAllSelected) {
-      setSelectedIds(new Set());
+      onSelectionChange(new Set());
     } else {
-      setSelectedIds(new Set(articles.map(a => a.id)));
+      onSelectionChange(new Set(articles.map(a => a.id)));
     }
   };
 
-  const handleSelectOne = (id: number) => {
+  const toggleSelect = (id: number) => {
     const newSet = new Set(selectedIds);
     if (newSet.has(id)) {
       newSet.delete(id);
     } else {
       newSet.add(id);
     }
-    setSelectedIds(newSet);
+    onSelectionChange(newSet);
   };
 
   return (
     <div className="bg-admin-netral-10 rounded-2xl px-6 py-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)] overflow-x-auto flex-1 h-full">
-      <table className="w-full text-left border-collapse min-w-[1000px]">
+        <table className="w-full text-left border-collapse min-w-[1000px]">
         <thead>
           <tr className="border-b border-admin-netral-20">
             <th className="h-[2.5rem] pr-4 w-12 align-middle">
@@ -198,7 +205,7 @@ export const ArticleTable = ({
               <td className="h-[3.625rem] pr-4 align-middle">
                 <CustomCheckbox 
                   checked={selectedIds.has(article.id)} 
-                  onClick={() => handleSelectOne(article.id)}
+                  onClick={() => toggleSelect(article.id)}
                 />
               </td>
               <td className="h-[3.625rem] px-4 whitespace-nowrap align-middle">{article.publisher}</td>
@@ -228,8 +235,11 @@ export const ArticleTable = ({
                       Edit
                     </button>
                     <button 
-                      onClick={() => setOpenDropdownId(null)}
-                      className="w-full text-left px-3 py-2 rounded-lg hover:bg-admin-netral-20 transition-colors text-admin-sm font-admin-regular text-admin-netral-100"
+                      onClick={() => {
+                        onDelete?.(article.id);
+                        setOpenDropdownId(null);
+                      }}
+                      className="w-full text-left px-3 py-2 rounded-lg hover:bg-admin-error-10 transition-colors text-admin-sm font-admin-regular text-admin-error-100"
                     >
                       Delete
                     </button>

@@ -324,6 +324,7 @@ const CreateArticle = () => {
     imageUrl: previewImageUrl,
     imageCaption,
     content,
+    onSaveDraft: handleSaveDraft,
   };
 
   return (

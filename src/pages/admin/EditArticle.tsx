@@ -46,6 +46,7 @@ const EditArticle = () => {
   const [imageCaption, setImageCaption] = useState('');
   const [content, setContent] = useState('');
   const [scheduleDateValue, setScheduleDateValue] = useState('');
+  const [currentStatus, setCurrentStatus] = useState<'DRAFT' | 'PUBLISHED' | 'SCHEDULED' | 'DELETED' | 'ARCHIVED'>('DRAFT');
 
 
   // Fetch initial data
@@ -57,6 +58,7 @@ const EditArticle = () => {
         const article = await postService.getPostById(parseInt(id));
         setHeadline(article.title);
         setExcerpt(article.excerpt);
+        setCurrentStatus(article.status);
         // Ưu tiên ngày xuất bản hoặc ngày hẹn giờ, nếu không có mới dùng ngày tạo
         const displayDate = article.publishedAt || article.scheduledAt || article.createdAt;
         setPubDateValue(formatISODateForDisplay(displayDate));
@@ -248,30 +250,31 @@ const EditArticle = () => {
   };
 
   const handleAction = (type: 'save' | 'publish') => {
-    if (type === 'publish') {
+    if (type === 'save') {
+      handleSave();
+    } else {
       if (validateForm()) {
         setIsPublishModalOpen(true);
       } else {
         triggerToast('Please fill in all required fields correctly.', 'error', 3500);
       }
-    } else {
-      handleSaveDraft();
     }
   };
 
-  const handleSaveDraft = async () => {
+  const handleSave = async () => {
     if (isSubmitting || !id) return;
     if (!headline.trim()) {
-      setErrors(prev => ({ ...prev, headline: 'Headline is required to save a draft' }));
-      triggerToast('Please enter a headline before saving as draft.', 'error', 3500);
+      setErrors(prev => ({ ...prev, headline: 'Headline is required to save' }));
+      triggerToast('Please enter a headline before saving.', 'error', 3500);
       return;
     }
 
     setIsSubmitting(true);
     try {
-      const payload = buildPayload('DRAFT');
+      // Save keeps the current status (Draft stays Draft, Published stays Published)
+      const payload = buildPayload(currentStatus);
       await postService.updatePost(parseInt(id), payload);
-      triggerToast('Draft saved successfully!', 'success');
+      triggerToast(currentStatus === 'DRAFT' ? 'Draft saved successfully!' : 'Changes saved successfully!', 'success');
       setTimeout(() => navigate(ROUTE_PATHS.adminArticles), 2000);
     } catch (err) {
       triggerToast(extractErrorMessage(err), 'error', 5000);
@@ -354,6 +357,8 @@ const EditArticle = () => {
     imageUrl: previewImageUrl,
     imageCaption,
     content,
+    onSaveDraft: () => handleAction('save'),
+    saveLabel: `Save ${currentStatus === 'DRAFT' ? 'to draft' : 'changes'}`
   };
 
   if (isLoading) {
@@ -393,7 +398,7 @@ const EditArticle = () => {
             className="px-6 py-2.5 rounded-full text-admin-xs font-admin-medium border border-admin-netral-30 text-admin-netral-100 bg-admin-netral-10 hover:bg-admin-netral-20 transition-colors shrink-0 disabled:opacity-50 flex items-center gap-2"
           >
             {isSubmitting && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
-            Save changes
+            Save {currentStatus === 'DRAFT' ? 'to draft' : 'changes'}
           </button>
           <button 
             onClick={() => handleAction('publish')}
