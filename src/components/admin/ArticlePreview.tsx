@@ -2,6 +2,7 @@ import { ArrowLeft, Image as ImageIcon, ExternalLink } from 'lucide-react';
 import { getFullImageUrl } from '../../utils/imageUtils';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 
 interface ArticlePreviewProps {
   headline: string;
@@ -96,7 +97,7 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({
           <div className="flex flex-col gap-6 max-w-[800px] mx-auto text-admin-base font-admin-regular text-admin-netral-90 leading-relaxed">
             {excerpt && <p className="text-admin-lg font-admin-medium text-admin-netral-80 mt-4 italic">{excerpt}</p>}
             <div className="prose prose-admin max-w-none prose-headings:font-admin-semibold prose-headings:text-admin-netral-100 prose-p:text-admin-netral-90 prose-strong:text-admin-netral-100 prose-blockquote:border-l-admin-primary-100 prose-blockquote:bg-admin-netral-10 prose-blockquote:py-1 prose-blockquote:px-4 prose-blockquote:rounded-r-lg prose-li:text-admin-netral-90">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
+              <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>{content}</ReactMarkdown>
             </div>
           </div>
         </div>
@@ -136,7 +137,7 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({
         {excerpt && <p className="text-admin-base font-admin-medium text-admin-netral-80 mt-2 italic">{excerpt}</p>}
         
         <div className="prose prose-sm prose-admin max-w-none prose-headings:font-admin-semibold prose-headings:text-admin-netral-100 prose-p:text-admin-netral-90 prose-strong:text-admin-netral-100 prose-blockquote:border-l-admin-primary-100 prose-blockquote:bg-admin-netral-10 prose-blockquote:py-1 prose-blockquote:px-4 prose-blockquote:rounded-r-lg prose-li:text-admin-netral-90">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>
+          <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>{content}</ReactMarkdown>
         </div>
       </div>
     </div>

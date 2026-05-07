@@ -122,7 +122,7 @@ const ArticleForm: ForwardRefRenderFunction<HTMLDivElement, ArticleFormProps> = 
           readOnly 
           onClick={() => setShowPubDate(!showPubDate)} 
           value={pubDateValue} 
-          placeholder="DD/MM/YYYY - HH:MM AM/PM" 
+          placeholder="DD/MM/YYYY (Time optional)" 
           className={`border rounded-lg p-3 text-admin-base text-admin-netral-90 w-full outline-none transition-colors mt-2 cursor-pointer bg-white ${
             errors.pubDate ? 'border-admin-error-100 bg-admin-error-10/10' : 'border-admin-netral-20 focus:border-admin-primary-100'
           }`} 
@@ -275,7 +275,7 @@ const ArticleForm: ForwardRefRenderFunction<HTMLDivElement, ArticleFormProps> = 
           readOnly 
           onClick={() => setShowScheduleDate(!showScheduleDate)} 
           value={scheduleDateValue} 
-          placeholder="DD/MM/YYYY - HH:MM AM/PM" 
+          placeholder="DD/MM/YYYY (Time optional)" 
           className={`border rounded-lg p-3 text-admin-base text-admin-netral-90 w-full outline-none transition-colors mt-2 cursor-pointer bg-white ${
             errors.scheduleDate ? 'border-admin-error-100 bg-admin-error-10/10' : 'border-admin-netral-20 focus:border-admin-primary-100'
           }`} 

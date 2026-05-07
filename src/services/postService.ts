@@ -35,13 +35,23 @@ export interface CreatePostPayload {
 
 export const parseDateStringToISO = (dateStr: string): string | null => {
   if (!dateStr) return null;
-  const match = dateStr.match(/^(\d{2})\/(\d{2})\/(\d{4})\s*-\s*(\d{2}):(\d{2})\s*(AM|PM)$/i);
+  // Match DD/MM/YYYY optionally followed by " - HH:MM AM/PM"
+  const match = dateStr.match(/^(\d{2})\/(\d{2})\/(\d{4})(?:\s*-\s*(\d{2}):(\d{2})\s*(AM|PM))?$/i);
   if (!match) return null;
+  
   const [, dd, mm, yyyy, hh, min, period] = match;
-  let hour = parseInt(hh, 10);
-  if (period.toUpperCase() === 'PM' && hour !== 12) hour += 12;
-  if (period.toUpperCase() === 'AM' && hour === 12) hour = 0;
-  return `${yyyy}-${mm}-${dd}T${String(hour).padStart(2, '0')}:${min}:00`;
+  
+  let hour = 0;
+  let minute = '00';
+  
+  if (hh && min && period) {
+    hour = parseInt(hh, 10);
+    minute = min;
+    if (period.toUpperCase() === 'PM' && hour !== 12) hour += 12;
+    if (period.toUpperCase() === 'AM' && hour === 12) hour = 0;
+  }
+  
+  return `${yyyy}-${mm}-${dd}T${String(hour).padStart(2, '0')}:${minute}:00`;
 };
 
 export const generateSlug = (text: string): string => {
