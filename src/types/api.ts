@@ -27,6 +27,17 @@ export interface User {
 
 export type PostStatus = 'DRAFT' | 'PUBLISHED' | 'SCHEDULED' | 'DELETED' | 'ARCHIVED' | 'PENDING' | 'APPROVED' | 'REJECTED';
 export type ContentFormat = 'MARKDOWN' | 'HTML';
+export type MediaRole = 'CONTENT' | 'GALLERY' | 'THUMBNAIL' | 'ATTACHMENT';
+
+export interface PostMediaResponse {
+  mediaId: number;
+  sortOrder?: number;
+  role: MediaRole;
+  fileUrl?: string;
+  fileName?: string;
+  mimeType?: string;
+  fileSize?: number;
+}
 
 export interface PostResponse {
   id: number;
@@ -45,4 +56,8 @@ export interface PostResponse {
   authorId: number;
   authorName?: string;
   viewCount: number;
+  categoryId?: number;
+  categoryName?: string;
+  categorySlug?: string;
+  media?: PostMediaResponse[];
 }
