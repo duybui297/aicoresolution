@@ -1,59 +1,69 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { useEffect } from 'react';
-import { BLOG_POSTS } from '../../data/newsData';
+import { useEffect, useState } from 'react';
 import { useDocumentMeta } from '../../hooks/useDocumentMeta';
 import { ArrowLeft } from 'lucide-react';
 import { getRoutePath } from '../../utils/routeConstants';
+import publicPostService from '../../services/publicPostService';
+import { PostResponse } from '../../types/api';
+import { getFullImageUrl, transformHtmlContent } from '../../utils/imageUtils';
 
 export default function NewsDetailPage() {
     const { id } = useParams();
     const { t, i18n } = useTranslation();
     const navigate = useNavigate();
+    const [post, setPost] = useState<PostResponse | null>(null);
+    const [loading, setLoading] = useState(true);
 
-    const post = BLOG_POSTS.find(p => {
-        // Check both slugs in case user switches language on the detail page or uses a link
-        return p.slugs.en === id || p.slugs.vi === id;
-    });
-
-    // Automatically update URL when language changes
     useEffect(() => {
-        if (post) {
-            const currentLang = i18n.language as 'en' | 'vi';
-            const targetSlug = post.slugs[currentLang];
-            const routePattern = getRoutePath('newsDetail', currentLang);
-
-            // If the current ID doesn't match the target language slug, redirect
-            // This also handles switching from /news/:id to /tin-tuc/:id via the route pattern
-            if (id !== targetSlug && routePattern) {
-                const newPath = routePattern.replace(':id', targetSlug);
-                // Only navigate if we are not already on the correct path (to avoid loops or executed redundancy)
-                // However, since 'id' check covers the slug, we just need to be careful.
-                // But wait, if slugs are same for both languages (unlikely but possible), 
-                // we should also check if the path base matches.
-                // But simplify: just replace if slug differs OR to ensure path correctness.
-                // Actually, if I am on /news/slug-en and switch to VN, id is slug-en. targetSlug is slug-vi. They differ.
-                // If I am on /news/slug-common and switch to VN (expect /tin-tuc/slug-common), id is slug-common. targetSlug is slug-common.
-                // In that case, we need to check the pathname?
-                // Let's rely on id difference for now as slugs are distinct in this dataset.
-                // If they are not distinct, we might rely on the parent component keying or check location.pathname.
-                navigate(newPath, { replace: true });
+        const fetchPost = async () => {
+            if (!id) return;
+            setLoading(true);
+            try {
+                const locale = i18n.language === 'vi' ? 'vi-VN' : 'en-US';
+                const data = await publicPostService.getPostBySlug(id, locale);
+                setPost(data);
+            } catch (error) {
+                console.error("Error fetching post details:", error);
+                setPost(null);
+            } finally {
+                setLoading(false);
             }
-        }
-    }, [i18n.language, post, id, navigate]);
+        };
+
+        fetchPost();
+    }, [id, i18n.language]);
 
     // Update meta even if post not found (though useDocumentMeta handles general meta)
     useDocumentMeta();
 
+    const formatDate = (dateString: string) => {
+        if (!dateString) return '';
+        const date = new Date(dateString);
+        return date.toLocaleDateString(i18n.language === 'vi' ? 'vi-VN' : 'en-US', {
+            day: 'numeric',
+            month: 'short',
+            year: 'numeric'
+        });
+    };
+
+    if (loading) {
+        return (
+            <div className="container mx-auto px-4 py-20 flex justify-center items-center min-h-screen">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+            </div>
+        );
+    }
+
     if (!post) {
         return (
-            <div className="container mx-auto px-4 py-20 text-center">
-                <h2 className="text-2xl font-bold mb-4">{t('news.notFound')}</h2>
+            <div className="container mx-auto px-4 py-20 text-center min-h-screen">
+                <h2 className="text-2xl font-bold mb-4">{t('news.notFound', 'Không tìm thấy bài viết')}</h2>
                 <button
                     onClick={() => navigate(getRoutePath('news', i18n.language))}
                     className="text-blue-600 hover:underline"
                 >
-                    {t('news.backToNews')}
+                    {t('news.backToNews', 'Quay lại Tin tức')}
                 </button>
             </div>
         );
@@ -67,58 +77,45 @@ export default function NewsDetailPage() {
                     className="flex items-center text-slate-500 hover:text-blue-600 mb-8 transition-colors"
                 >
                     <ArrowLeft className="w-5 h-5 mr-2" />
-                    {t('news.backToNews')}
+                    {t('news.backToNews', 'Quay lại Tin tức')}
                 </button>
 
                 <article>
                     <div className="mb-8">
-                        <span className="text-sm font-bold text-blue-600 uppercase tracking-wider mb-2 block">{t(post.category)}</span>
+                        <span className="text-sm font-bold text-blue-600 uppercase tracking-wider mb-2 block">
+                            TIN TỨC
+                        </span>
                         <h1 className="text-3xl md:text-5xl font-bold text-slate-900 mb-6 leading-tight">
-                            {t(post.title)}
+                            {post.title}
                         </h1>
                         <div className="flex items-center text-slate-500 text-sm mb-8 border-b border-slate-100 pb-8">
-                            <span className="mr-4">{post.date}</span>
-                            {post.author && <span>• {post.author}</span>}
+                            <span className="mr-4">{formatDate(post.publishedAt)}</span>
+                            {post.authorName && <span>• {post.authorName}</span>}
                         </div>
                     </div>
 
-                    <div className="mb-10 rounded-2xl overflow-hidden shadow-lg">
-                        <img
-                            src={post.image}
-                            alt={t(post.title)}
-                            className="w-full h-auto object-cover max-h-[500px]"
-                        />
+                    <div className="mb-10 rounded-2xl overflow-hidden shadow-lg bg-slate-100">
+                            <img
+                                src={getFullImageUrl(post.thumbnailUrl) || '/images/default-thumbnail.png'}
+                                alt={post.thumbnailAlt || post.title}
+                                className="w-full h-auto object-cover max-h-[500px]"
+                                onError={(e) => {
+                                    const target = e.target as HTMLImageElement;
+                                    if (!target.src.includes('via.placeholder.com')) {
+                                        target.src = 'https://via.placeholder.com/1200x600?text=AI+Core';
+                                    }
+                                }}
+                            />
                     </div>
 
                     <div className="prose prose-lg max-w-none text-slate-700">
-                        {/* Split content by newlines and render paragraphs or images */}
-                        {t(post.content).split('\n\n').map((paragraph, idx) => {
-                            // Check for image placeholder {{IMAGE_index}}
-                            const imageMatch = paragraph.trim().match(/^{{IMAGE_(\d+)}}$/);
-
-                            if (imageMatch && post.contentImages) {
-                                const imageIndex = parseInt(imageMatch[1]);
-                                const imageSrc = post.contentImages[imageIndex];
-
-                                if (imageSrc) {
-                                    return (
-                                        <div key={idx} className="my-8 rounded-xl overflow-hidden shadow-md">
-                                            <img
-                                                src={imageSrc}
-                                                alt={`Illustration ${imageIndex + 1}`}
-                                                className="w-full h-auto object-cover"
-                                            />
-                                        </div>
-                                    );
-                                }
-                            }
-
-                            return (
-                                <p key={idx} className="mb-6 whitespace-pre-line leading-relaxed">
-                                    {paragraph}
-                                </p>
-                            );
-                        })}
+                        {post.contentFormat === 'HTML' ? (
+                            <div dangerouslySetInnerHTML={{ __html: transformHtmlContent(post.content) }} />
+                        ) : (
+                            <div className="whitespace-pre-line leading-relaxed">
+                                {post.content}
+                            </div>
+                        )}
                     </div>
                 </article>
             </div>
