@@ -5,13 +5,25 @@ import com.aicoresolution.backend.entity.PostStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
-public interface PostRepository extends JpaRepository<Post, Long> {
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+
+public interface PostRepository extends JpaRepository<Post, Long>, JpaSpecificationExecutor<Post> {
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE posts SET status = 'PUBLISHED'::post_status, " +
+           "published_at = scheduled_at, updated_at = :now " +
+           "WHERE status = 'SCHEDULED'::post_status " +
+           "AND scheduled_at <= :now", nativeQuery = true)
+    int publishScheduledPosts(@Param("now") LocalDateTime now);
 
     boolean existsBySlugIgnoreCase(String slug);
 

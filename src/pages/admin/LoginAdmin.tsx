@@ -1,9 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { LogIn, AlertCircle, Loader2 } from 'lucide-react';
 import authService from '../../services/authService';
+import { extractErrorMessage, mapAuthErrorToI18n } from '../../utils/errorHandler';
+import { ROUTE_PATHS } from '../../utils/routeConstants';
 
 const LoginAdmin = () => {
+  const { t } = useTranslation();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -17,10 +21,10 @@ const LoginAdmin = () => {
 
     try {
       await authService.login({ username, password });
-      navigate('/admin');
-    } catch (err: any) {
-      console.error('Login failed:', err);
-      setError(err.response?.data?.message || 'Invalid username or password. Please try again.');
+      navigate(ROUTE_PATHS.admin);
+    } catch (err: unknown) {
+      const raw = extractErrorMessage(err);
+      setError(mapAuthErrorToI18n(raw, t));
     } finally {
       setIsLoading(false);
     }
@@ -34,10 +38,10 @@ const LoginAdmin = () => {
             <LogIn className="h-8 w-8 text-admin-secondary-100" />
           </div>
           <h2 className="text-admin-2xl font-admin-semibold text-admin-netral-100">
-            Admin Portal
+            {t('auth.adminLogin.title')}
           </h2>
           <p className="mt-2 text-admin-sm text-admin-netral-50">
-            Enter your credentials to access the dashboard
+            {t('auth.adminLogin.subtitle')}
           </p>
         </div>
 
@@ -51,25 +55,31 @@ const LoginAdmin = () => {
 
           <div className="space-y-4">
             <div>
-              <label className="block text-admin-xs font-admin-medium text-admin-netral-100 mb-2 ml-1">Username</label>
+              <label className="block text-admin-xs font-admin-medium text-admin-netral-100 mb-2 ml-1">
+                {t('auth.adminLogin.usernameLabel')}
+              </label>
               <input
                 type="text"
                 required
+                autoComplete="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="admin"
+                placeholder={t('auth.adminLogin.usernamePlaceholder')}
                 className="block w-full px-4 py-3 border border-admin-netral-20 rounded-xl shadow-sm outline-none focus:border-admin-primary-100 transition-colors text-admin-base text-admin-netral-100 placeholder:text-admin-netral-30"
               />
             </div>
 
             <div>
-              <label className="block text-admin-xs font-admin-medium text-admin-netral-100 mb-2 ml-1">Password</label>
+              <label className="block text-admin-xs font-admin-medium text-admin-netral-100 mb-2 ml-1">
+                {t('auth.adminLogin.passwordLabel')}
+              </label>
               <input
                 type="password"
                 required
+                autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
+                placeholder={t('auth.adminLogin.passwordPlaceholder')}
                 className="block w-full px-4 py-3 border border-admin-netral-20 rounded-xl shadow-sm outline-none focus:border-admin-primary-100 transition-colors text-admin-base text-admin-netral-100 placeholder:text-admin-netral-30"
               />
             </div>
@@ -85,7 +95,7 @@ const LoginAdmin = () => {
             {isLoading ? (
               <Loader2 className="w-5 h-5 animate-spin" />
             ) : (
-              'Sign in to Dashboard'
+              t('auth.adminLogin.submitButton')
             )}
           </button>
         </form>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MoreHorizontal, ArrowDown, Check, Minus, FileQuestion } from 'lucide-react';
 import { Article, ArticleStatus } from '../../types/article';
@@ -57,6 +57,18 @@ const StatusBadge = ({ status }: { status: ArticleStatus }) => {
       bg = 'bg-admin-info-10';
       text = 'text-admin-info-100';
       break;
+    case 'Deleted':
+      bg = 'bg-admin-error-10';
+      text = 'text-admin-error-100';
+      break;
+    case 'Archived':
+      bg = 'bg-admin-netral-20';
+      text = 'text-admin-netral-60';
+      break;
+    default:
+      bg = 'bg-admin-netral-10';
+      text = 'text-admin-netral-50';
+      break;
   }
 
   return (
@@ -69,11 +81,21 @@ const StatusBadge = ({ status }: { status: ArticleStatus }) => {
 export const ArticleTable = ({ 
   articles = [], 
   sortConfig, 
-  onSort 
+  onSort,
+  onView,
+  onDelete,
+  onDeleteBatch,
+  selectedIds,
+  onSelectionChange
 }: { 
   articles?: Article[];
   sortConfig: { key: keyof Article; direction: 'asc' | 'desc' } | null;
   onSort: (config: { key: keyof Article; direction: 'asc' | 'desc' } | null) => void;
+  onView?: (id: number) => void; 
+  onDelete?: (id: number) => void;
+  onDeleteBatch?: (ids: number[]) => void;
+  selectedIds: Set<number>;
+  onSelectionChange: (ids: Set<number>) => void;
 }) => {
   const navigate = useNavigate();
   const requestSort = (key: keyof Article) => {
@@ -101,7 +123,6 @@ export const ArticleTable = ({
   }
 
   const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
-  const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
 
   const toggleDropdown = (id: number) => {
     setOpenDropdownId(openDropdownId === id ? null : id);
@@ -112,25 +133,25 @@ export const ArticleTable = ({
 
   const handleSelectAll = () => {
     if (isAllSelected) {
-      setSelectedIds(new Set());
+      onSelectionChange(new Set());
     } else {
-      setSelectedIds(new Set(articles.map(a => a.id)));
+      onSelectionChange(new Set(articles.map(a => a.id)));
     }
   };
 
-  const handleSelectOne = (id: number) => {
+  const toggleSelect = (id: number) => {
     const newSet = new Set(selectedIds);
     if (newSet.has(id)) {
       newSet.delete(id);
     } else {
       newSet.add(id);
     }
-    setSelectedIds(newSet);
+    onSelectionChange(newSet);
   };
 
   return (
     <div className="bg-admin-netral-10 rounded-2xl px-6 py-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)] overflow-x-auto flex-1 h-full">
-      <table className="w-full text-left border-collapse min-w-[1000px]">
+        <table className="w-full text-left border-collapse min-w-[1000px]">
         <thead>
           <tr className="border-b border-admin-netral-20">
             <th className="h-[2.5rem] pr-4 w-12 align-middle">
@@ -169,7 +190,7 @@ export const ArticleTable = ({
               onClick={() => requestSort('dateCreated')}
             >
               <div className="flex items-center gap-2">
-                Date created 
+                Published At 
                 <ArrowDown className={`w-4 h-4 text-admin-netral-60 transition-transform ${sortConfig?.key === 'dateCreated' ? (sortConfig.direction === 'desc' ? 'rotate-180 text-admin-primary-100' : 'text-admin-primary-100') : 'group-hover:text-admin-netral-80'}`} />
               </div>
             </th>
@@ -184,11 +205,18 @@ export const ArticleTable = ({
               <td className="h-[3.625rem] pr-4 align-middle">
                 <CustomCheckbox 
                   checked={selectedIds.has(article.id)} 
-                  onClick={() => handleSelectOne(article.id)}
+                  onClick={() => toggleSelect(article.id)}
                 />
               </td>
               <td className="h-[3.625rem] px-4 whitespace-nowrap align-middle">{article.publisher}</td>
-              <td className="h-[3.625rem] px-4 max-w-md truncate align-middle">{article.headline}</td>
+              <td className="h-[3.625rem] px-4 max-w-md align-middle">
+                <button 
+                  onClick={() => onView?.(article.id)}
+                  className="hover:text-admin-primary-100 transition-colors text-left font-admin-regular line-clamp-2"
+                >
+                  {article.headline}
+                </button>
+              </td>
               <td className="h-[3.625rem] px-4 whitespace-nowrap align-middle">
                 <StatusBadge status={article.status} />
               </td>
@@ -205,14 +233,38 @@ export const ArticleTable = ({
                 {openDropdownId === article.id && (
                   <div className="absolute right-0 top-12 w-[11.25rem] p-2 bg-admin-netral-10 rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.08)] z-10 border border-admin-netral-20 flex flex-col">
                     <button 
-                      onClick={() => navigate(ROUTE_PATHS.adminEditArticle.replace(':id', article.id.toString()))}
+                      onClick={() => {
+                        navigate(ROUTE_PATHS.adminEditArticle.replace(':id', article.id.toString()));
+                        setOpenDropdownId(null);
+                      }}
                       className="w-full text-left px-3 py-2 rounded-lg hover:bg-admin-netral-20 transition-colors text-admin-sm font-admin-regular text-admin-netral-100"
                     >
                       Edit
                     </button>
-                    <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-admin-netral-20 transition-colors text-admin-sm font-admin-regular text-admin-netral-100">Delete</button>
-                    <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-admin-netral-20 transition-colors text-admin-sm font-admin-regular text-admin-netral-100">View article</button>
-                    <button className="w-full text-left px-3 py-2 rounded-lg hover:bg-admin-netral-20 transition-colors text-admin-sm font-admin-regular text-admin-netral-100">Takedown</button>
+                    <button 
+                      onClick={() => {
+                        onDelete?.(article.id);
+                        setOpenDropdownId(null);
+                      }}
+                      className="w-full text-left px-3 py-2 rounded-lg hover:bg-admin-error-10 transition-colors text-admin-sm font-admin-regular text-admin-error-100"
+                    >
+                      Delete
+                    </button>
+                    <button 
+                      onClick={() => {
+                        onView?.(article.id);
+                        setOpenDropdownId(null);
+                      }}
+                      className="w-full text-left px-3 py-2 rounded-lg hover:bg-admin-netral-20 transition-colors text-admin-sm font-admin-regular text-admin-netral-100"
+                    >
+                      View article
+                    </button>
+                    <button 
+                      onClick={() => setOpenDropdownId(null)}
+                      className="w-full text-left px-3 py-2 rounded-lg hover:bg-admin-netral-20 transition-colors text-admin-sm font-admin-regular text-admin-netral-100"
+                    >
+                      Takedown
+                    </button>
                   </div>
                 )}
               </td>

@@ -3,6 +3,27 @@
         "title": "AICoreSolutions - Đối tác AI Cho Sự Tăng trưởng Bền vững",
         "description": "Chuyên cung cấp giải pháp thiết kế website AI, hiện đại và tối ưu hóa trải nghiệm người dùng."
     },
+    "auth": {
+        "adminLogin": {
+            "title": "Cổng Quản Trị",
+            "subtitle": "Nhập thông tin đăng nhập để truy cập bảng điều khiển",
+            "usernameLabel": "Tên đăng nhập",
+            "usernamePlaceholder": "admin",
+            "passwordLabel": "Mật khẩu",
+            "passwordPlaceholder": "••••••••",
+            "submitButton": "Đăng nhập",
+            "errorInvalidCredentials": "Tên đăng nhập hoặc mật khẩu không đúng.",
+            "errorAccountInactive": "Tài khoản của bạn chưa được kích hoạt.",
+            "errorGeneric": "Đăng nhập thất bại. Vui lòng thử lại."
+        }
+    },
+    "admin": {
+        "underConstruction": {
+            "title": "Sắp Ra Mắt",
+            "description": "Phần này đang được phát triển. Chúng tôi đang nỗ lực mang đến những tính năng mới.",
+            "hint": "Dự kiến trong các bản cập nhật sắp tới"
+        }
+    },
     "nav": {
         "home": "Trang chủ",
         "services": "Dịch vụ",

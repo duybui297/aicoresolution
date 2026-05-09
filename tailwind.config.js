@@ -1,3 +1,4 @@
+import typography from '@tailwindcss/typography';
 import { adminColors } from './src/styles/adminColors';
 import { adminFontFamily, adminFontSize, adminFontWeight } from './src/styles/adminTypography';
 
@@ -32,5 +33,7 @@ export default {
       }
     },
   },
-  plugins: [],
+  plugins: [
+    typography,
+  ],
 };

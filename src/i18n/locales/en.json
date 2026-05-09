@@ -3,6 +3,27 @@
         "title": "AICoreSolutions - Your AI Partner for Sustainable Growth",
         "description": "Specialized in providing AI website design solutions, modern and optimized user experience."
     },
+    "auth": {
+        "adminLogin": {
+            "title": "Admin Portal",
+            "subtitle": "Enter your credentials to access the dashboard",
+            "usernameLabel": "Username",
+            "usernamePlaceholder": "admin",
+            "passwordLabel": "Password",
+            "passwordPlaceholder": "••••••••",
+            "submitButton": "Sign in to Dashboard",
+            "errorInvalidCredentials": "Invalid username/email or password.",
+            "errorAccountInactive": "Your account is not active.",
+            "errorGeneric": "Login failed. Please try again."
+        }
+    },
+    "admin": {
+        "underConstruction": {
+            "title": "Coming Soon",
+            "description": "This section is currently under development. We're working hard to bring you new features.",
+            "hint": "Expected in upcoming releases"
+        }
+    },
     "nav": {
         "home": "Home",
         "services": "Services",

@@ -19,18 +19,25 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({ onClose, onApply }) => 
   }, []);
 
   const handleApply = () => {
-    if (selectedDate && selectedHour && selectedMinute && selectedPeriod && onApply) {
+    if (selectedDate && onApply) {
       const day = selectedDate.getDate().toString().padStart(2, '0');
       const month = (selectedDate.getMonth() + 1).toString().padStart(2, '0');
       const year = selectedDate.getFullYear();
-      const dateStr = `${day}/${month}/${year} - ${selectedHour}:${selectedMinute} ${selectedPeriod}`;
+      
+      let dateStr = `${day}/${month}/${year}`;
+      
+      // Only append time if all time parts are selected
+      if (selectedHour && selectedMinute && selectedPeriod) {
+        dateStr += ` - ${selectedHour}:${selectedMinute} ${selectedPeriod}`;
+      }
+      
       onApply(dateStr);
     }
     if (onClose) onClose();
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-admin-netral-20 shadow-[0_4px_30px_rgba(0,0,0,0.1)] flex py-4 px-6 gap-6 w-[587px] h-[378px] z-50">
+    <div className="bg-white rounded-2xl border border-admin-netral-20 shadow-[0_4px_30px_rgba(0,0,0,0.1)] flex py-5 px-6 gap-6 w-[587px] h-auto min-h-[400px] z-50">
        {/* Left side: Calendar */}
        <div className="flex flex-col flex-1 relative">
           <SharedCalendar 
@@ -43,13 +50,13 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({ onClose, onApply }) => 
           <div className="flex items-center gap-3 mt-4">
             <button 
               onClick={onClose}
-              className="flex-1 py-2.5 border border-admin-netral-20 rounded-lg text-admin-xs font-admin-regular text-admin-netral-100 hover:bg-admin-netral-10 transition-colors"
+              className="flex-1 py-3 border border-admin-netral-30 rounded-xl text-admin-sm font-admin-semibold text-admin-netral-100 hover:bg-admin-netral-10 transition-colors"
             >
               Cancel
             </button>
             <button 
               onClick={handleApply}
-              className="flex-1 py-2.5 bg-admin-primary-100 rounded-lg text-admin-xs font-admin-regular text-white hover:bg-admin-primary-90 transition-colors"
+              className="flex-1 py-3 bg-admin-primary-100 rounded-xl text-admin-sm font-admin-semibold text-white hover:bg-admin-primary-90 transition-colors"
             >
               Apply
             </button>
@@ -58,11 +65,11 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({ onClose, onApply }) => 
        
        {/* Right side: Time Picker */}
        <div className="flex flex-col w-[200px]">
-         <div className="text-center text-admin-base font-admin-semibold text-admin-primary-100 mb-2 mt-1">
-           {selectedHour || '--'} : {selectedMinute || '--'} {selectedPeriod || '--'}
-         </div>
+          <div className="text-center text-admin-base font-admin-semibold text-admin-primary-100 mb-2 mt-1">
+            {selectedHour || '00'} : {selectedMinute || '00'} {selectedPeriod || 'AM'}
+          </div>
          
-         <div className="flex gap-2 h-[290px] relative overflow-hidden">
+         <div className="flex gap-2 h-[350px] relative overflow-hidden">
             {/* Fade overlays for scrolling illusion */}
             <div className="absolute top-0 left-0 right-0 h-8 bg-gradient-to-b from-white to-transparent z-10 pointer-events-none"></div>
             <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-white to-transparent z-10 pointer-events-none"></div>

@@ -25,7 +25,7 @@ export interface User {
   role: string;
 }
 
-export type PostStatus = 'DRAFT' | 'PUBLISHED' | 'SCHEDULED' | 'DELETED' | 'ARCHIVED';
+export type PostStatus = 'DRAFT' | 'PUBLISHED' | 'SCHEDULED' | 'DELETED' | 'ARCHIVED' | 'PENDING' | 'APPROVED' | 'REJECTED';
 export type ContentFormat = 'MARKDOWN' | 'HTML';
 
 export interface PostResponse {
@@ -36,8 +36,10 @@ export interface PostResponse {
   content: string;
   contentFormat: ContentFormat;
   thumbnailUrl: string;
+  thumbnailAlt?: string;
   status: PostStatus;
   publishedAt: string;
+  scheduledAt?: string;
   createdAt: string;
   updatedAt: string;
   authorId: number;

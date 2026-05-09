@@ -153,27 +153,54 @@ public class PostService implements IPostService {
 
     @Override
     @Transactional(readOnly = true)
-    public Page<PostResponse> listAdmin(Pageable pageable, String status) {
+    public Page<PostResponse> listAdmin(Pageable pageable, 
+            String search, java.util.List<String> statuses, 
+            java.time.OffsetDateTime startDate, java.time.OffsetDateTime endDate,
+            String role) {
+        
         // Use default sort if none provided
         if (pageable.getSort().isUnsorted()) {
             pageable = PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), 
                     Sort.by(Sort.Direction.DESC, "updatedAt"));
         }
         
-        Page<Post> postPage;
-        
-        if (status != null && !status.equalsIgnoreCase("All")) {
-            try {
-                PostStatus postStatus = PostStatus.valueOf(status.toUpperCase());
-                postPage = postRepository.findByStatusAndDeletedAtIsNull(postStatus, pageable);
-            } catch (IllegalArgumentException e) {
-                logger.warn("Invalid status filter: {}", status);
-                postPage = postRepository.findAllNotDeleted(pageable);
-            }
-        } else {
-            postPage = postRepository.findAllNotDeleted(pageable);
+        org.springframework.data.jpa.domain.Specification<Post> spec = org.springframework.data.jpa.domain.Specification
+                .where(com.aicoresolution.backend.service.specification.PostSpecification.isNotDeleted());
+
+        if (search != null && !search.isBlank()) {
+            spec = spec.and(com.aicoresolution.backend.service.specification.PostSpecification.hasSearchQuery(search));
         }
 
+        if (statuses != null && !statuses.isEmpty() && !statuses.contains("All")) {
+            List<PostStatus> postStatuses = new ArrayList<>();
+            for (String s : statuses) {
+                try {
+                    postStatuses.add(PostStatus.valueOf(s.toUpperCase()));
+                } catch (IllegalArgumentException e) {
+                    logger.warn("Invalid status filter: {}", s);
+                }
+            }
+            if (!postStatuses.isEmpty()) {
+                spec = spec.and(com.aicoresolution.backend.service.specification.PostSpecification.hasStatusIn(postStatuses));
+            }
+        }
+
+        if (startDate != null || endDate != null) {
+            LocalDateTime start = startDate != null ? startDate.toLocalDateTime() : null;
+            LocalDateTime end = endDate != null ? endDate.toLocalDateTime() : null;
+            spec = spec.and(com.aicoresolution.backend.service.specification.PostSpecification.createdAtBetween(start, end));
+        }
+
+        if (role != null && !role.equalsIgnoreCase("All")) {
+            try {
+                UserRole userRole = UserRole.valueOf(role.toUpperCase().replace(" ", "_"));
+                spec = spec.and(com.aicoresolution.backend.service.specification.PostSpecification.authorHasRole(userRole));
+            } catch (IllegalArgumentException e) {
+                logger.warn("Invalid role filter: {}", role);
+            }
+        }
+
+        Page<Post> postPage = postRepository.findAll(spec, pageable);
         Page<PostResponse> responsePage = postPage.map(post -> toResponseInternal(post, true));
         enrichPostResponses(responsePage.getContent());
         return responsePage;
@@ -313,12 +340,22 @@ public class PostService implements IPostService {
             post.setAllowComments(request.getAllowComments());
         }
 
+        // Cập nhật ngày đăng và ngày hẹn giờ từ request
+        if (request.getPublishedAt() != null) {
+            post.setPublishedAt(request.getPublishedAt());
+        }
+        if (request.getScheduledAt() != null) {
+            post.setScheduledAt(request.getScheduledAt());
+        }
+
+        // Logic tự động nếu không gửi ngày cụ thể
         if (request.getStatus() == PostStatus.PUBLISHED && post.getPublishedAt() == null) {
             post.setPublishedAt(LocalDateTime.now());
         }
 
         if (request.getStatus() == PostStatus.DRAFT) {
             post.setPublishedAt(null);
+            post.setScheduledAt(null);
         }
     }
 

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import LandingLayout from './layouts/LandingLayout';
 import AdminLayout from './layouts/AdminLayout';
 import Home from './pages/landing/Home';
@@ -14,6 +14,7 @@ import Dashboard from './pages/admin/Dashboard';
 import LoginAdmin from './pages/admin/LoginAdmin';
 import CreateArticle from './pages/admin/CreateArticle';
 import EditArticle from './pages/admin/EditArticle';
+import { UnderConstruction } from './pages/admin/UnderConstruction';
 import ProtectedRoute from './components/ProtectedRoute';
 import { useDocumentMeta } from './hooks/useDocumentMeta';
 import { ROUTE_PATHS } from './utils/routeConstants';
@@ -31,12 +32,27 @@ function App() {
   return (
     <Routes>
       {/* Admin Portal Routes */}
-      <Route path={ROUTE_PATHS.adminLogin} element={<LoginAdmin />} />
+      {/*
+       * IMPORTANT: /admin/login must be INSIDE ProtectedRoute, not a sibling.
+       * React Router v6 matches routes by prefix — if /admin/login is a sibling of
+       * /admin (ProtectedRoute), the router matches /admin/* first and redirects
+       * /admin/login to itself, creating an infinite loop.
+       *
+       * By nesting /admin/login as a child of ProtectedRoute, the router first
+       * checks the more-specific path /admin/login before the parent catches it.
+       * LoginAdmin itself renders without the Outlet so the layout is irrelevant.
+       */}
       <Route path={ROUTE_PATHS.admin} element={<ProtectedRoute />}>
+        <Route path="login" element={<LoginAdmin />} />
         <Route element={<AdminLayout />}>
-          <Route index element={<Dashboard />} />
-          <Route path={ROUTE_PATHS.adminCreateArticle} element={<CreateArticle />} />
-          <Route path={ROUTE_PATHS.adminEditArticle} element={<EditArticle />} />
+          <Route index element={<Navigate to={ROUTE_PATHS.adminArticles} replace />} />
+          <Route path="articles" element={<Dashboard />} />
+          <Route path="articles/create" element={<CreateArticle />} />
+          <Route path="articles/edit/:id" element={<EditArticle />} />
+          <Route path="scheduled" element={<UnderConstruction />} />
+          <Route path="contributors" element={<UnderConstruction />} />
+          <Route path="trash" element={<UnderConstruction />} />
+          <Route path="settings" element={<UnderConstruction />} />
         </Route>
       </Route>
 
