@@ -43,10 +43,10 @@ public interface IPostService {
     /**
      * Get single post by slug (public view)
      */
-    PostResponse getPublicBySlug(String slug);
+    PostResponse getPublicBySlug(String slug, String locale);
 
     /**
      * Get paginated list of published posts (public view)
      */
-    Page<PostResponse> listPublic(int page, int size);
+    Page<PostResponse> listPublic(int page, int size, String locale);
 }

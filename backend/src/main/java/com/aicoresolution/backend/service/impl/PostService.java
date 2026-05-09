@@ -10,6 +10,7 @@ import com.aicoresolution.backend.service.IPostRevisionService;
 import com.aicoresolution.backend.common.headers.HeaderUtils;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -34,6 +35,7 @@ public class PostService implements IPostService {
     private final PostMediaRepository postMediaRepository;
     private final PostAuthorRepository postAuthorRepository;
     private final RedirectRepository redirectRepository;
+    private final PostTranslationRepository postTranslationRepository;
 
     public PostService(PostRepository postRepository,
                        CmsUserRepository cmsUserRepository,
@@ -42,7 +44,8 @@ public class PostService implements IPostService {
                        PostTagRepository postTagRepository,
                        PostMediaRepository postMediaRepository,
                        PostAuthorRepository postAuthorRepository,
-                       RedirectRepository redirectRepository) {
+                       RedirectRepository redirectRepository,
+                       PostTranslationRepository postTranslationRepository) {
         this.postRepository = postRepository;
         this.cmsUserRepository = cmsUserRepository;
         this.revisionService = revisionService;
@@ -51,6 +54,7 @@ public class PostService implements IPostService {
         this.postMediaRepository = postMediaRepository;
         this.postAuthorRepository = postAuthorRepository;
         this.redirectRepository = redirectRepository;
+        this.postTranslationRepository = postTranslationRepository;
     }
 
     @Override
@@ -216,25 +220,57 @@ public class PostService implements IPostService {
 
     @Override
     @Transactional(readOnly = true)
-    public PostResponse getPublicBySlug(String slug) {
-        Post post = postRepository.findBySlugIgnoreCaseAndStatus(slug, PostStatus.PUBLISHED)
+    public PostResponse getPublicBySlug(String slug, String locale) {
+        Post post = postRepository.findBySlugOrTranslationSlugAndStatus(slug, PostStatus.PUBLISHED)
                 .orElseThrow(() -> new EntityNotFoundException("Post not found or not published"));
         
         if (post.getDeletedAt() != null) {
             throw new EntityNotFoundException("Post not found");
         }
         
-        return toResponse(post);
+        PostResponse response = toResponse(post);
+        if (locale != null && !locale.isEmpty() && !locale.equals(post.getLocale())) {
+            postTranslationRepository.findByPostIdAndLocale(post.getId(), locale)
+                .ifPresent(t -> mapTranslationToResponse(t, response));
+        }
+        return response;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<PostResponse> listPublic(int page, int size) {
+    public Page<PostResponse> listPublic(int page, int size, String locale) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "publishedAt"));
-        Page<PostResponse> responsePage = postRepository.findPublishedNotDeleted(PostStatus.PUBLISHED, pageable)
-                .map(post -> toResponseInternal(post, true));
-        enrichPostResponses(responsePage.getContent());
-        return responsePage;
+        Page<Post> postPage = postRepository.findPublishedNotDeletedByLocale(PostStatus.PUBLISHED, locale, pageable);
+        
+        List<PostResponse> responses = postPage.stream()
+            .map(post -> toResponseInternal(post, true))
+            .collect(Collectors.toList());
+
+        if (locale != null && !locale.isEmpty()) {
+            List<Long> postIds = postPage.getContent().stream().map(Post::getId).collect(Collectors.toList());
+            Map<Long, PostTranslation> translationMap = postTranslationRepository.findByPostIdInAndLocale(postIds, locale)
+                .stream()
+                .collect(Collectors.toMap(PostTranslation::getPostId, t -> t));
+            
+            responses.forEach(response -> {
+                PostTranslation t = translationMap.get(response.getId());
+                if (t != null) {
+                    mapTranslationToResponse(t, response);
+                }
+            });
+        }
+        
+        enrichPostResponses(responses);
+        return new PageImpl<>(responses, pageable, postPage.getTotalElements());
+    }
+
+    private void mapTranslationToResponse(PostTranslation t, PostResponse response) {
+        response.setTitle(t.getTitle());
+        response.setSlug(t.getSlug());
+        response.setExcerpt(t.getExcerpt());
+        response.setContent(t.getContent());
+        response.setMetaTitle(t.getMetaTitle());
+        response.setMetaDescription(t.getMetaDescription());
     }
 
     private void applyPostData(Post post, PostUpsertRequest request) {
