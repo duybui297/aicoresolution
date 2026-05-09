@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { ROUTE_PATHS } from '../utils/routeConstants';
+import { STORAGE_KEYS } from '../utils/authStorageKeys';
 
 // Base API URL
 const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8080/api/v1').replace(/\/$/, '') + '/';
@@ -14,7 +15,7 @@ const axiosClient = axios.create({
 // Request interceptor: attach token to every request
 axiosClient.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('accessToken');
+    const token = localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -50,7 +51,7 @@ axiosClient.interceptors.response.use(
       }
 
       originalRequest._retry = true;
-      const refreshToken = localStorage.getItem('refreshToken');
+      const refreshToken = localStorage.getItem(STORAGE_KEYS.REFRESH_TOKEN);
 
       if (refreshToken) {
         try {
@@ -58,8 +59,8 @@ axiosClient.interceptors.response.use(
           const res = await axios.post(`${API_URL}auth/refresh`, { refreshToken });
           const { accessToken: newAccessToken, refreshToken: newRefreshToken } = res.data;
 
-          localStorage.setItem('accessToken', newAccessToken);
-          if (newRefreshToken) localStorage.setItem('refreshToken', newRefreshToken);
+          localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, newAccessToken);
+          if (newRefreshToken) localStorage.setItem(STORAGE_KEYS.REFRESH_TOKEN, newRefreshToken);
 
           // Update header and retry
           originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;

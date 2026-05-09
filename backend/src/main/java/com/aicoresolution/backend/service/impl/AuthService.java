@@ -84,9 +84,7 @@ public class AuthService implements IAuthService, CommandLineRunner {
         logger.info("User login attempt: {} - RequestID: {}", request.getUsername(), requestId);
         String username = request.getUsername().trim();
 
-        // Try to find user by username first, then by email
-        CmsUser user = cmsUserRepository.findByUsername(username)
-                .or(() -> cmsUserRepository.findByEmail(username))
+        CmsUser user = cmsUserRepository.findByUsernameOrEmail(username, username)
                 .orElseThrow(() -> new BadCredentialsException("Invalid username/email or password"));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {

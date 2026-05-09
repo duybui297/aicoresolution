@@ -1,13 +1,7 @@
 import axiosClient from './axiosClient';
 import { LoginRequest, LoginResponse, ApiResponse } from '../types/api';
 import { clearAuthStorage } from '../utils/authUtils';
-
-export const STORAGE_KEYS = {
-  ACCESS_TOKEN: 'accessToken',
-  REFRESH_TOKEN: 'refreshToken',
-  USER_ROLE: 'userRole',
-  USER_ID: 'userId',
-} as const;
+import { STORAGE_KEYS } from '../utils/authStorageKeys';
 
 const authService = {
   login: async (credentials: LoginRequest): Promise<LoginResponse> => {
