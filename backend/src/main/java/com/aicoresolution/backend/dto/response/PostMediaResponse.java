@@ -14,4 +14,8 @@ public class PostMediaResponse {
     private Long mediaId;
     private Integer sortOrder;
     private MediaRole role;
+    private String fileUrl;
+    private String fileName;
+    private String mimeType;
+    private Long fileSize;
 }

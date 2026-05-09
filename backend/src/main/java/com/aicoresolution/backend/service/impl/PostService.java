@@ -34,6 +34,8 @@ public class PostService implements IPostService {
     private final PostMediaRepository postMediaRepository;
     private final PostAuthorRepository postAuthorRepository;
     private final RedirectRepository redirectRepository;
+    private final com.aicoresolution.backend.repository.CategoryRepository categoryRepository;
+    private final com.aicoresolution.backend.repository.MediaRepository mediaRepository;
 
     public PostService(PostRepository postRepository,
                        CmsUserRepository cmsUserRepository,
@@ -42,7 +44,9 @@ public class PostService implements IPostService {
                        PostTagRepository postTagRepository,
                        PostMediaRepository postMediaRepository,
                        PostAuthorRepository postAuthorRepository,
-                       RedirectRepository redirectRepository) {
+                       RedirectRepository redirectRepository,
+                       com.aicoresolution.backend.repository.CategoryRepository categoryRepository,
+                       com.aicoresolution.backend.repository.MediaRepository mediaRepository) {
         this.postRepository = postRepository;
         this.cmsUserRepository = cmsUserRepository;
         this.revisionService = revisionService;
@@ -51,6 +55,8 @@ public class PostService implements IPostService {
         this.postMediaRepository = postMediaRepository;
         this.postAuthorRepository = postAuthorRepository;
         this.redirectRepository = redirectRepository;
+        this.categoryRepository = categoryRepository;
+        this.mediaRepository = mediaRepository;
     }
 
     @Override
@@ -219,12 +225,14 @@ public class PostService implements IPostService {
     public PostResponse getPublicBySlug(String slug) {
         Post post = postRepository.findBySlugIgnoreCaseAndStatus(slug, PostStatus.PUBLISHED)
                 .orElseThrow(() -> new EntityNotFoundException("Post not found or not published"));
-        
+
         if (post.getDeletedAt() != null) {
             throw new EntityNotFoundException("Post not found");
         }
-        
-        return toResponse(post);
+
+        PostResponse response = toResponse(post);
+        enrichPostResponses(java.util.List.of(response));
+        return response;
     }
 
     @Override
@@ -467,22 +475,22 @@ public class PostService implements IPostService {
 
     private void enrichPostResponses(java.util.List<PostResponse> responses) {
         if (responses == null || responses.isEmpty()) return;
-        
+
         List<Long> postIds = responses.stream().map(PostResponse::getId).toList();
-        
+
         // Batch fetch all relations
         Map<Long, List<Long>> categoryMap = postCategoryRepository.findByPostIdIn(postIds).stream()
-                .collect(Collectors.groupingBy(PostCategory::getPostId, 
+                .collect(Collectors.groupingBy(PostCategory::getPostId,
                         Collectors.mapping(PostCategory::getCategoryId, Collectors.toList())));
-        
+
         Map<Long, List<Long>> tagMap = postTagRepository.findByPostIdIn(postIds).stream()
-                .collect(Collectors.groupingBy(PostTag::getPostId, 
+                .collect(Collectors.groupingBy(PostTag::getPostId,
                         Collectors.mapping(PostTag::getTagId, Collectors.toList())));
-        
+
         Map<Long, List<Long>> authorIdsMap = postAuthorRepository.findByPostIdIn(postIds).stream()
-                .collect(Collectors.groupingBy(PostAuthor::getPostId, 
+                .collect(Collectors.groupingBy(PostAuthor::getPostId,
                         Collectors.mapping(PostAuthor::getUserId, Collectors.toList())));
-                        
+
         Map<Long, List<PostMediaResponse>> mediaMap = postMediaRepository.findByPostIdIn(postIds).stream()
                 .collect(Collectors.groupingBy(PostMedia::getPostId,
                         Collectors.mapping(m -> PostMediaResponse.builder()
@@ -490,20 +498,37 @@ public class PostService implements IPostService {
                                 .sortOrder(m.getSortOrder())
                                 .role(m.getRole())
                                 .build(), Collectors.toList())));
-                                
+
         // Batch fetch all author names
         Set<Long> authorUserIds = responses.stream()
                 .map(PostResponse::getAuthorId)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toSet());
-                
+
         Map<Long, String> authorNameMap = new HashMap<>();
         if (!authorUserIds.isEmpty()) {
-            cmsUserRepository.findAllById(authorUserIds).forEach(user -> 
+            cmsUserRepository.findAllById(authorUserIds).forEach(user ->
                 authorNameMap.put(user.getId(), user.getFullName())
             );
         }
-                
+
+        // Batch fetch primary category details for each post
+        Map<Long, com.aicoresolution.backend.entity.Category> primaryCategoryMap = new HashMap<>();
+        List<com.aicoresolution.backend.entity.PostCategory> primaryLinks = postCategoryRepository.findByPostIdIn(postIds).stream()
+                .filter(pc -> Boolean.TRUE.equals(pc.getIsPrimary()))
+                .toList();
+        Set<Long> primaryCategoryIds = primaryLinks.stream().map(com.aicoresolution.backend.entity.PostCategory::getCategoryId).collect(Collectors.toSet());
+        if (!primaryCategoryIds.isEmpty()) {
+            Map<Long, com.aicoresolution.backend.entity.Category> allCategories = categoryRepository.findAllById(primaryCategoryIds).stream()
+                    .collect(Collectors.toMap(com.aicoresolution.backend.entity.Category::getId, c -> c));
+            for (com.aicoresolution.backend.entity.PostCategory pc : primaryLinks) {
+                com.aicoresolution.backend.entity.Category cat = allCategories.get(pc.getCategoryId());
+                if (cat != null) {
+                    primaryCategoryMap.put(pc.getPostId(), cat);
+                }
+            }
+        }
+
         // Fill data into responses
         responses.forEach(r -> {
             r.setCategoryIds(categoryMap.getOrDefault(r.getId(), Collections.emptyList()));
@@ -512,6 +537,37 @@ public class PostService implements IPostService {
             r.setMedia(mediaMap.getOrDefault(r.getId(), Collections.emptyList()));
             if (r.getAuthorId() != null) {
                 r.setAuthorName(authorNameMap.get(r.getAuthorId()));
+            }
+            // Enrich primary category details
+            com.aicoresolution.backend.entity.Category primaryCat = primaryCategoryMap.get(r.getId());
+            if (primaryCat != null) {
+                r.setCategoryId(primaryCat.getId());
+                r.setCategoryName(primaryCat.getName());
+                r.setCategorySlug(primaryCat.getSlug());
+            }
+        });
+
+        // Batch fetch media file details (AFTER setMedia has been called on all responses)
+        Set<Long> allMediaIds = responses.stream()
+                .flatMap(r -> r.getMedia() != null ? r.getMedia().stream().map(m -> m.getMediaId()) : java.util.stream.Stream.empty())
+                .collect(Collectors.toSet());
+        Map<Long, com.aicoresolution.backend.entity.Media> mediaFileMap = new HashMap<>();
+        if (!allMediaIds.isEmpty()) {
+            mediaRepository.findAllById(allMediaIds).forEach(m -> mediaFileMap.put(m.getId(), m));
+        }
+
+        // Enrich media file details into each response's media list
+        responses.forEach(r -> {
+            if (r.getMedia() != null) {
+                r.getMedia().forEach(m -> {
+                    com.aicoresolution.backend.entity.Media file = mediaFileMap.get(m.getMediaId());
+                    if (file != null) {
+                        m.setFileUrl(file.getFileUrl());
+                        m.setFileName(file.getFileName());
+                        m.setMimeType(file.getMimeType());
+                        m.setFileSize(file.getFileSize());
+                    }
+                });
             }
         });
     }

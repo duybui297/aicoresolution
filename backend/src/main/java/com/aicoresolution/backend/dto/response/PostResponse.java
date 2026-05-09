@@ -52,6 +52,9 @@ public class PostResponse {
     private String authorName;
     private Long createdById;
     private Long updatedById;
+    private Long categoryId;
+    private String categoryName;
+    private String categorySlug;
 
     private List<Long> authorIds;
     private List<Long> categoryIds;

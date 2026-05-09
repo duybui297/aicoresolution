@@ -1,7 +1,8 @@
 import axiosClient from './axiosClient';
-import { PostResponse, ApiResponse, PostStatus } from '../types/api';
+import { PostResponse, PostStatus } from '../types/api';
+import { getFullImageUrl } from '../utils/imageUtils';
 
-interface PageResponse<T> {
+export interface PageResponse<T> {
   content: T[];
   totalPages: number;
   totalElements: number;
@@ -35,22 +36,21 @@ export interface CreatePostPayload {
 
 export const parseDateStringToISO = (dateStr: string): string | null => {
   if (!dateStr) return null;
-  // Match DD/MM/YYYY optionally followed by " - HH:MM AM/PM"
   const match = dateStr.match(/^(\d{2})\/(\d{2})\/(\d{4})(?:\s*-\s*(\d{2}):(\d{2})\s*(AM|PM))?$/i);
   if (!match) return null;
-  
+
   const [, dd, mm, yyyy, hh, min, period] = match;
-  
+
   let hour = 0;
   let minute = '00';
-  
+
   if (hh && min && period) {
     hour = parseInt(hh, 10);
     minute = min;
     if (period.toUpperCase() === 'PM' && hour !== 12) hour += 12;
     if (period.toUpperCase() === 'AM' && hour === 12) hour = 0;
   }
-  
+
   return `${yyyy}-${mm}-${dd}T${String(hour).padStart(2, '0')}:${minute}:00`;
 };
 
@@ -60,29 +60,28 @@ export const generateSlug = (text: string): string => {
 
 const postService = {
   getPosts: (
-    page = 0, 
-    size = 10, 
-    statuses?: string | string[], 
+    page = 0,
+    size = 10,
+    statuses?: string | string[],
     sort?: string,
     search?: string,
     startDate?: string,
     endDate?: string,
     role?: string
   ): Promise<PageResponse<PostResponse>> => {
-    // Convert statuses to array if it's a string, then join with comma for backend List<String>
     const statusParam = Array.isArray(statuses) ? statuses.join(',') : statuses;
-    
-    return axiosClient.get('admin/posts', { 
-      params: { 
-        page, 
-        size, 
-        statuses: statusParam, 
+
+    return axiosClient.get('admin/posts', {
+      params: {
+        page,
+        size,
+        statuses: statusParam,
         sort,
         search,
         startDate,
         endDate,
         role
-      } 
+      }
     });
   },
 
@@ -108,13 +107,75 @@ const postService = {
     return axiosClient.put(`admin/posts/${id}`, payload);
   },
 
-  deletePost: (id: number): Promise<any> => {
+  deletePost: (id: number): Promise<unknown> => {
     return axiosClient.delete(`admin/posts/${id}`);
   },
 
-  deletePostsBatch: (ids: number[]): Promise<any> => {
+  deletePostsBatch: (ids: number[]): Promise<unknown> => {
     return axiosClient.delete('admin/posts/batch-delete', { data: { ids } });
-  }
+  },
+
+  /** Public API — fetch paginated list of published posts (for /news page) */
+  getPublicPosts: (
+    page = 0,
+    size = 10
+  ): Promise<PageResponse<PostResponse>> => {
+    const baseURL = axiosClient.defaults.baseURL || 'http://localhost:8080/api/v1';
+    const publicBaseURL = baseURL.replace(/\/admin(\/|$)/, '/posts$1');
+    return axiosClient.get('posts', {
+      baseURL: publicBaseURL,
+      params: { page, size },
+    });
+  },
+
+  /** Public API — fetch a single published post by slug (for /news/:id page) */
+  getPublicPostBySlug: (slug: string): Promise<PostResponse> => {
+    const baseURL = axiosClient.defaults.baseURL || 'http://localhost:8080/api/v1';
+    const publicBaseURL = baseURL.replace(/\/admin(\/|$)/, '/posts$1');
+    return axiosClient.get(`posts/${slug}`, {
+      baseURL: publicBaseURL,
+    });
+  },
+};
+
+/**
+ * Map a PostResponse from the backend to the shape expected by News/NewsDetail components.
+ * - Converts relative thumbnail URLs to absolute
+ * - Maps category slug to i18n key for translation
+ * - Extracts ordered content image URLs from post_media
+ */
+export const mapPostToNewsItem = (post: PostResponse) => {
+  return {
+    ...post,
+    thumbnailUrl: getFullImageUrl(post.thumbnailUrl) || '',
+    categoryKey: getCategoryI18nKey(post.categorySlug),
+    contentImages: extractContentImages(post),
+  };
+};
+
+const getCategoryI18nKey = (categorySlug?: string): string => {
+  const categoryMap: Record<string, string> = {
+    'ai-tools': 'news.categories.tips',
+    'generative-ai': 'news.categories.trends',
+    'ai-ung-dung': 'news.categories.company',
+    'tri-tue-nhan-tao': 'news.categories.trends',
+    'machine-learning': 'news.categories.trends',
+    'deep-learning': 'news.categories.trends',
+    'ai-ethics': 'news.categories.trends',
+    'computer-vision': 'news.categories.trends',
+    'xlngtu-nlp': 'news.categories.trends',
+    'robotics': 'news.categories.trends',
+  };
+  return categorySlug ? (categoryMap[categorySlug] || 'news.categories.trends') : 'news.categories.trends';
+};
+
+const extractContentImages = (post: PostResponse): string[] => {
+  if (!post.media || post.media.length === 0) return [];
+  return post.media
+    .filter(m => m.role === 'CONTENT')
+    .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0))
+    .map(m => getFullImageUrl(m.fileUrl) || '')
+    .filter(Boolean);
 };
 
 export default postService;
