@@ -18,18 +18,3 @@ export const getFullImageUrl = (url?: string): string | undefined => {
   
   return `${BASE_URL}${normalizedUrl}`;
 };
-
-/**
- * Thay thế các đường dẫn ảnh tương đối trong HTML bằng đường dẫn tuyệt đối.
- */
-export const transformHtmlContent = (html?: string): string => {
-  if (!html) return '';
-  
-  const BASE_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8080').replace(/\/api\/v1\/?$/, '').replace(/\/$/, '');
-  
-  // Regex tìm các thẻ img có src bắt đầu bằng /uploads hoặc /images
-  return html.replace(
-    /src="(\/(?:uploads|images)[^"]*)"/g,
-    (match, path) => `src="${BASE_URL}${path}"`
-  );
-};

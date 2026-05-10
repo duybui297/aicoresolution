@@ -1,4 +1,4 @@
-import { STORAGE_KEYS } from '../services/authService';
+import { STORAGE_KEYS } from './authStorageKeys';
 
 export const clearAuthStorage = () => {
   localStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);

@@ -10,9 +10,11 @@ export interface AppError {
   isNetworkError?: boolean;
 }
 
-/**
- * Extracts a user-friendly error message from various error types
- */
+const AUTH_ERROR_KEYS: Record<string, string> = {
+  'Invalid username/email or password': 'auth.adminLogin.errorInvalidCredentials',
+  'Invalid username or password': 'auth.adminLogin.errorInvalidCredentials',
+  'User account is not active': 'auth.adminLogin.errorAccountInactive',
+};
 export const extractErrorMessage = (err: unknown): string => {
   if (axios.isAxiosError(err)) {
     // Connection Error (No response from server)
@@ -23,6 +25,11 @@ export const extractErrorMessage = (err: unknown): string => {
 
     const status = err.response.status;
     const data = err.response.data;
+    const backendMessage: string = data?.message || '';
+
+    if (status === 401 && backendMessage) {
+      return backendMessage;
+    }
 
     // Specific status handling
     switch (status) {
@@ -54,6 +61,15 @@ export const extractErrorMessage = (err: unknown): string => {
   if (typeof err === 'string') return err;
   
   return 'An unexpected error occurred. Please try again.';
+};
+
+/**
+ * Maps a backend auth error message to its corresponding i18n translation key.
+ * Returns the translated string using the active locale.
+ */
+export const mapAuthErrorToI18n = (message: string, t: (key: string) => string): string => {
+  const key = AUTH_ERROR_KEYS[message];
+  return key ? t(key) : message;
 };
 
 /**
