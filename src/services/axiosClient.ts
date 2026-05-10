@@ -15,7 +15,7 @@ const axiosClient = axios.create({
 // Request interceptor: attach token to every request
 axiosClient.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
+    const token = localStorage.getItem('accessToken');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

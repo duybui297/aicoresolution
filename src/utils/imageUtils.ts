@@ -18,3 +18,24 @@ export const getFullImageUrl = (url?: string): string | undefined => {
   
   return `${BASE_URL}${normalizedUrl}`;
 };
+
+/**
+ * Transform HTML content to ensure all <img> tags have full URLs.
+ */
+export const transformHtmlContent = (html?: string): string => {
+  if (!html) return '';
+  
+  const BASE_URL = (import.meta.env.VITE_API_URL || 'http://localhost:8080').replace(/\/api\/v1\/?$/, '').replace(/\/$/, '');
+  
+  // Replace relative src in img tags with absolute ones
+  return html.replace(/<img[^>]+src=["']([^"']+)["'][^>]*>/gi, (match, src) => {
+    if (src.startsWith('http://') || src.startsWith('https://') || src.startsWith('blob:')) {
+      return match;
+    }
+    
+    const normalizedSrc = src.startsWith('/') ? src : `/${src}`;
+    const fullUrl = `${BASE_URL}${normalizedSrc}`;
+    return match.replace(src, fullUrl);
+  });
+};
+

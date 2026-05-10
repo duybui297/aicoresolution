@@ -23,16 +23,19 @@ public class PostController {
     @GetMapping
     public ResponseEntity<Page<PostResponse>> list(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) String locale) {
         String requestId = HeaderUtils.getRequestId();
-        logger.info("Public listing posts - Page: {}, Size: {}, RequestID: {}", page, size, requestId);
-        return ResponseEntity.ok(postService.listPublic(page, size));
+        logger.info("Public listing posts - Page: {}, Size: {}, Locale: {}, RequestID: {}", page, size, locale, requestId);
+        return ResponseEntity.ok(postService.listPublic(page, size, locale));
     }
 
     @GetMapping("/{slug}")
-    public ResponseEntity<PostResponse> getBySlug(@PathVariable String slug) {
+    public ResponseEntity<PostResponse> getBySlug(
+            @PathVariable String slug,
+            @RequestParam(required = false) String locale) {
         String traceId = HeaderUtils.getTraceId();
-        logger.info("Public getting post by slug: {} - TraceID: {}", slug, traceId);
-        return ResponseEntity.ok(postService.getPublicBySlug(slug));
+        logger.info("Public getting post by slug: {} - Locale: {} - TraceID: {}", slug, locale, traceId);
+        return ResponseEntity.ok(postService.getPublicBySlug(slug, locale));
     }
 }

@@ -9,4 +9,6 @@ public interface CmsUserRepository extends JpaRepository<CmsUser, Long> {
     Optional<CmsUser> findByUsername(String username);
 
     Optional<CmsUser> findByEmail(String email);
+
+    Optional<CmsUser> findByUsernameOrEmail(String username, String email);
 }

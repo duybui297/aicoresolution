@@ -56,4 +56,10 @@ public interface PostRepository extends JpaRepository<Post, Long>, JpaSpecificat
 
     @Query("SELECT p FROM Post p WHERE p.status = :status AND p.deletedAt IS NULL")
     Page<Post> findByStatusAndDeletedAtIsNull(@Param("status") PostStatus status, Pageable pageable);
+
+    @Query("SELECT DISTINCT p FROM Post p WHERE p.status = :status AND p.deletedAt IS NULL AND (:locale IS NULL OR p.locale = :locale OR EXISTS (SELECT 1 FROM PostTranslation t WHERE t.postId = p.id AND t.locale = :locale))")
+    Page<Post> findPublishedNotDeletedByLocale(@Param("status") PostStatus status, @Param("locale") String locale, Pageable pageable);
+
+    @Query("SELECT p FROM Post p WHERE p.status = :status AND p.deletedAt IS NULL AND (LOWER(p.slug) = LOWER(:slug) OR EXISTS (SELECT 1 FROM PostTranslation t WHERE t.postId = p.id AND LOWER(t.slug) = LOWER(:slug)))")
+    Optional<Post> findBySlugOrTranslationSlugAndStatus(@Param("slug") String slug, @Param("status") PostStatus status);
 }
