@@ -272,7 +272,6 @@ const EditArticle = () => {
       const payload = buildPayload(currentStatus);
       await postService.updatePost(parseInt(id), payload);
       triggerToast(currentStatus === 'DRAFT' ? 'Draft saved successfully!' : 'Changes saved successfully!', 'success');
-      setTimeout(() => navigate(ROUTE_PATHS.adminArticles), 2000);
     } catch (err) {
       triggerToast(extractErrorMessage(err), 'error', 5000);
     } finally {
@@ -323,9 +322,6 @@ const EditArticle = () => {
         status === 'SCHEDULED' ? 'Article scheduled successfully!' : 'The article has been updated and published.',
         'success'
       );
-      setTimeout(() => {
-        navigate(ROUTE_PATHS.adminArticles);
-      }, 2500);
     } catch (err) {
       triggerToast(extractErrorMessage(err), 'error', 5000);
     } finally {

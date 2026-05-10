@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MoreHorizontal, ArrowDown, Check, Minus, FileQuestion } from 'lucide-react';
 import { Article, ArticleStatus } from '../../types/article';
@@ -123,6 +123,20 @@ export const ArticleTable = ({
   }
 
   const [openDropdownId, setOpenDropdownId] = useState<number | null>(null);
+  const dropdownRefs = useRef<Map<number, HTMLTableCellElement>>(new Map());
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const isInsideAnyDropdown = Array.from(dropdownRefs.current.values()).some(
+        (ref) => ref && ref.contains(event.target as Node)
+      );
+      if (!isInsideAnyDropdown) {
+        setOpenDropdownId(null);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const toggleDropdown = (id: number) => {
     setOpenDropdownId(openDropdownId === id ? null : id);
@@ -210,8 +224,8 @@ export const ArticleTable = ({
               </td>
               <td className="h-[3.625rem] px-4 whitespace-nowrap align-middle">{article.publisher}</td>
               <td className="h-[3.625rem] px-4 max-w-md align-middle">
-                <button 
-                  onClick={() => onView?.(article.id)}
+                <button
+                  onClick={() => navigate(ROUTE_PATHS.adminEditArticle.replace(':id', article.id.toString()))}
                   className="hover:text-admin-primary-100 transition-colors text-left font-admin-regular line-clamp-2"
                 >
                   {article.headline}
@@ -222,7 +236,10 @@ export const ArticleTable = ({
               </td>
               <td className="h-[3.625rem] px-4 whitespace-nowrap align-middle">{article.role}</td>
               <td className="h-[3.625rem] px-4 whitespace-nowrap align-middle">{article.dateCreated}</td>
-              <td className="h-[3.625rem] pl-4 text-right relative align-middle">
+              <td className="h-[3.625rem] pl-4 text-right relative align-middle" ref={(el) => {
+                  if (el) dropdownRefs.current.set(article.id, el);
+                  else dropdownRefs.current.delete(article.id);
+                }}>
                 <button
                   onClick={() => toggleDropdown(article.id)}
                   className="p-2 hover:bg-admin-netral-20 rounded-full transition-colors text-admin-netral-60"
@@ -259,12 +276,12 @@ export const ArticleTable = ({
                     >
                       View article
                     </button>
-                    <button 
+                    {/* <button 
                       onClick={() => setOpenDropdownId(null)}
                       className="w-full text-left px-3 py-2 rounded-lg hover:bg-admin-netral-20 transition-colors text-admin-sm font-admin-regular text-admin-netral-100"
                     >
                       Takedown
-                    </button>
+                    </button> */}
                   </div>
                 )}
               </td>

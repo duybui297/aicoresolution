@@ -1,7 +1,9 @@
 import { ForwardRefRenderFunction, forwardRef, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { Image as ImageIcon, X, Bold, Italic, Underline, Quote, ListOrdered, List, Link as LinkIcon } from 'lucide-react';
+import { Image as ImageIcon, X } from 'lucide-react';
 import DateTimePicker from './DateTimePicker';
+import { RichTextEditor } from './RichTextEditor';
+import postService from '../../services/postService';
 
 interface ArticleFormProps {
   headline: string;
@@ -21,7 +23,7 @@ interface ArticleFormProps {
   onImageSelect: (file: File) => void;
   onImageRemove: () => void;
   previewImageUrl?: string;
-  
+
   // Portal Props
   showPubDate: boolean;
   setShowPubDate: (val: boolean) => void;
@@ -29,7 +31,7 @@ interface ArticleFormProps {
   showScheduleDate: boolean;
   setShowScheduleDate: (val: boolean) => void;
   scheduleDatePos: { top: number; left: number };
-  
+
   pubDateRef: React.RefObject<HTMLDivElement>;
   scheduleDateRef: React.RefObject<HTMLDivElement>;
 
@@ -37,6 +39,11 @@ interface ArticleFormProps {
   errors: Record<string, string>;
   validateField: (name: string, value: any) => void;
 }
+
+const uploadImageToEditor = async (file: File) => {
+  const res = await postService.uploadMedia(file);
+  return { fileUrl: res.fileUrl };
+};
 
 const ArticleForm: ForwardRefRenderFunction<HTMLDivElement, ArticleFormProps> = (props, ref) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -242,26 +249,13 @@ const ArticleForm: ForwardRefRenderFunction<HTMLDivElement, ArticleFormProps> = 
         <label className={`text-admin-base font-admin-regular mb-2 ${errors.content ? 'text-admin-error-100' : 'text-admin-netral-100'}`}>
           Content article <span className="text-admin-error-100">*</span>
         </label>
-        <div className={`border rounded-lg flex flex-col transition-colors overflow-hidden ${
-          errors.content ? 'border-admin-error-100' : 'border-admin-netral-20 focus-within:border-admin-primary-100'
-        }`}>
-          <div className="border-b border-admin-netral-20 p-2 flex items-center justify-center gap-6 bg-white flex-wrap">
-            <div className="flex gap-3 text-xs font-admin-semibold"><button>H1</button><button>H2</button><button>H3</button><button>H4</button></div>
-            <div className="w-px h-4 bg-admin-netral-30"></div>
-            <div className="flex gap-3"><button><Bold className="w-4 h-4" /></button><button><Italic className="w-4 h-4" /></button><button><Underline className="w-4 h-4" /></button></div>
-            <div className="w-px h-4 bg-admin-netral-30"></div>
-            <div className="flex gap-3"><button><ImageIcon className="w-4 h-4" /></button><button><Quote className="w-4 h-4" /></button><button><ListOrdered className="w-4 h-4" /></button><button><List className="w-4 h-4" /></button><button><LinkIcon className="w-4 h-4" /></button></div>
-          </div>
-          <textarea 
-            placeholder="Description" 
-            value={content} 
-            onChange={(e) => { setContent(e.target.value); validateField('content', e.target.value); }} 
-            onBlur={(e) => validateField('content', e.target.value)}
-            className={`w-full p-4 min-h-[200px] outline-none text-admin-base text-admin-netral-90 resize-y bg-white ${
-              errors.content ? 'bg-admin-error-10/5' : ''
-            }`} 
-          />
-        </div>
+        <RichTextEditor
+          value={content}
+          onChange={setContent}
+          error={errors.content}
+          onBlur={(val) => validateField('content', val)}
+          uploadMedia={uploadImageToEditor}
+        />
         {errors.content && <p className="text-admin-xs text-admin-error-100 mt-1 font-admin-medium">{errors.content}</p>}
       </div>
 

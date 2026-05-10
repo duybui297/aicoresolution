@@ -6,8 +6,7 @@
 export const getFullImageUrl = (url?: string): string | undefined => {
   if (!url) return undefined;
   
-  // Nếu là blob (cho instant preview) hoặc đã có http/https thì trả về luôn
-  if (url.startsWith('blob:') || url.startsWith('http://') || url.startsWith('https://')) {
+  if (url.startsWith('blob:') || url.startsWith('data:') || url.startsWith('http://') || url.startsWith('https://')) {
     return url;
   }
   
