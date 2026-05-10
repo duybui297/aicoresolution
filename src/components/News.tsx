@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { ArrowRight } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { ArrowRight } from 'lucide-react';
 import postService, { mapPostToNewsItem } from '../services/postService';
 import { PostResponse } from '../types/api';
 import { getRoutePath } from '../utils/routeConstants';
