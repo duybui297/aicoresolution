@@ -25,7 +25,6 @@ services:
     build: .
     container_name: aicoresolution-backend-prod
     restart: always
-    user: "33:33"  # www-data user (uid:gid) to match nginx
     depends_on:
       postgres:
         condition: service_healthy

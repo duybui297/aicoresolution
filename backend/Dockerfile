@@ -21,9 +21,9 @@ WORKDIR /app
 # Copy jar from builder
 COPY --from=builder /build/target/backend-0.0.1-SNAPSHOT.jar app.jar
 
-# Create uploads directory with proper permissions
-RUN mkdir -p /app/uploads && \
-    chmod 755 /app/uploads
+# Create necessary directories
+RUN mkdir -p /app/uploads /app/logs && \
+    chmod 755 /app/uploads /app/logs
 
 # Expose port
 EXPOSE 8080
