@@ -13,6 +13,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.PosixFilePermission;
+import java.nio.file.attribute.PosixFilePermissions;
+import java.util.Set;
 import java.util.UUID;
 
 @Service
@@ -61,6 +64,15 @@ public class FileUploadService implements IFileUploadService {
 
             Path filePath = uploadPath.resolve(filename);
             file.transferTo(filePath);
+
+            // Set file permissions to 644 (rw-r--r--) so Nginx can read it
+            try {
+                Set<PosixFilePermission> perms = PosixFilePermissions.fromString("rw-r--r--");
+                Files.setPosixFilePermissions(filePath, perms);
+            } catch (UnsupportedOperationException e) {
+                // Windows doesn't support POSIX permissions, skip
+                logger.warn("POSIX file permissions not supported on this system");
+            }
 
             return "/uploads/" + filename;
         } catch (IOException e) {
