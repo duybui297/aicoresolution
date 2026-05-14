@@ -245,6 +245,24 @@ public class PostService implements IPostService {
         return responsePage;
     }
 
+    @Override
+    @Transactional
+    public PostResponse unpublish(Long id) {
+        String requestId = HeaderUtils.getRequestId();
+        logger.info("Unpublishing post {} - RequestID: {}", id, requestId);
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Post not found"));
+        if (post.getDeletedAt() != null) {
+            throw new IllegalStateException("Cannot unpublish a deleted post");
+        }
+        post.setStatus(PostStatus.ARCHIVED);
+        post.setPublishedAt(null);
+        post.setScheduledAt(null);
+        Post savedPost = postRepository.save(post);
+        logger.info("Post {} unpublished successfully, now status=ARCHIVED - RequestID: {}", id, requestId);
+        return toResponse(savedPost);
+    }
+
     private void applyPostData(Post post, PostUpsertRequest request) {
         if (request.getTitle() != null) {
             post.setTitle(request.getTitle().trim());

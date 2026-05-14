@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { Search, Bell, SlidersHorizontal, Loader2 } from 'lucide-react';
 import { createPortal } from 'react-dom';
 import { ArticleTable } from '../../components/admin/ArticleTable';
@@ -7,14 +8,16 @@ import Pagination from '../../components/admin/Pagination';
 import FilterModal from '../../components/admin/FilterModal';
 import ArticlePreview from '../../components/admin/ArticlePreview';
 import Toast from '../../components/admin/Toast';
+import DeleteConfirmModal from '../../components/admin/DeleteConfirmModal';
+import UnpublishModal from '../../components/admin/UnpublishModal';
 import postService from '../../services/postService';
 import { Article } from '../../types/article';
-import { PostResponse, PostStatus } from '../../types/api';
+import { PostResponse } from '../../types/api';
 import { ROUTE_PATHS } from '../../utils/routeConstants';
 import { formatISODateForDisplay } from '../../utils/dateUtils';
-import DeleteConfirmModal from '../../components/admin/DeleteConfirmModal';
 
 const Dashboard = () => {
+  const { t } = useTranslation();
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
   const [articles, setArticles] = useState<Article[]>([]);
@@ -55,6 +58,17 @@ const Dashboard = () => {
     ids: [],
     type: 'single',
     isDeleting: false
+  });
+
+  // Unpublish Modal state
+  const [unpublishModal, setUnpublishModal] = useState<{
+    isOpen: boolean;
+    id: number | null;
+    isLoading: boolean;
+  }>({
+    isOpen: false,
+    id: null,
+    isLoading: false
   });
 
   // New Selection state
@@ -176,7 +190,8 @@ const Dashboard = () => {
         'Draft': 'DRAFT',
         'Waiting for approval': 'PENDING',
         'Approved': 'APPROVED',
-        'Rejected': 'REJECTED'
+        'Rejected': 'REJECTED',
+        'Archived': 'ARCHIVED'
       };
 
       const mappedStatuses = filters.statuses.map(s => statusMapping[s] || s.toUpperCase());
@@ -215,7 +230,8 @@ const Dashboard = () => {
                 (p.status as string) === 'SCHEDULED' ? 'Scheduled' : 
                 (p.status as string) === 'PENDING' ? 'Waiting for approval' : 
                 (p.status as string) === 'APPROVED' ? 'Approved' :
-                (p.status as string) === 'REJECTED' ? 'Rejected' : 'Unknown',
+                (p.status as string) === 'REJECTED' ? 'Rejected' :
+                (p.status as string) === 'ARCHIVED' ? 'Archived' : 'Unknown',
         role: 'Admin',
         dateCreated: formatISODateForDisplay(p.publishedAt || p.scheduledAt || p.createdAt),
         rawDate: p.createdAt
@@ -248,6 +264,26 @@ const Dashboard = () => {
       type: 'batch',
       isDeleting: false
     });
+  };
+
+  const handleUnpublish = (id: number) => {
+    setUnpublishModal({ isOpen: true, id, isLoading: false });
+  };
+
+  const confirmUnpublish = async () => {
+    if (!unpublishModal.id) return;
+    setUnpublishModal(prev => ({ ...prev, isLoading: true }));
+    try {
+      await postService.unpublishPost(unpublishModal.id);
+      showToast(t('admin.article.unpublishSuccess'), 'success');
+      setUnpublishModal({ isOpen: false, id: null, isLoading: false });
+      fetchArticles();
+    } catch (error: any) {
+      console.error('Unpublish failed:', error);
+      const { extractErrorMessage } = await import('../../utils/errorHandler');
+      showToast(extractErrorMessage(error) || t('admin.article.unpublishFailed'), 'error');
+      setUnpublishModal(prev => ({ ...prev, isLoading: false }));
+    }
   };
 
   const confirmDelete = async () => {
@@ -336,7 +372,7 @@ const Dashboard = () => {
       </div>
 
       <div className="flex items-center gap-3 bg-admin-netral-10 rounded-2xl px-6 py-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)] shrink-0 overflow-x-auto">
-        {['All', 'Published', 'Scheduled', 'Draft'].map((tab) => {
+        {['All', 'Published', 'Scheduled', 'Draft', 'Archived'].map((tab) => {
           const isActive = tab === 'All' 
             ? filters.statuses.length === 0 
             : filters.statuses.length === 1 && filters.statuses[0] === tab;
@@ -371,7 +407,7 @@ const Dashboard = () => {
           onSort={handleSortChange}
           onView={handleViewArticle}
           onDelete={handleDelete}
-          onDeleteBatch={handleDeleteBatch}
+          onUnpublish={handleUnpublish}
           selectedIds={selectedIds}
           onSelectionChange={setSelectedIds}
         />
@@ -389,6 +425,16 @@ const Dashboard = () => {
             ? 'Are you sure you want to delete this article? This action cannot be undone.'
             : `Are you sure you want to delete ${deleteModal.ids.length} selected articles? This action cannot be undone.`
         }
+      />
+
+      {/* Unpublish Confirmation Modal */}
+      <UnpublishModal
+        isOpen={unpublishModal.isOpen}
+        isLoading={unpublishModal.isLoading}
+        onClose={() => !unpublishModal.isLoading && setUnpublishModal(prev => ({ ...prev, isOpen: false }))}
+        onConfirm={confirmUnpublish}
+        title={t('admin.article.unpublishTitle')}
+        message={t('admin.article.unpublishMessage')}
       />
 
       {/* Pagination */}

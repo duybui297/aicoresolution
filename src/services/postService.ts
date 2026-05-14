@@ -115,6 +115,10 @@ const postService = {
     return axiosClient.delete('admin/posts/batch-delete', { data: { ids } });
   },
 
+  unpublishPost: (id: number): Promise<PostResponse> => {
+    return axiosClient.patch(`admin/posts/${id}/unpublish`);
+  },
+
   /** Public API — fetch paginated list of published posts (for /news page) */
   getPublicPosts: (
     page = 0,

@@ -65,6 +65,10 @@ const StatusBadge = ({ status }: { status: ArticleStatus }) => {
       bg = 'bg-admin-netral-20';
       text = 'text-admin-netral-60';
       break;
+    case 'UnPublished':
+      bg = 'bg-admin-warning-10';
+      text = 'text-admin-warning-100';
+      break;
     default:
       bg = 'bg-admin-netral-10';
       text = 'text-admin-netral-50';
@@ -84,7 +88,7 @@ export const ArticleTable = ({
   onSort,
   onView,
   onDelete,
-  onDeleteBatch,
+  onUnpublish,
   selectedIds,
   onSelectionChange
 }: { 
@@ -93,7 +97,7 @@ export const ArticleTable = ({
   onSort: (config: { key: keyof Article; direction: 'asc' | 'desc' } | null) => void;
   onView?: (id: number) => void; 
   onDelete?: (id: number) => void;
-  onDeleteBatch?: (ids: number[]) => void;
+  onUnpublish?: (id: number) => void;
   selectedIds: Set<number>;
   onSelectionChange: (ids: Set<number>) => void;
 }) => {
@@ -276,6 +280,17 @@ export const ArticleTable = ({
                     >
                       View article
                     </button>
+                    {article.status === 'Published' && (
+                      <button
+                        onClick={() => {
+                          onUnpublish?.(article.id);
+                          setOpenDropdownId(null);
+                        }}
+                        className="w-full text-left px-3 py-2 rounded-lg hover:bg-admin-warning-10 transition-colors text-admin-sm font-admin-regular text-admin-warning-100"
+                      >
+                        Unpublish
+                      </button>
+                    )}
                     {/* <button 
                       onClick={() => setOpenDropdownId(null)}
                       className="w-full text-left px-3 py-2 rounded-lg hover:bg-admin-netral-20 transition-colors text-admin-sm font-admin-regular text-admin-netral-100"

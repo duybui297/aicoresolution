@@ -126,4 +126,12 @@ public class AdminPostController {
         postService.deleteMultiple(request.getIds());
         return ResponseEntity.ok(new ApiResponse(true, "Deleted " + request.getIds().size() + " posts"));
     }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'EDITOR', 'AUTHOR')")
+    @PatchMapping("/{id}/unpublish")
+    public ResponseEntity<PostResponse> unpublish(@PathVariable Long id) {
+        String requestId = HeaderUtils.getRequestId();
+        logger.info("Unpublishing post {} - RequestID: {}", id, requestId);
+        return ResponseEntity.ok(postService.unpublish(id));
+    }
 }

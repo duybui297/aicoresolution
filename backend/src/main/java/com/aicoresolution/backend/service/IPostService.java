@@ -49,4 +49,10 @@ public interface IPostService {
      * Get paginated list of published posts (public view)
      */
     Page<PostResponse> listPublic(int page, int size);
+
+    /**
+     * Unpublish a post — transitions status from PUBLISHED to ARCHIVED.
+     * Keeps the post data intact; removes it from public listings.
+     */
+    PostResponse unpublish(Long id);
 }

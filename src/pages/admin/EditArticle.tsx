@@ -2,9 +2,11 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import ArticlePreview from '../../components/admin/ArticlePreview';
 import ArticleForm from '../../components/admin/ArticleForm';
 import PublishModal from '../../components/admin/PublishModal';
+import UnpublishModal from '../../components/admin/UnpublishModal';
 import Toast from '../../components/admin/Toast';
 import { ROUTE_PATHS } from '../../utils/routeConstants';
 import postService, {
@@ -15,9 +17,11 @@ import postService, {
 import { extractErrorMessage } from '../../utils/errorHandler';
 import { formatISODateForDisplay } from '../../utils/dateUtils';
 import { getFullImageUrl } from '../../utils/imageUtils';
+import { ArticleStatus } from '../../types/article';
 import { PostStatus } from '../../types/api';
 
 const EditArticle = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
 
@@ -47,7 +51,9 @@ const EditArticle = () => {
   const [imageCaption, setImageCaption] = useState('');
   const [content, setContent] = useState('');
   const [scheduleDateValue, setScheduleDateValue] = useState('');
-  const [currentStatus, setCurrentStatus] = useState<'DRAFT' | 'PUBLISHED' | 'SCHEDULED' | 'DELETED' | 'ARCHIVED'>('DRAFT');
+  const [currentStatus, setCurrentStatus] = useState<PostStatus>('DRAFT');
+  const [isUnpublishModalOpen, setIsUnpublishModalOpen] = useState(false);
+  const [isUnpublishing, setIsUnpublishing] = useState(false);
 
 
   // Fetch initial data
@@ -59,7 +65,7 @@ const EditArticle = () => {
         const article = await postService.getPostById(parseInt(id));
         setHeadline(article.title);
         setExcerpt(article.excerpt);
-        setCurrentStatus(article.status);
+        setCurrentStatus(article.status as PostStatus);
         // Ưu tiên ngày xuất bản hoặc ngày hẹn giờ, nếu không có mới dùng ngày tạo
         const displayDate = article.publishedAt || article.scheduledAt || article.createdAt;
         setPubDateValue(formatISODateForDisplay(displayDate));
@@ -318,6 +324,7 @@ const EditArticle = () => {
     setIsSubmitting(true);
     try {
       await postService.updatePost(parseInt(id), payload);
+      setCurrentStatus(status);
       triggerToast(
         status === 'SCHEDULED' ? 'Article scheduled successfully!' : 'The article has been updated and published.',
         'success'
@@ -326,6 +333,25 @@ const EditArticle = () => {
       triggerToast(extractErrorMessage(err), 'error', 5000);
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleUnpublish = () => {
+    setIsUnpublishModalOpen(true);
+  };
+
+  const confirmUnpublish = async () => {
+    if (!id) return;
+    setIsUnpublishing(true);
+    try {
+      await postService.unpublishPost(parseInt(id));
+      setCurrentStatus('ARCHIVED');
+      setIsUnpublishModalOpen(false);
+      triggerToast(t('admin.article.unpublishSuccess'), 'success');
+    } catch (err) {
+      triggerToast(extractErrorMessage(err) || t('admin.article.unpublishFailed'), 'error', 5000);
+    } finally {
+      setIsUnpublishing(false);
     }
   };
 
@@ -342,6 +368,20 @@ const EditArticle = () => {
     return () => URL.revokeObjectURL(url);
   }, [imageFile, uploadedMedia]);
 
+  const mapPostStatusToArticleStatus = (status: PostStatus): ArticleStatus => {
+    switch (status) {
+      case 'PUBLISHED': return 'Published';
+      case 'DRAFT': return 'Draft';
+      case 'SCHEDULED': return 'Scheduled';
+      case 'DELETED': return 'Deleted';
+      case 'ARCHIVED': return 'Archived';
+      case 'PENDING': return 'Waiting for approval';
+      case 'APPROVED': return 'Approved';
+      case 'REJECTED': return 'Rejected';
+      default: return 'Unknown';
+    }
+  };
+
   const commonPreviewProps = {
     headline,
     excerpt,
@@ -350,6 +390,8 @@ const EditArticle = () => {
     imageUrl: previewImageUrl,
     imageCaption,
     content,
+    articleStatus: mapPostStatusToArticleStatus(currentStatus),
+    onUnpublish: handleUnpublish,
     onSaveDraft: () => handleAction('save'),
     saveLabel: `Save ${currentStatus === 'DRAFT' ? 'to draft' : 'changes'}`
   };
@@ -452,6 +494,15 @@ const EditArticle = () => {
         isOpen={isPublishModalOpen}
         onClose={() => setIsPublishModalOpen(false)}
         onConfirm={confirmPublish}
+      />
+
+      <UnpublishModal
+        isOpen={isUnpublishModalOpen}
+        onClose={() => setIsUnpublishModalOpen(false)}
+        onConfirm={confirmUnpublish}
+        isLoading={isUnpublishing}
+        title={t('admin.article.unpublishTitle')}
+        message={t('admin.article.unpublishMessage')}
       />
 
       <Toast 
