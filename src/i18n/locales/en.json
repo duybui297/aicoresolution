@@ -22,6 +22,14 @@
             "title": "Coming Soon",
             "description": "This section is currently under development. We're working hard to bring you new features.",
             "hint": "Expected in upcoming releases"
+        },
+        "article": {
+            "unpublish": "Unpublish",
+            "unpublishTitle": "Unpublish Article",
+            "unpublishMessage": "This article will be removed from public view and moved to Archived. You can republish it anytime.",
+            "unpublishSuccess": "Article unpublished successfully",
+            "unpublishFailed": "Failed to unpublish article",
+            "archived": "Archived"
         }
     },
     "nav": {

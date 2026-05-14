@@ -3,10 +3,11 @@ import { getFullImageUrl } from '../../utils/imageUtils';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
+import { ArticleStatus } from '../../types/article';
 
 interface ArticlePreviewProps {
   headline: string;
-  excerpt: string; // Thêm prop excerpt
+  excerpt: string;
   pubDate: string;
   uploadStatus: 'idle' | 'uploaded';
   imageUrl?: string;
@@ -14,10 +15,12 @@ interface ArticlePreviewProps {
   content: string;
   mode: 'side' | 'expanded';
   type?: 'create' | 'edit';
+  articleStatus?: ArticleStatus;
   onExpand?: () => void;
   onClose?: () => void;
   onNavigateBack?: () => void;
   onPublish?: () => void;
+  onUnpublish?: () => void;
   onSaveDraft?: () => void;
   onBackToForm?: () => void;
   saveLabel?: string;
@@ -25,7 +28,7 @@ interface ArticlePreviewProps {
 
 const ArticlePreview: React.FC<ArticlePreviewProps> = ({
   headline,
-  excerpt, // Lấy excerpt từ props
+  excerpt,
   pubDate,
   uploadStatus,
   imageUrl,
@@ -33,10 +36,12 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({
   content,
   mode,
   type = 'create',
+  articleStatus,
   onExpand,
   onClose,
   onNavigateBack,
   onPublish,
+  onUnpublish,
   onSaveDraft,
   onBackToForm,
   saveLabel
@@ -61,6 +66,14 @@ const ArticlePreview: React.FC<ArticlePreviewProps> = ({
             <span className="text-admin-netral-100 font-admin-semibold">Live preview</span>
           </div>
           <div className="flex items-center gap-4">
+            {articleStatus === 'Published' && (
+              <button
+                onClick={onUnpublish}
+                className="px-6 py-2.5 rounded-full text-admin-xs font-admin-medium border border-admin-warning-100/40 text-admin-warning-100 bg-admin-warning-10 hover:bg-admin-warning-20 transition-colors shrink-0"
+              >
+                Unpublish
+              </button>
+            )}
             <button 
               onClick={onSaveDraft}
               className="px-6 py-2.5 rounded-full text-admin-xs font-admin-medium border border-admin-netral-30 text-admin-netral-100 bg-admin-netral-10 hover:bg-admin-netral-20 transition-colors shrink-0"

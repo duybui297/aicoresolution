@@ -22,6 +22,14 @@
             "title": "Sắp Ra Mắt",
             "description": "Phần này đang được phát triển. Chúng tôi đang nỗ lực mang đến những tính năng mới.",
             "hint": "Dự kiến trong các bản cập nhật sắp tới"
+        },
+        "article": {
+            "unpublish": "Bỏ đăng",
+            "unpublishTitle": "Bỏ đăng bài viết",
+            "unpublishMessage": "Bài viết này sẽ bị ẩn khỏi trang công khai và chuyển sang trạng thái Đã lưu trữ. Bạn có thể đăng lại bất kỳ lúc nào.",
+            "unpublishSuccess": "Bỏ đăng bài viết thành công",
+            "unpublishFailed": "Bỏ đăng bài viết thất bại",
+            "archived": "Đã lưu trữ"
         }
     },
     "nav": {

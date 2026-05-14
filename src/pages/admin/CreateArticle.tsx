@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import ArticlePreview from '../../components/admin/ArticlePreview';
 import ArticleForm from '../../components/admin/ArticleForm';
 import PublishModal from '../../components/admin/PublishModal';
@@ -16,8 +17,10 @@ import postService, {
 import { extractErrorMessage } from '../../utils/errorHandler';
 import { formatISODateForDisplay } from '../../utils/dateUtils';
 import { getFullImageUrl } from '../../utils/imageUtils';
+import { ArticleStatus } from '../../types/article';
 
 const CreateArticle = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
 
   // Upload state
@@ -320,6 +323,7 @@ const CreateArticle = () => {
     imageUrl: previewImageUrl,
     imageCaption,
     content,
+    articleStatus: 'Draft' as ArticleStatus,
     onSaveDraft: handleSaveDraft,
   };
 
