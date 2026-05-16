@@ -26,8 +26,12 @@ export interface CreatePostPayload {
   slug: string;
   excerpt: string;
   content: string;
+  titleEn?: string;
+  excerptEn?: string;
+  contentEn?: string;
   thumbnailUrl?: string;
   thumbnailAlt?: string;
+  thumbnailAltEn?: string;
   status: PostStatus;
   publishedAt?: string;
   scheduledAt?: string;

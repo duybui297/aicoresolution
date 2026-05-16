@@ -38,6 +38,11 @@ public class PostUpsertRequest {
     @Size(max = 300)
     private String thumbnailAlt;
 
+    private String titleEn;
+    private String excerptEn;
+    private String contentEn;
+    private String thumbnailAltEn;
+
     private PostStatus status;
 
     private String metaTitle;

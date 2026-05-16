@@ -23,6 +23,12 @@ public class PostResponse {
     private ContentFormat contentFormat;
     private String thumbnailUrl;
     private String thumbnailAlt;
+
+    private String titleEn;
+    private String excerptEn;
+    private String contentEn;
+    private String thumbnailAltEn;
+
     private PostStatus status;
     private LocalDateTime publishedAt;
     private LocalDateTime scheduledAt;

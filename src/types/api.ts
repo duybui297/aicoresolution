@@ -48,6 +48,10 @@ export interface PostResponse {
   contentFormat: ContentFormat;
   thumbnailUrl: string;
   thumbnailAlt?: string;
+  titleEn?: string;
+  excerptEn?: string;
+  contentEn?: string;
+  thumbnailAltEn?: string;
   status: PostStatus;
   publishedAt: string;
   scheduledAt?: string;

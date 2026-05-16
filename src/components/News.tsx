@@ -55,6 +55,16 @@ export default function News() {
     }
   };
 
+  // ── Resolve localized title/excerpt based on current language ──────
+  const getLocalized = (post: NewsPost) => {
+    const isEnglish = i18n.language === 'en';
+    return {
+      title:     isEnglish && post.titleEn     ? post.titleEn     : post.title,
+      excerpt:   isEnglish && post.excerptEn  ? post.excerptEn  : post.excerpt,
+      thumbnailAlt: isEnglish && post.thumbnailAltEn ? post.thumbnailAltEn : post.thumbnailAlt,
+    };
+  };
+
   if (loading) {
     return (
       <section className="py-20 bg-slate-50 min-h-screen">
@@ -96,7 +106,9 @@ export default function News() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {posts.map(post => (
+          {posts.map(post => {
+            const { title, excerpt, thumbnailAlt } = getLocalized(post);
+            return (
             <div
               key={post.id}
               className="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all group flex flex-col h-full cursor-pointer"
@@ -105,7 +117,7 @@ export default function News() {
               <div className="overflow-hidden h-48 flex-shrink-0">
                 <img
                   src={getFullImageUrl(post.thumbnailUrl) || ''}
-                  alt={post.thumbnailAlt || post.title}
+                  alt={thumbnailAlt || title}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                 />
@@ -118,10 +130,10 @@ export default function News() {
                   <span className="text-xs text-slate-400">{formatDate(post.publishedAt)}</span>
                 </div>
                 <h3 className="text-xl font-bold mb-3 text-slate-900 hover:text-blue-600 transition-colors line-clamp-2 min-h-[3.5rem]">
-                  {post.title}
+                  {title}
                 </h3>
                 <p className="text-slate-600 text-sm mb-4 line-clamp-2 min-h-[2.5rem]">
-                  {post.excerpt}
+                  {excerpt}
                 </p>
                 <div className="flex items-center justify-between border-t border-slate-100 pt-4 mt-auto">
                   {post.authorName && <span className="text-xs font-medium text-slate-500">{post.authorName}</span>}
@@ -131,7 +143,8 @@ export default function News() {
                 </div>
               </div>
             </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

@@ -295,6 +295,20 @@ public class PostService implements IPostService {
         if (request.getThumbnailAlt() != null) {
             post.setThumbnailAlt(request.getThumbnailAlt());
         }
+
+        if (request.getTitleEn() != null) {
+            post.setTitleEn(request.getTitleEn().trim());
+        }
+        if (request.getExcerptEn() != null) {
+            post.setExcerptEn(request.getExcerptEn().trim());
+        }
+        if (request.getContentEn() != null) {
+            post.setContentEn(request.getContentEn().trim());
+        }
+        if (request.getThumbnailAltEn() != null) {
+            post.setThumbnailAltEn(request.getThumbnailAltEn());
+        }
+
         if (request.getStatus() != null) {
             post.setStatus(request.getStatus());
         }
@@ -434,6 +448,12 @@ public class PostService implements IPostService {
         response.setContentFormat(post.getContentFormat());
         response.setThumbnailUrl(post.getThumbnailUrl());
         response.setThumbnailAlt(post.getThumbnailAlt());
+        // ── English (bilingual) fields ────────────────────────────
+        response.setTitleEn(post.getTitleEn());
+        response.setExcerptEn(post.getExcerptEn());
+        response.setContentEn(post.getContentEn());
+        response.setThumbnailAltEn(post.getThumbnailAltEn());
+        // ─────────────────────────────────────────────────────────
         response.setStatus(post.getStatus());
         response.setPublishedAt(post.getPublishedAt());
         response.setScheduledAt(post.getScheduledAt());
