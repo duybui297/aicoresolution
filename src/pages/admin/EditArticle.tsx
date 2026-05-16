@@ -19,22 +19,26 @@ import { formatISODateForDisplay } from '../../utils/dateUtils';
 import { getFullImageUrl } from '../../utils/imageUtils';
 import { ArticleStatus } from '../../types/article';
 import { PostStatus } from '../../types/api';
+import { type ArticleLanguage } from '../../components/admin/LanguageToggle';
+import { useSharedGallery, type GalleryImage } from '../../hooks/useSharedGallery';
 
 const EditArticle = () => {
-  const { t } = useTranslation();
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
 
-  // Data state
+  // ── Shared content gallery (persisted in localStorage) ────────────
+  const { images: galleryImages, upload: galleryUpload, remove: galleryRemove, seed: gallerySeed } = useSharedGallery();
+
+  // ── Data state ────────────────────────────────────────────────────
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Upload state
+  // ── Upload state ───────────────────────────────────────────────────
   const [uploadStatus, setUploadStatus] = useState<'idle' | 'uploading' | 'uploaded' | 'error'>('idle');
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [uploadedMedia, setUploadedMedia] = useState<MediaUploadResponse | null>(null);
 
-  // UI state
+  // ── UI state ─────────────────────────────────────────────────────
   const [isExpanded, setIsExpanded] = useState(false);
   const [isPublishModalOpen, setIsPublishModalOpen] = useState(false);
   const [showToast, setShowToast] = useState(false);
@@ -43,48 +47,70 @@ const EditArticle = () => {
     type: 'info'
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
-  
-  // Form State
-  const [headline, setHeadline] = useState('');
-  const [excerpt, setExcerpt] = useState('');
-  const [pubDateValue, setPubDateValue] = useState('');
-  const [imageCaption, setImageCaption] = useState('');
-  const [content, setContent] = useState('');
-  const [scheduleDateValue, setScheduleDateValue] = useState('');
   const [currentStatus, setCurrentStatus] = useState<PostStatus>('DRAFT');
   const [isUnpublishModalOpen, setIsUnpublishModalOpen] = useState(false);
   const [isUnpublishing, setIsUnpublishing] = useState(false);
 
+  // ── Active language ────────────────────────────────────────────────
+  const [activeLanguage, setActiveLanguage] = useState<ArticleLanguage>('vi');
 
-  // Fetch initial data
+  // ── Vietnamese fields ────────────────────────────────────────────
+  const [headlineVi, setHeadlineVi] = useState('');
+  const [excerptVi, setExcerptVi] = useState('');
+  const [imageCaptionVi, setImageCaptionVi] = useState('');
+  const [contentVi, setContentVi] = useState('');
+
+  // ── English fields ──────────────────────────────────────────────
+  const [headlineEn, setHeadlineEn] = useState('');
+  const [excerptEn, setExcerptEn] = useState('');
+  const [imageCaptionEn, setImageCaptionEn] = useState('');
+  const [contentEn, setContentEn] = useState('');
+
+  // ── Shared / metadata fields ────────────────────────────────────
+  const [pubDateValue, setPubDateValue] = useState('');
+  const [scheduleDateValue, setScheduleDateValue] = useState('');
+
+  // ── Fetch initial data ──────────────────────────────────────────
   useEffect(() => {
     const fetchArticle = async () => {
       if (!id) return;
       setIsLoading(true);
       try {
         const article = await postService.getPostById(parseInt(id));
-        setHeadline(article.title);
-        setExcerpt(article.excerpt);
+        setHeadlineVi(article.title || '');
+        setExcerptVi(article.excerpt || '');
+        setImageCaptionVi(article.thumbnailAlt || '');
+        setContentVi(article.content || '');
+
+        setHeadlineEn(article.titleEn || '');
+        setExcerptEn(article.excerptEn || '');
+        setImageCaptionEn(article.thumbnailAltEn || '');
+        setContentEn(article.contentEn || '');
+
         setCurrentStatus(article.status as PostStatus);
-        // Ưu tiên ngày xuất bản hoặc ngày hẹn giờ, nếu không có mới dùng ngày tạo
         const displayDate = article.publishedAt || article.scheduledAt || article.createdAt;
         setPubDateValue(formatISODateForDisplay(displayDate));
-        setImageCaption(article.thumbnailAlt || '');
-        setContent(article.content);
-        // If it was scheduled
-        // if (article.status === 'SCHEDULED') {
-        //   setScheduleDateValue(formatISODateForDisplay(article.publishedAt));
-        // }
-        
+
         if (article.thumbnailUrl) {
           setUploadStatus('uploaded');
-          // For editing, we don't have the File object, but we have the URL
           setUploadedMedia({
-            id: 0, // We don't strictly need the ID for display
+            id: 0,
             fileUrl: article.thumbnailUrl,
             fileName: 'current-thumbnail',
             fileSize: 0
           });
+        }
+
+        if (article.media && article.media.length > 0) {
+          const contentMedia: GalleryImage[] = article.media
+            .filter((m) => m.role !== 'THUMBNAIL')
+            .map((m) => ({
+              id: m.mediaId,
+              fileUrl: getFullImageUrl(m.fileUrl),
+              fileName: m.fileName || `image-${m.mediaId}`,
+              fileSize: m.fileSize || 0,
+            }));
+          gallerySeed(contentMedia);
         }
       } catch (err) {
         setToastConfig({ message: extractErrorMessage(err), type: 'error' });
@@ -97,7 +123,7 @@ const EditArticle = () => {
     fetchArticle();
   }, [id]);
 
-  // ─── Toast helper ───────────────────────────────────────────────────────────
+  // ─── Toast helper ──────────────────────────────────────────────────
   const triggerToast = (message: string, type: 'success' | 'error' | 'info', autoDismissMs: number = 3000) => {
     setToastConfig({ message, type });
     setShowToast(true);
@@ -157,25 +183,25 @@ const EditArticle = () => {
     if (showPubDate || showScheduleDate) updatePositions();
   }, [showPubDate, showScheduleDate, updatePositions]);
 
-  // ─── Image handling ──────────────────────────────────────────────────────────
+  // ── Image handling ───────────────────────────────────────────────
   const handleImageSelect = async (file: File) => {
     if (file.size > 10 * 1024 * 1024) {
-      setErrors(prev => ({ ...prev, image: 'Image must be less than 10 MB.' }));
+      setErrors((prev) => ({ ...prev, image: 'Image must be less than 10 MB.' }));
       return;
     }
 
     setImageFile(file);
     setUploadStatus('uploading');
-    setErrors(prev => ({ ...prev, image: '' }));
+    setErrors((prev) => ({ ...prev, image: '' }));
 
     try {
-      const media = await postService.uploadMedia(file, undefined, imageCaption || undefined);
+      const media = await postService.uploadMedia(file);
       setUploadedMedia(media);
       setUploadStatus('uploaded');
     } catch (err) {
       setUploadStatus('error');
       setImageFile(null);
-      setErrors(prev => ({ ...prev, image: extractErrorMessage(err) }));
+      setErrors((prev) => ({ ...prev, image: extractErrorMessage(err) }));
       triggerToast(extractErrorMessage(err), 'error', 4000);
     }
   };
@@ -184,19 +210,41 @@ const EditArticle = () => {
     setImageFile(null);
     setUploadedMedia(null);
     setUploadStatus('idle');
-    setErrors(prev => ({ ...prev, image: '' }));
+    setErrors((prev) => ({ ...prev, image: '' }));
   };
 
-  // ─── Form validation ──────────────────────────────────────────────────────────
+  // ── Content helpers ──────────────────────────────────────────────
+  const hasViContent = headlineVi.trim() || contentVi.trim();
+  const hasEnContent = headlineEn.trim() || contentEn.trim();
+
+  // ── Form validation ─────────────────────────────────────────────
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
-    if (!headline.trim()) newErrors.headline = 'Headline is required';
-    if (!excerpt.trim()) newErrors.excerpt = 'Excerpt is required';
-    else if (excerpt.length > 500) newErrors.excerpt = 'Excerpt must be less than 500 characters';
+
     if (uploadStatus === 'idle') newErrors.image = 'Image cover is required';
-    if (!imageCaption.trim() && uploadStatus === 'uploaded') newErrors.caption = 'Image caption is required';
-    if (!content.trim()) newErrors.content = 'Content is required';
-    
+
+    if (!hasViContent && !hasEnContent) {
+      newErrors.viHeadline = 'At least one language (VI or EN) must have a headline';
+      setErrors(newErrors);
+      return false;
+    }
+
+    if (hasViContent) {
+      if (!headlineVi.trim()) newErrors.viHeadline = 'Headline is required';
+      if (!excerptVi.trim()) newErrors.viExcerpt = 'Excerpt is required';
+      else if (excerptVi.length > 500) newErrors.viExcerpt = 'Excerpt must be less than 500 characters';
+      if (!imageCaptionVi.trim() && uploadStatus === 'uploaded') newErrors.viCaption = 'Image caption is required';
+      if (!contentVi.trim()) newErrors.viContent = 'Content is required';
+    }
+
+    if (hasEnContent) {
+      if (!headlineEn.trim()) newErrors.enHeadline = 'Headline is required';
+      if (!excerptEn.trim()) newErrors.enExcerpt = 'Excerpt is required';
+      else if (excerptEn.length > 500) newErrors.enExcerpt = 'Excerpt must be less than 500 characters';
+      if (!imageCaptionEn.trim() && uploadStatus === 'uploaded') newErrors.enCaption = 'Image caption is required';
+      if (!contentEn.trim()) newErrors.enContent = 'Content is required';
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -204,49 +252,74 @@ const EditArticle = () => {
   const validateField = (name: string, value: any) => {
     let error = '';
     switch (name) {
-      case 'headline':
-        if (!value.trim()) error = 'Headline is required';
+      case 'viHeadline':
+        if (!value?.trim()) error = 'Headline is required';
         break;
-      case 'excerpt':
-        if (!value.trim()) error = 'Excerpt is required';
+      case 'viExcerpt':
+        if (!value?.trim()) error = 'Excerpt is required';
         else if (value.length > 500) error = 'Excerpt must be less than 500 characters';
         break;
-      case 'caption':
-        if (!value.trim() && uploadStatus === 'uploaded') error = 'Image caption is required';
+      case 'viCaption':
+        if (!value?.trim() && uploadStatus === 'uploaded') error = 'Image caption is required';
         break;
-      case 'content':
-        if (!value.trim()) error = 'Content is required';
+      case 'viContent':
+        if (!value?.trim()) error = 'Content is required';
         break;
-      case 'scheduleDate':
-        if (!value) error = 'Schedule date is required';
+      case 'enHeadline':
+        if (!value?.trim()) error = 'Headline is required';
+        break;
+      case 'enExcerpt':
+        if (!value?.trim()) error = 'Excerpt is required';
+        else if (value.length > 500) error = 'Excerpt must be less than 500 characters';
+        break;
+      case 'enCaption':
+        if (!value?.trim() && uploadStatus === 'uploaded') error = 'Image caption is required';
+        break;
+      case 'enContent':
+        if (!value?.trim()) error = 'Content is required';
         break;
     }
-    setErrors(prev => ({ ...prev, [name]: error }));
+    setErrors((prev) => ({ ...prev, [name]: error }));
   };
 
-  // ─── Build payload ────────────────────────────────────────────────────────────
+  // ── Build payload ───────────────────────────────────────────────
   const buildPayload = (status: 'PUBLISHED' | 'SCHEDULED' | 'DRAFT') => {
     const pubISO = parseDateStringToISO(pubDateValue);
     const schedISO = parseDateStringToISO(scheduleDateValue);
-    const slug = generateSlug(headline);
 
-    const payload: any = {
-      title: headline.trim(),
+    const baseHeadline = headlineVi.trim() || headlineEn.trim();
+    const slug = generateSlug(baseHeadline);
+
+    const payload: Record<string, unknown> = {
       slug,
-      excerpt: excerpt.trim(),
-      content: content.trim(),
-      thumbnailUrl: uploadedMedia?.fileUrl ?? undefined,
-      thumbnailAlt: imageCaption.trim() || undefined,
       status,
       contentFormat: 'MARKDOWN',
     };
 
+    if (hasViContent) {
+      Object.assign(payload, {
+        title: headlineVi.trim(),
+        excerpt: excerptVi.trim(),
+        content: contentVi.trim(),
+        thumbnailAlt: imageCaptionVi.trim() || undefined,
+      });
+    }
+
+    if (hasEnContent) {
+      Object.assign(payload, {
+        titleEn: headlineEn.trim(),
+        excerptEn: excerptEn.trim(),
+        contentEn: contentEn.trim(),
+        thumbnailAltEn: imageCaptionEn.trim() || undefined,
+      });
+    }
+
     if (pubISO) payload['publishedAt'] = pubISO;
     if (schedISO) payload['scheduledAt'] = schedISO;
 
-    // Only include media if it's new (has an ID from upload)
+    // Only include media if it's new (has a non-zero ID from upload)
     if (uploadedMedia && uploadedMedia.id !== 0) {
-      payload['mediaIds'] = [{ mediaId: uploadedMedia.id, sortOrder: 0, role: 'CONTENT' }];
+      payload['media'] = [{ mediaId: uploadedMedia.id, sortOrder: 0, role: 'CONTENT' }];
     }
 
     return payload;
@@ -266,17 +339,16 @@ const EditArticle = () => {
 
   const handleSave = async () => {
     if (isSubmitting || !id) return;
-    if (!headline.trim()) {
-      setErrors(prev => ({ ...prev, headline: 'Headline is required to save' }));
+    if (!headlineVi.trim() && !headlineEn.trim()) {
+      setErrors((prev) => ({ ...prev, viHeadline: 'At least one language must have a headline' }));
       triggerToast('Please enter a headline before saving.', 'error', 3500);
       return;
     }
 
     setIsSubmitting(true);
     try {
-      // Save keeps the current status (Draft stays Draft, Published stays Published)
       const payload = buildPayload(currentStatus);
-      await postService.updatePost(parseInt(id), payload);
+      await postService.updatePost(parseInt(id), payload as Parameters<typeof postService.updatePost>[1]);
       triggerToast(currentStatus === 'DRAFT' ? 'Draft saved successfully!' : 'Changes saved successfully!', 'success');
     } catch (err) {
       triggerToast(extractErrorMessage(err), 'error', 5000);
@@ -292,7 +364,7 @@ const EditArticle = () => {
     const now = new Date();
     const pubISO = parseDateStringToISO(pubDateValue);
     const schedISO = parseDateStringToISO(scheduleDateValue);
-    
+
     let status: 'PUBLISHED' | 'SCHEDULED' = 'PUBLISHED';
     let finalScheduledAt: string | undefined = undefined;
 
@@ -313,17 +385,17 @@ const EditArticle = () => {
         status = 'PUBLISHED';
       }
     }
-    
+
     const payload = buildPayload(status);
     if (status === 'SCHEDULED') {
-      payload.scheduledAt = finalScheduledAt;
+      payload['scheduledAt'] = finalScheduledAt;
     } else {
-      delete payload.scheduledAt;
+      delete payload['scheduledAt'];
     }
 
     setIsSubmitting(true);
     try {
-      await postService.updatePost(parseInt(id), payload);
+      await postService.updatePost(parseInt(id), payload as Parameters<typeof postService.updatePost>[1]);
       setCurrentStatus(status);
       triggerToast(
         status === 'SCHEDULED' ? 'Article scheduled successfully!' : 'The article has been updated and published.',
@@ -347,15 +419,15 @@ const EditArticle = () => {
       await postService.unpublishPost(parseInt(id));
       setCurrentStatus('ARCHIVED');
       setIsUnpublishModalOpen(false);
-      triggerToast(t('admin.article.unpublishSuccess'), 'success');
+      triggerToast('Article unpublished successfully', 'success');
     } catch (err) {
-      triggerToast(extractErrorMessage(err) || t('admin.article.unpublishFailed'), 'error', 5000);
+      triggerToast(extractErrorMessage(err) || 'Failed to unpublish article', 'error', 5000);
     } finally {
       setIsUnpublishing(false);
     }
   };
 
-  // Preview image URL logic
+  // ── Preview image URL logic ───────────────────────────────────────
   const [previewImageUrl, setPreviewImageUrl] = useState<string | undefined>(undefined);
 
   useEffect(() => {
@@ -368,6 +440,7 @@ const EditArticle = () => {
     return () => URL.revokeObjectURL(url);
   }, [imageFile, uploadedMedia]);
 
+  // ── Status mapping ────────────────────────────────────────────────
   const mapPostStatusToArticleStatus = (status: PostStatus): ArticleStatus => {
     switch (status) {
       case 'PUBLISHED': return 'Published';
@@ -382,14 +455,20 @@ const EditArticle = () => {
     }
   };
 
+  // ── Common preview props ──────────────────────────────────────────
   const commonPreviewProps = {
-    headline,
-    excerpt,
+    headlineVi,
+    headlineEn,
+    excerptVi,
+    excerptEn,
+    contentVi,
+    contentEn,
+    captionVi: imageCaptionVi,
+    captionEn: imageCaptionEn,
+    activeLanguage,
     pubDate: pubDateValue,
-    uploadStatus: (uploadStatus === 'uploaded' ? 'uploaded' : 'idle') as 'idle' | 'uploaded',
+    uploadStatus: uploadStatus === 'uploaded' ? 'uploaded' : 'idle',
     imageUrl: previewImageUrl,
-    imageCaption,
-    content,
     articleStatus: mapPostStatusToArticleStatus(currentStatus),
     onUnpublish: handleUnpublish,
     onSaveDraft: () => handleAction('save'),
@@ -409,14 +488,17 @@ const EditArticle = () => {
 
   return (
     <div className="flex flex-col gap-4 h-full relative">
-      {/* Top Header */}
+      {/* ── Top header ─────────────────────────────────────────── */}
       <div className="flex items-center justify-between bg-admin-netral-10 rounded-2xl px-6 py-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)] shrink-0">
         <div className="flex items-center gap-3">
-          <button onClick={() => navigate(-1)} className="text-admin-netral-50 hover:text-admin-netral-100 transition-colors">
+          <button
+            onClick={() => navigate(-1)}
+            className="text-admin-netral-50 hover:text-admin-netral-100 transition-colors"
+          >
             <ArrowLeft className="w-5 h-5" />
           </button>
           <h1 className="text-admin-xl font-admin-semibold">
-            <button 
+            <button
               onClick={() => navigate(ROUTE_PATHS.adminArticles)}
               className="text-admin-netral-50 hover:text-admin-primary-100 transition-colors"
             >
@@ -427,7 +509,7 @@ const EditArticle = () => {
           </h1>
         </div>
         <div className="flex items-center gap-4">
-          <button 
+          <button
             onClick={() => handleAction('save')}
             disabled={isSubmitting}
             className="px-6 py-2.5 rounded-full text-admin-xs font-admin-medium border border-admin-netral-30 text-admin-netral-100 bg-admin-netral-10 hover:bg-admin-netral-20 transition-colors shrink-0 disabled:opacity-50 flex items-center gap-2"
@@ -435,7 +517,7 @@ const EditArticle = () => {
             {isSubmitting && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
             Save {currentStatus === 'DRAFT' ? 'to draft' : 'changes'}
           </button>
-          <button 
+          <button
             onClick={() => handleAction('publish')}
             disabled={isSubmitting || uploadStatus === 'uploading'}
             className="bg-admin-primary-100 text-admin-netral-10 px-6 py-2.5 rounded-full text-admin-xs font-admin-medium hover:bg-admin-primary-90 transition-colors shrink-0 disabled:opacity-50 flex items-center gap-2"
@@ -446,15 +528,21 @@ const EditArticle = () => {
         </div>
       </div>
 
-      {/* Main Content */}
+      {/* ── Main content ──────────────────────────────────────── */}
       <div className="flex gap-4 items-start pb-10 flex-1 overflow-hidden">
-        <ArticleForm 
+        <ArticleForm
           ref={formContainerRef}
-          headline={headline} setHeadline={setHeadline}
-          excerpt={excerpt} setExcerpt={setExcerpt}
+          activeLanguage={activeLanguage}
+          setActiveLanguage={setActiveLanguage}
+          headlineVi={headlineVi} setHeadlineVi={setHeadlineVi}
+          excerptVi={excerptVi} setExcerptVi={setExcerptVi}
+          imageCaptionVi={imageCaptionVi} setImageCaptionVi={setImageCaptionVi}
+          contentVi={contentVi} setContentVi={setContentVi}
+          headlineEn={headlineEn} setHeadlineEn={setHeadlineEn}
+          excerptEn={excerptEn} setExcerptEn={setExcerptEn}
+          imageCaptionEn={imageCaptionEn} setImageCaptionEn={setImageCaptionEn}
+          contentEn={contentEn} setContentEn={setContentEn}
           pubDateValue={pubDateValue} setPubDateValue={setPubDateValue}
-          imageCaption={imageCaption} setImageCaption={setImageCaption}
-          content={content} setContent={setContent}
           scheduleDateValue={scheduleDateValue} setScheduleDateValue={setScheduleDateValue}
           uploadStatus={uploadStatus}
           imageFile={imageFile}
@@ -466,9 +554,12 @@ const EditArticle = () => {
           pubDateRef={pubDateRef} scheduleDateRef={scheduleDateRef}
           errors={errors}
           validateField={validateField}
+          galleryImages={galleryImages}
+          onGalleryUpload={galleryUpload}
+          onGalleryDelete={galleryRemove}
         />
 
-        <ArticlePreview 
+        <ArticlePreview
           {...commonPreviewProps}
           mode="side"
           type="edit"
@@ -476,21 +567,22 @@ const EditArticle = () => {
         />
       </div>
 
-      {/* Expanded Preview */}
-      {isExpanded && createPortal(
-        <ArticlePreview 
-          {...commonPreviewProps}
-          mode="expanded"
-          type="edit"
-          onClose={() => setIsExpanded(false)}
-          onNavigateBack={() => navigate(ROUTE_PATHS.adminArticles)}
-          onPublish={() => handleAction('publish')}
-          onSaveDraft={() => handleAction('save')}
-        />,
-        document.body
-      )}
+      {/* ── Expanded preview ──────────────────────────────────── */}
+      {isExpanded &&
+        createPortal(
+          <ArticlePreview
+            {...commonPreviewProps}
+            mode="expanded"
+            type="edit"
+            onClose={() => setIsExpanded(false)}
+            onNavigateBack={() => navigate(ROUTE_PATHS.adminArticles)}
+            onPublish={() => handleAction('publish')}
+            onSaveDraft={() => handleAction('save')}
+          />,
+          document.body
+        )}
 
-      <PublishModal 
+      <PublishModal
         isOpen={isPublishModalOpen}
         onClose={() => setIsPublishModalOpen(false)}
         onConfirm={confirmPublish}
@@ -498,14 +590,14 @@ const EditArticle = () => {
 
       <UnpublishModal
         isOpen={isUnpublishModalOpen}
+        isLoading={isUnpublishing}
         onClose={() => setIsUnpublishModalOpen(false)}
         onConfirm={confirmUnpublish}
-        isLoading={isUnpublishing}
-        title={t('admin.article.unpublishTitle')}
-        message={t('admin.article.unpublishMessage')}
+        title="Unpublish Article"
+        message="This article will be removed from public view and moved to Archived. You can republish it anytime."
       />
 
-      <Toast 
+      <Toast
         message={toastConfig.message}
         type={toastConfig.type}
         isVisible={showToast}

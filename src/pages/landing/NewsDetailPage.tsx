@@ -24,6 +24,16 @@ const formatDate = (dateStr: string | undefined | null): string => {
   }
 };
 
+function getLocalizedContent(post: NewsPost, lang: string) {
+  const isEnglish = lang === 'en';
+  return {
+    title:     isEnglish && post.titleEn      ? post.titleEn      : post.title,
+    excerpt:   isEnglish && post.excerptEn    ? post.excerptEn    : post.excerpt,
+    content:   isEnglish && post.contentEn   ? post.contentEn   : post.content,
+    thumbnailAlt: isEnglish && post.thumbnailAltEn ? post.thumbnailAltEn : post.thumbnailAlt,
+  };
+}
+
 export default function NewsDetailPage() {
   const { id } = useParams<{ id: string }>();
   const { t, i18n } = useTranslation();
@@ -65,6 +75,8 @@ export default function NewsDetailPage() {
 
   useDocumentMeta(post?.title, post?.excerpt);
 
+  const localized = post ? getLocalizedContent(post, i18n.language) : null;
+
   if (loading) {
     return (
       <section className="py-20 bg-white min-h-screen">
@@ -84,7 +96,7 @@ export default function NewsDetailPage() {
     );
   }
 
-  if (error || !post) {
+  if (error || !post || !localized) {
     return (
       <div className="container mx-auto px-4 py-20 text-center">
         <h2 className="text-2xl font-bold mb-4">{t('news.notFound')}</h2>
@@ -100,13 +112,11 @@ export default function NewsDetailPage() {
 
   // Render content: replace {{IMAGE_N}} placeholders with actual <img> tags
   const renderContent = () => {
-    if (!post.content) return null;
+    if (!localized.content) return null;
     const contentImages = post.contentImages || [];
 
-    // Extract and replace image placeholders first
-    let processedContent = post.content;
+    let processedContent = localized.content;
 
-    // Replace <p>{{IMAGE_N}}</p> patterns with actual image tags
     processedContent = processedContent.replace(/<p>\s*\{\{IMAGE_(\d+)\}\}\s*<\/p>/g, (match, index) => {
       const imageIndex = parseInt(index, 10);
       const imageSrc = contentImages[imageIndex];
@@ -141,7 +151,7 @@ export default function NewsDetailPage() {
               {t(post.categoryKey || 'news.categories.trends')}
             </span>
             <h1 className="text-3xl md:text-5xl font-bold text-slate-900 mb-6 leading-tight">
-              {post.title}
+              {localized.title}
             </h1>
             <div className="flex items-center text-slate-500 text-sm mb-8 border-b border-slate-100 pb-8">
               <span className="mr-4">{formatDate(post.publishedAt)}</span>
@@ -153,7 +163,7 @@ export default function NewsDetailPage() {
             <div className="mb-10 rounded-2xl overflow-hidden shadow-lg">
               <img
                 src={getFullImageUrl(post.thumbnailUrl) || ''}
-                alt={post.thumbnailAlt || post.title}
+                alt={localized.thumbnailAlt || localized.title}
                 className="w-full h-auto object-cover max-h-[500px]"
               />
             </div>

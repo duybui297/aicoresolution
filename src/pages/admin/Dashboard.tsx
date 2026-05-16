@@ -447,13 +447,18 @@ const Dashboard = () => {
       {/* Quick Preview Modal */}
       {previewArticle && createPortal(
         <ArticlePreview
-          headline={previewArticle.title}
-          excerpt={previewArticle.excerpt}
+          headlineVi={previewArticle.title || ''}
+          headlineEn={previewArticle.titleEn || ''}
+          excerptVi={previewArticle.excerpt || ''}
+          excerptEn={previewArticle.excerptEn || ''}
+          contentVi={previewArticle.content || ''}
+          contentEn={previewArticle.contentEn || ''}
+          captionVi={previewArticle.thumbnailAlt || ''}
+          captionEn={previewArticle.thumbnailAltEn || ''}
+          activeLanguage="vi"
           pubDate={formatISODateForDisplay(previewArticle.publishedAt || previewArticle.scheduledAt || previewArticle.createdAt)}
           uploadStatus="uploaded"
           imageUrl={previewArticle.thumbnailUrl}
-          imageCaption={previewArticle.thumbnailAlt || ''}
-          content={previewArticle.content}
           mode="expanded"
           type="edit"
           onClose={() => setPreviewArticle(null)}

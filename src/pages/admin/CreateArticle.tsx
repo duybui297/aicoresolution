@@ -7,7 +7,6 @@ import ArticlePreview from '../../components/admin/ArticlePreview';
 import ArticleForm from '../../components/admin/ArticleForm';
 import PublishModal from '../../components/admin/PublishModal';
 import Toast from '../../components/admin/Toast';
-
 import { ROUTE_PATHS } from '../../utils/routeConstants';
 import postService, {
   parseDateStringToISO,
@@ -18,12 +17,14 @@ import { extractErrorMessage } from '../../utils/errorHandler';
 import { formatISODateForDisplay } from '../../utils/dateUtils';
 import { getFullImageUrl } from '../../utils/imageUtils';
 import { ArticleStatus } from '../../types/article';
+import { type ArticleLanguage } from '../../components/admin/LanguageToggle';
+import { useSharedGallery } from '../../hooks/useSharedGallery';
 
 const CreateArticle = () => {
-  const { t } = useTranslation();
   const navigate = useNavigate();
 
-  // Upload state
+  const { images: galleryImages, upload: galleryUpload, remove: galleryRemove, isUploading: galleryUploading } = useSharedGallery();
+
   const [uploadStatus, setUploadStatus] = useState<'idle' | 'uploading' | 'uploaded' | 'error'>('idle');
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [uploadedMedia, setUploadedMedia] = useState<MediaUploadResponse | null>(null);
@@ -39,15 +40,26 @@ const CreateArticle = () => {
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
 
-  // Form State
-  const [headline, setHeadline] = useState('');
-  const [excerpt, setExcerpt] = useState('');
+  // ── Active language ──────────────────────────────────────────────
+  const [activeLanguage, setActiveLanguage] = useState<ArticleLanguage>('vi');
+
+  // ── Vietnamese fields ────────────────────────────────────────────
+  const [headlineVi, setHeadlineVi] = useState('');
+  const [excerptVi, setExcerptVi] = useState('');
+  const [imageCaptionVi, setImageCaptionVi] = useState('');
+  const [contentVi, setContentVi] = useState('');
+
+  // ── English fields ──────────────────────────────────────────────
+  const [headlineEn, setHeadlineEn] = useState('');
+  const [excerptEn, setExcerptEn] = useState('');
+  const [imageCaptionEn, setImageCaptionEn] = useState('');
+  const [contentEn, setContentEn] = useState('');
+
+  // ── Shared / metadata fields ────────────────────────────────────
   const [pubDateValue, setPubDateValue] = useState(formatISODateForDisplay(new Date()));
-  const [imageCaption, setImageCaption] = useState('');
-  const [content, setContent] = useState('');
   const [scheduleDateValue, setScheduleDateValue] = useState('');
 
-  // Refs & Portal State
+  // ── Refs & portal state ─────────────────────────────────────────
   const formContainerRef = useRef<HTMLDivElement>(null);
   const [showPubDate, setShowPubDate] = useState(false);
   const [pubDatePos, setPubDatePos] = useState({ top: 0, left: 0 });
@@ -56,7 +68,7 @@ const CreateArticle = () => {
   const [scheduleDatePos, setScheduleDatePos] = useState({ top: 0, left: 0 });
   const scheduleDateRef = useRef<HTMLDivElement>(null);
 
-  // ─── Toast helper ───────────────────────────────────────────────────────────
+  // ── Toast helper ────────────────────────────────────────────────
   const showToast = (message: string, type: 'success' | 'error' | 'info', autoDismissMs?: number) => {
     setToastConfig({ message, type });
     setShowPublishedToast(true);
@@ -65,7 +77,7 @@ const CreateArticle = () => {
     }
   };
 
-  // ─── Portal position sync ────────────────────────────────────────────────────
+  // ── Portal position sync ────────────────────────────────────────
   const updatePositions = useCallback(() => {
     if (pubDateRef.current) {
       const rect = pubDateRef.current.getBoundingClientRect();
@@ -108,25 +120,25 @@ const CreateArticle = () => {
     }
   }, [showPubDate, showScheduleDate]);
 
-  // ─── Image handling ──────────────────────────────────────────────────────────
+  // ── Image handling ───────────────────────────────────────────────
   const handleImageSelect = async (file: File) => {
     if (file.size > 10 * 1024 * 1024) {
-      setErrors(prev => ({ ...prev, image: 'Image must be less than 10 MB.' }));
+      setErrors((prev) => ({ ...prev, image: 'Image must be less than 10 MB.' }));
       return;
     }
 
     setImageFile(file);
     setUploadStatus('uploading');
-    setErrors(prev => ({ ...prev, image: '' }));
+    setErrors((prev) => ({ ...prev, image: '' }));
 
     try {
-      const media = await postService.uploadMedia(file, undefined, imageCaption || undefined);
+      const media = await postService.uploadMedia(file);
       setUploadedMedia(media);
       setUploadStatus('uploaded');
     } catch (err) {
       setUploadStatus('error');
       setImageFile(null);
-      setErrors(prev => ({ ...prev, image: extractErrorMessage(err) }));
+      setErrors((prev) => ({ ...prev, image: extractErrorMessage(err) }));
       showToast(extractErrorMessage(err), 'error', 4000);
     }
   };
@@ -135,19 +147,46 @@ const CreateArticle = () => {
     setImageFile(null);
     setUploadedMedia(null);
     setUploadStatus('idle');
-    setErrors(prev => ({ ...prev, image: '' }));
+    setErrors((prev) => ({ ...prev, image: '' }));
   };
 
-  // ─── Form validation ──────────────────────────────────────────────────────────
+  // ── Determine which language's fields to use for validation ────
+  // We validate whichever fields are filled (allow partial)
+  const hasViContent = headlineVi.trim() || contentVi.trim();
+  const hasEnContent = headlineEn.trim() || contentEn.trim();
+
+  // ── Form validation ─────────────────────────────────────────────
   const validateForm = (): boolean => {
     const newErrors: Record<string, string> = {};
 
-    if (!headline.trim()) newErrors.headline = 'Headline is required';
-    if (!excerpt.trim()) newErrors.excerpt = 'Excerpt is required';
-    else if (excerpt.length > 500) newErrors.excerpt = 'Excerpt must be less than 500 characters';
-    if (uploadStatus !== 'uploaded') newErrors.image = 'Image cover is required';
-    if (!imageCaption.trim() && uploadStatus === 'uploaded') newErrors.caption = 'Image caption is required';
-    if (!content.trim()) newErrors.content = 'Content is required';
+    // Always require image
+    if (uploadStatus !== 'uploaded') {
+      newErrors.image = 'Image cover is required';
+    }
+
+    // At least one language must be filled
+    if (!hasViContent && !hasEnContent) {
+      newErrors.viHeadline = 'At least one language (VI or EN) must have a headline';
+      setErrors(newErrors);
+      return false;
+    }
+
+    // Validate filled language(s)
+    if (hasViContent) {
+      if (!headlineVi.trim()) newErrors.viHeadline = 'Headline is required';
+      if (!excerptVi.trim()) newErrors.viExcerpt = 'Excerpt is required';
+      else if (excerptVi.length > 500) newErrors.viExcerpt = 'Excerpt must be less than 500 characters';
+      if (!imageCaptionVi.trim() && uploadStatus === 'uploaded') newErrors.viCaption = 'Image caption is required';
+      if (!contentVi.trim()) newErrors.viContent = 'Content is required';
+    }
+
+    if (hasEnContent) {
+      if (!headlineEn.trim()) newErrors.enHeadline = 'Headline is required';
+      if (!excerptEn.trim()) newErrors.enExcerpt = 'Excerpt is required';
+      else if (excerptEn.length > 500) newErrors.enExcerpt = 'Excerpt must be less than 500 characters';
+      if (!imageCaptionEn.trim() && uploadStatus === 'uploaded') newErrors.enCaption = 'Image caption is required';
+      if (!contentEn.trim()) newErrors.enContent = 'Content is required';
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -156,39 +195,69 @@ const CreateArticle = () => {
   const validateField = (name: string, value: any) => {
     let error = '';
     switch (name) {
-      case 'headline':
-        if (!value.trim()) error = 'Headline is required';
+      case 'viHeadline':
+        if (!value?.trim()) error = 'Headline is required';
         break;
-      case 'excerpt':
-        if (!value.trim()) error = 'Excerpt is required';
+      case 'viExcerpt':
+        if (!value?.trim()) error = 'Excerpt is required';
         else if (value.length > 500) error = 'Excerpt must be less than 500 characters';
         break;
-      case 'caption':
-        if (!value.trim() && uploadStatus === 'uploaded') error = 'Image caption is required';
+      case 'viCaption':
+        if (!value?.trim() && uploadStatus === 'uploaded') error = 'Image caption is required';
         break;
-      case 'content':
-        if (!value.trim()) error = 'Content is required';
+      case 'viContent':
+        if (!value?.trim()) error = 'Content is required';
+        break;
+      case 'enHeadline':
+        if (!value?.trim()) error = 'Headline is required';
+        break;
+      case 'enExcerpt':
+        if (!value?.trim()) error = 'Excerpt is required';
+        else if (value.length > 500) error = 'Excerpt must be less than 500 characters';
+        break;
+      case 'enCaption':
+        if (!value?.trim() && uploadStatus === 'uploaded') error = 'Image caption is required';
+        break;
+      case 'enContent':
+        if (!value?.trim()) error = 'Content is required';
         break;
     }
-    setErrors(prev => ({ ...prev, [name]: error }));
+    setErrors((prev) => ({ ...prev, [name]: error }));
   };
 
-  // ─── Build payload ────────────────────────────────────────────────────────────
+  // ── Build payload ───────────────────────────────────────────────
   const buildPayload = (status: 'PUBLISHED' | 'SCHEDULED' | 'DRAFT') => {
     const pubISO = parseDateStringToISO(pubDateValue);
     const schedISO = parseDateStringToISO(scheduleDateValue);
-    const slug = generateSlug(headline);
 
-    const payload: Record<string, any> = {
-      title: headline.trim(),
-      slug,
-      excerpt: excerpt.trim(),
-      content: content.trim(),
-      thumbnailUrl: uploadedMedia?.fileUrl ?? undefined,
-      thumbnailAlt: imageCaption.trim() || undefined,
+    // Use the VI headline to generate the base slug
+    const baseHeadline = headlineVi.trim() || headlineEn.trim();
+    const slug = generateSlug(baseHeadline);
+
+    const payload: Record<string, unknown> = {
       status,
       contentFormat: 'MARKDOWN',
     };
+
+    // Only include VI fields if filled
+    if (hasViContent) {
+      Object.assign(payload, {
+        title: headlineVi.trim(),
+        excerpt: excerptVi.trim(),
+        content: contentVi.trim(),
+        thumbnailAlt: imageCaptionVi.trim() || undefined,
+      });
+    }
+
+    // Only include EN fields if filled
+    if (hasEnContent) {
+      Object.assign(payload, {
+        titleEn: headlineEn.trim(),
+        excerptEn: excerptEn.trim(),
+        contentEn: contentEn.trim(),
+        thumbnailAltEn: imageCaptionEn.trim() || undefined,
+      });
+    }
 
     if (pubISO) payload['publishedAt'] = pubISO;
     if (schedISO) payload['scheduledAt'] = schedISO;
@@ -216,7 +285,7 @@ const CreateArticle = () => {
     const now = new Date();
     const pubISO = parseDateStringToISO(pubDateValue);
     const schedISO = parseDateStringToISO(scheduleDateValue);
-    
+
     let status: 'PUBLISHED' | 'SCHEDULED' = 'PUBLISHED';
     let finalScheduledAt: string | undefined = undefined;
 
@@ -224,7 +293,6 @@ const CreateArticle = () => {
       const sDate = new Date(schedISO);
       if (sDate <= now) {
         showToast('Schedule date must be in the future.', 'error', 4000);
-        setIsSubmitting(false);
         return;
       }
       status = 'SCHEDULED';
@@ -238,17 +306,17 @@ const CreateArticle = () => {
         status = 'PUBLISHED';
       }
     }
-    
-    const payload = buildPayload(status) as any;
+
+    const payload = buildPayload(status) as Record<string, unknown>;
     if (status === 'SCHEDULED') {
-      payload.scheduledAt = finalScheduledAt;
+      payload['scheduledAt'] = finalScheduledAt;
     } else {
-      delete payload.scheduledAt;
+      delete payload['scheduledAt'];
     }
 
     setIsSubmitting(true);
     try {
-      await postService.createPost(payload);
+      await postService.createPost(payload as Parameters<typeof postService.createPost>[0]);
       showToast(
         status === 'SCHEDULED' ? 'Article scheduled successfully!' : 'The article has been published.',
         'success'
@@ -264,34 +332,48 @@ const CreateArticle = () => {
     }
   };
 
-  // ─── Save draft ───────────────────────────────────────────────────────────────
+  // ── Save draft ─────────────────────────────────────────────────
   const handleSaveDraft = async () => {
     if (isSubmitting) return;
 
-    if (!headline.trim()) {
-      setErrors(prev => ({ ...prev, headline: 'Headline is required to save a draft' }));
+    const baseHeadline = headlineVi.trim() || headlineEn.trim();
+    if (!baseHeadline) {
       showToast('Please enter a headline before saving as draft.', 'error', 3500);
       return;
     }
 
     setIsSubmitting(true);
     try {
-      const slug = generateSlug(headline);
-      const draftPayload: Record<string, any> = {
-        title: headline.trim(),
+      const slug = generateSlug(baseHeadline);
+      const draftPayload: Record<string, unknown> = {
         slug,
-        excerpt: excerpt.trim() || undefined,
-        content: content.trim() || undefined,
-        thumbnailUrl: uploadedMedia?.fileUrl ?? undefined,
-        thumbnailAlt: imageCaption.trim() || undefined,
         status: 'DRAFT',
         contentFormat: 'MARKDOWN',
       };
+
+      if (hasViContent) {
+        Object.assign(draftPayload, {
+          title: headlineVi.trim(),
+          excerpt: excerptVi.trim() || undefined,
+          content: contentVi.trim() || undefined,
+          thumbnailAlt: imageCaptionVi.trim() || undefined,
+        });
+      }
+
+      if (hasEnContent) {
+        Object.assign(draftPayload, {
+          titleEn: headlineEn.trim(),
+          excerptEn: excerptEn.trim() || undefined,
+          contentEn: contentEn.trim() || undefined,
+          thumbnailAltEn: imageCaptionEn.trim() || undefined,
+        });
+      }
+
       if (uploadedMedia) {
         draftPayload['media'] = [{ mediaId: uploadedMedia.id, sortOrder: 0, role: 'CONTENT' }];
       }
 
-      await postService.createPost(draftPayload as any);
+      await postService.createPost(draftPayload as Parameters<typeof postService.createPost>[0]);
       showToast('Draft saved successfully!', 'success', 3000);
       setTimeout(() => navigate(ROUTE_PATHS.adminArticles), 3000);
     } catch (err) {
@@ -301,8 +383,7 @@ const CreateArticle = () => {
     }
   };
 
-  // ─── Preview props ────────────────────────────────────────────────────────────
-  const previewUploadStatus: 'idle' | 'uploaded' = uploadStatus === 'uploaded' ? 'uploaded' : 'idle';
+  // ── Preview image URL logic ───────────────────────────────────────
   const [previewImageUrl, setPreviewImageUrl] = useState<string | undefined>(undefined);
 
   useEffect(() => {
@@ -315,20 +396,30 @@ const CreateArticle = () => {
     return () => URL.revokeObjectURL(url);
   }, [imageFile, uploadedMedia]);
 
+  // ── Active caption based on language ──────────────────────────────
+  const activeCaption = activeLanguage === 'vi' ? imageCaptionVi : imageCaptionEn;
+
+  // ── Common preview props ─────────────────────────────────────────
   const commonPreviewProps = {
-    headline,
-    excerpt,
+    headlineVi,
+    headlineEn,
+    excerptVi,
+    excerptEn,
+    contentVi,
+    contentEn,
+    captionVi: imageCaptionVi,
+    captionEn: imageCaptionEn,
+    activeLanguage,
     pubDate: pubDateValue,
-    uploadStatus: previewUploadStatus,
+    uploadStatus: uploadStatus === 'uploaded' ? 'uploaded' : 'idle',
     imageUrl: previewImageUrl,
-    imageCaption,
-    content,
     articleStatus: 'Draft' as ArticleStatus,
     onSaveDraft: handleSaveDraft,
   };
 
   return (
     <div className="flex flex-col gap-4 h-full relative">
+      {/* ── Top header ─────────────────────────────────────────── */}
       <div className="flex items-center justify-between bg-admin-netral-10 rounded-2xl px-6 py-4 shadow-[0_2px_10px_rgba(0,0,0,0.02)] shrink-0">
         <div className="flex items-center gap-3">
           <button
@@ -339,7 +430,7 @@ const CreateArticle = () => {
             <ArrowLeft className="w-5 h-5" />
           </button>
           <h1 className="text-admin-xl font-admin-semibold flex items-center">
-            <button 
+            <button
               onClick={() => navigate(ROUTE_PATHS.adminArticles)}
               className="text-admin-netral-50 hover:text-admin-primary-100 transition-colors"
             >
@@ -369,14 +460,21 @@ const CreateArticle = () => {
         </div>
       </div>
 
+      {/* ── Main content ──────────────────────────────────────── */}
       <div className="flex gap-4 items-start pb-10 flex-1 overflow-hidden">
         <ArticleForm
           ref={formContainerRef}
-          headline={headline} setHeadline={setHeadline}
-          excerpt={excerpt} setExcerpt={setExcerpt}
+          activeLanguage={activeLanguage}
+          setActiveLanguage={setActiveLanguage}
+          headlineVi={headlineVi} setHeadlineVi={setHeadlineVi}
+          excerptVi={excerptVi} setExcerptVi={setExcerptVi}
+          imageCaptionVi={imageCaptionVi} setImageCaptionVi={setImageCaptionVi}
+          contentVi={contentVi} setContentVi={setContentVi}
+          headlineEn={headlineEn} setHeadlineEn={setHeadlineEn}
+          excerptEn={excerptEn} setExcerptEn={setExcerptEn}
+          imageCaptionEn={imageCaptionEn} setImageCaptionEn={setImageCaptionEn}
+          contentEn={contentEn} setContentEn={setContentEn}
           pubDateValue={pubDateValue} setPubDateValue={setPubDateValue}
-          imageCaption={imageCaption} setImageCaption={setImageCaption}
-          content={content} setContent={setContent}
           scheduleDateValue={scheduleDateValue} setScheduleDateValue={setScheduleDateValue}
           uploadStatus={uploadStatus}
           imageFile={imageFile}
@@ -388,6 +486,9 @@ const CreateArticle = () => {
           pubDateRef={pubDateRef} scheduleDateRef={scheduleDateRef}
           errors={errors}
           validateField={validateField}
+          galleryImages={galleryImages}
+          onGalleryUpload={galleryUpload}
+          onGalleryDelete={galleryRemove}
         />
 
         <ArticlePreview
@@ -397,17 +498,19 @@ const CreateArticle = () => {
         />
       </div>
 
-      {isExpanded && createPortal(
-        <ArticlePreview
-          {...commonPreviewProps}
-          mode="expanded"
-          onClose={() => setIsExpanded(false)}
-          onNavigateBack={() => navigate(ROUTE_PATHS.adminArticles)}
-          onPublish={handlePublish}
-          onSaveDraft={handleSaveDraft}
-        />,
-        document.body
-      )}
+      {/* ── Expanded preview ──────────────────────────────────── */}
+      {isExpanded &&
+        createPortal(
+          <ArticlePreview
+            {...commonPreviewProps}
+            mode="expanded"
+            onClose={() => setIsExpanded(false)}
+            onNavigateBack={() => navigate(ROUTE_PATHS.adminArticles)}
+            onPublish={handlePublish}
+            onSaveDraft={handleSaveDraft}
+          />,
+          document.body
+        )}
 
       <PublishModal
         isOpen={isPublishModalOpen}

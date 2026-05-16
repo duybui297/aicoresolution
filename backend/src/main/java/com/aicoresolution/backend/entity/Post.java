@@ -51,6 +51,20 @@ public class Post {
     @Column(name = "thumbnail_alt", length = 300)
     private String thumbnailAlt;
 
+    // ── English (bilingual) fields ────────────────────────────
+    @Column(name = "title_en", length = 255)
+    private String titleEn;
+
+    @Column(name = "excerpt_en", length = 500)
+    private String excerptEn;
+
+    @Column(name = "content_en", columnDefinition = "TEXT")
+    private String contentEn;
+
+    @Column(name = "thumbnail_alt_en", length = 300)
+    private String thumbnailAltEn;
+    // ─────────────────────────────────────────────────────────
+
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Enumerated(EnumType.STRING)
     @Builder.Default
